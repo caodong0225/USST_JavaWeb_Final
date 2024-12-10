@@ -1,6 +1,5 @@
 package usst.web.response;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
@@ -14,13 +13,10 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@Schema(description = "基础响应体")
 public class BaseResponse implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    @Schema(description = "响应状态码")
     private Integer code;
-    @Schema(description = "响应消息")
     private String message;
 
     public BaseResponse() {

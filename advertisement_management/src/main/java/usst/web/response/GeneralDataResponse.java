@@ -1,6 +1,5 @@
 package usst.web.response;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GeneralDataResponse<T> extends BaseResponse {
-    @Schema(description = "响应数据")
     private T data;
 
     public GeneralDataResponse() {

@@ -32,12 +32,6 @@
       <version>1.18.28</version>
       <scope>provided</scope>
     </dependency>
-    <!-- 生成 API 接口文档的组件 -->
-    <dependency>
-      <groupId>com.github.xiaoymin</groupId>
-      <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-      <version>4.4.0</version>
-    </dependency>
   </dependencies>
   <build>
     <finalName>advertisement_management</finalName>

@@ -15,6 +15,7 @@
     </bean>
     <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
     <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>
-    <bean class="usst.web.config.SwaggerConfig"/>
+    <!-- 启用 Spring MVC -->
+    <mvc:annotation-driven/>
 
 </beans>
