@@ -49,7 +49,17 @@
       <artifactId>mybatis-spring</artifactId>
       <version>3.0.3</version>
     </dependency>
-
+    <!--引入tymeleaf-->
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf</artifactId>
+      <version>3.1.2.RELEASE</version> <!-- 请根据需要选择合适的版本 -->
+    </dependency>
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf-spring6</artifactId>
+      <version>3.1.2.RELEASE</version> <!-- 请使用适配 Spring 6 的版本 -->
+    </dependency>
     <!-- 数据库驱动 -->
     <dependency>
       <groupId>mysql</groupId>
@@ -62,7 +72,6 @@
       <artifactId>HikariCP</artifactId>
       <version>5.1.0</version>
     </dependency>
-
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
