@@ -72,6 +72,6 @@ public class AuthController {
             return "login";  // 返回登录页面并显示错误
         }
         // 登录成功后重定向到用户详情页面
-        return "redirect:/home";
+        return "index";
     }
 }

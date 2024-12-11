@@ -1,61 +1,103 @@
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>登录</title>
-    <style>
-        body {
-            background: linear-gradient(0deg, #d9d9d9 0%, #f2f2f2 100%);
-            padding: 20px;
-        }
-    </style>
-</head>
-<body>
-<div class="flex justify-center">
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 mt-10 w-[350px] hover:shadow-xl transition-all">
-        <h1 class="text-center font-bold text-4xl">登录</h1>
-        <p class="text-center text-gray-500 text-xs">
-            没有账号? <a th:href="@{/auth/register}"
-                         class="text-indigo-500 hover:text-indigo-700 no-underline hover:underline cursor-pointer transition-all">点我注册</a>
-        </p>
-        <form
-                th:action="@{/page/login}"
-                method="post"
-                class="flex flex-col pt-3">
+<!DOCTYPE html>
+<html lang="en">
 
-            <div th:if="${error != null}" class="text-red-500 text-sm">
-                <span th:text="${error}"></span>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>登录界面</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                                <img src="../static/img/login.webp" alt="login" style="width: 100%;height: 100%">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">欢迎登录!</h1>
+                                    </div>
+                                    <form class="user"
+                                          th:action="@{/auth/login}"
+                                          method="post">
+                                        <div th:if="${error != null}" class="text-danger text-sm-left">
+                                            <span th:text="${error}"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                   class="form-control form-control-user"
+                                                   name="username"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="请输入用户名">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user"
+                                                   name = "password"
+                                                id="exampleInputPassword" placeholder="请输入密码">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                <label class="custom-control-label" for="customCheck">记住我</label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            登录
+                                        </button>
+                                        <hr>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" th:href="register">点我注册账号!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <label for="username" class="text-gray-500 text-md mt-2.5">* 用户名</label>
-            <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="用户名"
-                    class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight hover:shadow transition-all"
-                    maxlength="20"
-                    required
-            />
-            <label for="password" class="text-gray-500 text-md mt-2.5">* 密码</label>
-            <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="密码"
-                    class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight hover:shadow transition-all"
-                    min="0"
-                    max="200"
-                    required
-            />
-            <input
-                    type="submit"
-                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded cursor-pointer mt-5 transition-all"
-                    value="登录"
-            />
-        </form>
+        </div>
+
     </div>
-</div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../static/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../static/js/sb-admin-2.min.js"></script>
+
 </body>
+
 </html>

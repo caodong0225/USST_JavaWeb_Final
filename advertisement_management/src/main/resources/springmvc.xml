@@ -45,5 +45,6 @@
         <property name="basePackage" value="usst.web.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
-
+    <!-- 配置静态资源 -->
+    <mvc:resources mapping="/static/**" location="classpath:/static/" />
 </beans>
