@@ -30,7 +30,7 @@
     <mvc:annotation-driven/>
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/adv?useSSL=false&amp;serverTimezone=UTC"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/adv?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true"/>
         <property name="username" value="root"/>
         <property name="password" value="123456"/>
     </bean>

@@ -1,6 +1,7 @@
 package usst.web.service;
 
 import usst.web.dto.UserInfoDTO;
+import usst.web.entity.User;
 
 /**
  * @author jyzxc
@@ -8,4 +9,7 @@ import usst.web.dto.UserInfoDTO;
  */
 public interface IUserService {
     UserInfoDTO getUserById(Integer id);
+    boolean isUserExist(String username);
+    boolean isCorrect(String username, String password);
+    boolean registerUser(User user);
 }

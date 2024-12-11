@@ -3,8 +3,10 @@ package usst.web.service.impl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import usst.web.dto.UserInfoDTO;
+import usst.web.entity.User;
 import usst.web.mapper.UserMapper;
 import usst.web.service.IUserService;
+import usst.web.util.SafetyUtils;
 
 /**
  * @author jyzxc
@@ -18,5 +20,22 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserInfoDTO getUserById(Integer id) {
         return userMapper.getUserById(id);
+    }
+
+    @Override
+    public boolean isUserExist(String username) {
+        return userMapper.selectUserByUsername(username) != null;
+    }
+
+    @Override
+    public boolean isCorrect(String username, String password) {
+        User user = userMapper.selectUserByUsername(username);
+        return SafetyUtils.checkBCrypt(password, user.getPassword());
+    }
+
+    @Override
+    public boolean registerUser(User user) {
+        user.setPassword(SafetyUtils.doBCrypt(user.getPassword()));
+        return userMapper.insertUser(user);
     }
 }

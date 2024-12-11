@@ -11,8 +11,8 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class User implements Serializable {
+public class UserRole implements Serializable {
     private Integer id;
-    private String username;
-    private String password;
+    private String roleName;
+    private Integer userId;
 }
