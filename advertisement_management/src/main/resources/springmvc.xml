@@ -17,5 +17,21 @@
     <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>
     <!-- 启用 Spring MVC -->
     <mvc:annotation-driven/>
-
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/adv?useSSL=false&amp;serverTimezone=UTC"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+    <!--配置mybatis-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- MyBatis 配置文件路径 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+    <!--设置mybatis的扫描路径-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="usst.web.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
 </beans>

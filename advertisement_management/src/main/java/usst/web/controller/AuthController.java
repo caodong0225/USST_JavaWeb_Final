@@ -12,7 +12,7 @@ import usst.web.response.BaseResponse;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    @GetMapping("/login")
+    @GetMapping(value = "/login", produces = "application/json")
     public BaseResponse login() {
         return BaseResponse.makeResponse(200, "ok");
     }
