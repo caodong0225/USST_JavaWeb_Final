@@ -1,10 +1,13 @@
 package usst.web.interceptor;
 
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import usst.web.dto.UserInfoDTO;
+import usst.web.entity.User;
+import usst.web.service.IRoleService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,18 +19,26 @@ import java.util.List;
  */
 @Component
 public class AuthorizationInterceptor implements HandlerInterceptor {
+    @Resource
+    IRoleService roleService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 从 Session 中获取用户信息
-        UserInfoDTO user = (UserInfoDTO) request.getSession().getAttribute("user");
+        User userSession = (User) request.getSession().getAttribute("user");
 
         // 检查用户是否已登录
-        if (user == null) {
+        if (userSession == null) {
             // 未登录则重定向到登录页面
             response.sendRedirect("/auth/login");
             return false;
         }
+
+        // 获取用户角色
+        UserInfoDTO user = new UserInfoDTO();
+        user.setId(userSession.getId());
+        user.setRoleName(roleService.getRoleNameByUserId(userSession.getId()));
+        user.setUsername(userSession.getUsername());
 
         // 获取当前请求的路径
         String requestURI = request.getRequestURI();

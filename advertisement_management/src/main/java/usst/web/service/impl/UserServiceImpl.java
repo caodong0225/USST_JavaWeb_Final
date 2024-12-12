@@ -28,11 +28,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserInfoDTO isCorrect(String username, String password) {
+    public User isCorrect(String username, String password) {
         User user = userMapper.selectUserByUsername(username);
         if(SafetyUtils.checkBCrypt(password, user.getPassword()))
         {
-            return this.getUserById(user.getId());
+            return user;
         }
         return null;
     }

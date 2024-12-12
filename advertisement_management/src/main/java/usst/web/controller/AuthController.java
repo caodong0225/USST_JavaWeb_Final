@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import usst.web.dto.UserInfoDTO;
 import usst.web.entity.User;
 import usst.web.service.IUserService;
 
@@ -76,7 +75,7 @@ public class AuthController {
             // 返回登录页面并显示错误
             return "login";
         }
-        UserInfoDTO user = userService.isCorrect(username, password);
+        User user = userService.isCorrect(username, password);
         if(user == null){
             model.addAttribute("error", "密码错误");
             // 返回登录页面并显示错误

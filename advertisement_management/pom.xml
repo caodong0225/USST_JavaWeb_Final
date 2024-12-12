@@ -14,6 +14,16 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>6.1.8</version> <!-- 确保版本与你的 Spring 版本匹配 -->
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.9.6</version> <!-- 最新版本 -->
+    </dependency>
     <!--引入servlet-->
     <dependency>
       <groupId>jakarta.servlet</groupId>

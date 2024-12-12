@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @Component
 @ControllerAdvice
 public class GlobalModelAttributeConfig {
-
     @ModelAttribute
     public void addUserToModel(Model model, HttpSession session) {
         Object user = session.getAttribute("user");
