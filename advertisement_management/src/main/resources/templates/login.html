@@ -23,6 +23,21 @@
 </head>
 
 <body class="bg-gradient-primary">
+    <div
+            th:if="${message != null}"
+            id="liveToast"
+            class="toast align-items-center text-white bg-success border-0 show"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+            data-bs-autohide="true"
+            data-bs-delay="3000">
+        <div class="d-flex">
+            <div class="toast-body" th:text="${message}">
+                登录成功！
+            </div>
+        </div>
+    </div>
 
     <div class="container">
 
@@ -30,7 +45,6 @@
         <div class="row justify-content-center">
 
             <div class="col-xl-10 col-lg-12 col-md-9">
-
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
@@ -46,9 +60,6 @@
                                     <form class="user"
                                           th:action="@{/auth/login}"
                                           method="post">
-                                        <div th:if="${error != null}" class="text-danger text-sm-left">
-                                            <span th:text="${error}"></span>
-                                        </div>
                                         <div class="form-group">
                                             <input
                                                    class="form-control form-control-user"
@@ -98,6 +109,15 @@
     <!-- Custom scripts for all pages-->
     <script src="../static/js/sb-admin-2.min.js"></script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toastElement = document.getElementById("liveToast");
+            if (toastElement) {
+                const toast = new bootstrap.Toast(toastElement);
+                toast.show();
+            }
+        });
+    </script>
 </body>
 
 </html>

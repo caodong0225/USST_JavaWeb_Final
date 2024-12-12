@@ -4,7 +4,7 @@
   <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="index">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/home/index}">
       <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-laugh-wink"></i>
       </div>
@@ -15,8 +15,8 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-      <a class="nav-link" th:href="index">
+    <li class="nav-item" th:classappend="${currentPath == '/home/index'} ? 'active'">
+      <a class="nav-link" th:href="@{/home/index}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>统计面板</span></a>
     </li>
@@ -31,17 +31,20 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-         aria-expanded="true" aria-controls="collapseTwo">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+         aria-controls="collapseTwo"
+      >
         <i class="fas fa-fw fa-cog"></i>
         <span>用户管理</span>
       </a>
-      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+           data-parent="#accordionSidebar"
+           th:classappend="${currentPath == '/user/list' || currentPath == '/user/add' || currentPath == '/user/edit'} ? 'show'">
         <div class="bg-white py-2 collapse-inner rounded">
 <!--          <h6 class="collapse-header"></h6>-->
-          <a class="collapse-item" th:href="@{/user/list}">用户列表</a>
-          <a class="collapse-item" th:href="@{/user/add}">添加用户</a>
-          <a class="collapse-item" th:href="@{/user/edit}">编辑用户</a>
+          <a class="collapse-item" th:href="@{/user/list}" th:classappend="${currentPath == '/user/list'} ? 'active'">用户列表</a>
+          <a class="collapse-item" th:href="@{/user/add}" th:classappend="${currentPath == '/user/add'} ? 'active'">添加用户</a>
+          <a class="collapse-item" th:href="@{/user/edit}" th:classappend="${currentPath == '/user/edit'} ? 'active'">编辑用户</a>
         </div>
       </div>
     </li>

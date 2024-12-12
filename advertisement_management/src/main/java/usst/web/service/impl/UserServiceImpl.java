@@ -2,11 +2,14 @@ package usst.web.service.impl;
 
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import usst.web.dto.UserGeneralDTO;
 import usst.web.dto.UserInfoDTO;
 import usst.web.entity.User;
 import usst.web.mapper.UserMapper;
 import usst.web.service.IUserService;
 import usst.web.util.SafetyUtils;
+
+import java.util.List;
 
 /**
  * @author jyzxc
@@ -41,5 +44,10 @@ public class UserServiceImpl implements IUserService {
     public boolean registerUser(User user) {
         user.setPassword(SafetyUtils.doBCrypt(user.getPassword()));
         return userMapper.insertUser(user);
+    }
+
+    @Override
+    public List<UserGeneralDTO> getUsers() {
+        return userMapper.getUsers();
     }
 }

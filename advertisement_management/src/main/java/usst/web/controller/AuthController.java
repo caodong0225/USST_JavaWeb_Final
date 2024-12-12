@@ -66,18 +66,18 @@ public class AuthController {
             Model model,
             HttpSession session) {
         if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
-            model.addAttribute("error", "用户名和密码不能为空");
+            model.addAttribute("message", "用户名和密码不能为空");
             // 返回登录页面并显示错误
             return "login";
         }
         if(!userService.isUserExist(username)){
-            model.addAttribute("error", "用户不存在");
+            model.addAttribute("message", "用户不存在");
             // 返回登录页面并显示错误
             return "login";
         }
         User user = userService.isCorrect(username, password);
         if(user == null){
-            model.addAttribute("error", "密码错误");
+            model.addAttribute("message", "密码错误");
             // 返回登录页面并显示错误
             return "login";
         }

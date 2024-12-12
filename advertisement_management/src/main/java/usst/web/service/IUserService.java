@@ -1,7 +1,10 @@
 package usst.web.service;
 
+import usst.web.dto.UserGeneralDTO;
 import usst.web.dto.UserInfoDTO;
 import usst.web.entity.User;
+
+import java.util.List;
 
 /**
  * @author jyzxc
@@ -12,4 +15,5 @@ public interface IUserService {
     boolean isUserExist(String username);
     User isCorrect(String username, String password);
     boolean registerUser(User user);
+    List<UserGeneralDTO> getUsers();
 }
