@@ -1,12 +1,14 @@
 package usst.web.controller;
 
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import usst.web.dto.UserInfoDTO;
 import usst.web.entity.User;
 import usst.web.service.IUserService;
 
@@ -21,7 +23,8 @@ public class AuthController {
     IUserService userService;
     @GetMapping("/login")
     public String login() {
-        return "login";  // This will resolve to login.html
+        // This will resolve to login.html
+        return "login";
     }
     @GetMapping("/register")
     public String register() {
@@ -37,11 +40,13 @@ public class AuthController {
         // 模拟简单验证逻辑
         if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
             model.addAttribute("error", "用户名和密码不能为空");
-            return "register";  // 返回注册页面并显示错误
+            // 返回注册页面并显示错误
+            return "register";
         }
         if(userService.isUserExist(username)){
             model.addAttribute("error", "用户名已存在");
-            return "register";  // 返回注册页面并显示错误
+            // 返回注册页面并显示错误
+            return "register";
         }
         User user = new User();
         user.setUsername(username);
@@ -49,7 +54,8 @@ public class AuthController {
         if(!userService.registerUser(user))
         {
             model.addAttribute("error", "注册失败");
-            return "register";  // 返回注册页面并显示错误
+            // 返回注册页面并显示错误
+            return "register";
         }
         // 注册成功后重定向到登录页面
         return "redirect:/auth/login";
@@ -58,20 +64,27 @@ public class AuthController {
     public String login(
             @RequestParam("username") String username,
             @RequestParam("password") String password,
-            Model model) {
+            Model model,
+            HttpSession session) {
         if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
             model.addAttribute("error", "用户名和密码不能为空");
-            return "login";  // 返回登录页面并显示错误
+            // 返回登录页面并显示错误
+            return "login";
         }
         if(!userService.isUserExist(username)){
             model.addAttribute("error", "用户不存在");
-            return "login";  // 返回登录页面并显示错误
+            // 返回登录页面并显示错误
+            return "login";
         }
-        if(!userService.isCorrect(username, password)){
+        UserInfoDTO user = userService.isCorrect(username, password);
+        if(user == null){
             model.addAttribute("error", "密码错误");
-            return "login";  // 返回登录页面并显示错误
+            // 返回登录页面并显示错误
+            return "login";
         }
+        // 将用户信息写入 Session
+        session.setAttribute("user", user);
         // 登录成功后重定向到用户详情页面
-        return "index";
+        return "redirect:/home/index";
     }
 }

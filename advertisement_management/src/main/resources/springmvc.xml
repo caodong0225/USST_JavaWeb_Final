@@ -23,7 +23,20 @@
         <property name="templateEngine" ref="templateEngine" />
         <property name="characterEncoding" value="UTF-8" />
     </bean>
-
+    <!-- 注册拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 匹配所有路径 -->
+            <mvc:mapping path="/**" />
+            <!-- 排除登录页和静态资源 -->
+            <mvc:exclude-mapping path="/auth/**" />
+            <mvc:exclude-mapping path="/static/**" />
+            <mvc:exclude-mapping path="/css/**" />
+            <mvc:exclude-mapping path="/js/**" />
+            <!-- 引用拦截器 bean -->
+            <bean class="usst.web.interceptor.AuthorizationInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
     <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
     <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>
     <!-- 启用 Spring MVC -->

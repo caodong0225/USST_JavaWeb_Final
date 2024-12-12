@@ -10,6 +10,6 @@ import usst.web.entity.User;
 public interface IUserService {
     UserInfoDTO getUserById(Integer id);
     boolean isUserExist(String username);
-    boolean isCorrect(String username, String password);
+    UserInfoDTO isCorrect(String username, String password);
     boolean registerUser(User user);
 }

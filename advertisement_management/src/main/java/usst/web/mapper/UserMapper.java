@@ -12,8 +12,8 @@ import usst.web.entity.User;
  */
 public interface UserMapper {
     @Select("""
-            SELECT user.id,user.username,user_role.role_name FROM user
-            inner join user_role on user.id = user_role.user_id
+            SELECT user.id,user.username,ur.role_name FROM user
+            left join (select role_name,user_id from user_role) as ur on user.id = ur.user_id
             WHERE user.id = #{id}
             """)
     UserInfoDTO getUserById(Integer id);

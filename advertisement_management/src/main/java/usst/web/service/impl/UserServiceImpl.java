@@ -28,9 +28,13 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean isCorrect(String username, String password) {
+    public UserInfoDTO isCorrect(String username, String password) {
         User user = userMapper.selectUserByUsername(username);
-        return SafetyUtils.checkBCrypt(password, user.getPassword());
+        if(SafetyUtils.checkBCrypt(password, user.getPassword()))
+        {
+            return this.getUserById(user.getId());
+        }
+        return null;
     }
 
     @Override
