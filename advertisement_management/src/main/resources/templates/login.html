@@ -19,28 +19,13 @@
 
     <!-- Custom styles for this template-->
     <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
-
 </head>
 
 <body class="bg-gradient-primary">
-    <div
-            th:if="${message != null}"
-            id="liveToast"
-            class="toast align-items-center text-white bg-success border-0 show"
-            role="alert"
-            aria-live="assertive"
-            aria-atomic="true"
-            data-bs-autohide="true"
-            data-bs-delay="3000">
-        <div class="d-flex">
-            <div class="toast-body" th:text="${message}">
-                登录成功！
-            </div>
-        </div>
-    </div>
+    <!--居中，显示在最顶层-->
+    <div th:replace="toast.html :: toast"></div>
 
     <div class="container">
-
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
@@ -109,15 +94,6 @@
     <!-- Custom scripts for all pages-->
     <script src="../static/js/sb-admin-2.min.js"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const toastElement = document.getElementById("liveToast");
-            if (toastElement) {
-                const toast = new bootstrap.Toast(toastElement);
-                toast.show();
-            }
-        });
-    </script>
 </body>
 
 </html>
