@@ -16,4 +16,5 @@ public interface IUserService {
     User isCorrect(String username, String password);
     boolean registerUser(User user);
     List<UserGeneralDTO> getUsers();
+    boolean deleteUserById(Integer id);
 }

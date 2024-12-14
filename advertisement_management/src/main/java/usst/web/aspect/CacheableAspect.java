@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import usst.web.annotation.Cacheable;
 
@@ -23,9 +24,14 @@ public class CacheableAspect {
     @Around("@annotation(cacheable)")
     public Object handleCacheable(ProceedingJoinPoint joinPoint, Cacheable cacheable) throws Throwable {
         String key = cacheable.key();
-
+        Object[] args = joinPoint.getArgs();
         // 获取ServletContext对象
         ServletContext servletContext = request.getServletContext();
+        // 将方法参数放入上下文
+        int index = cacheable.index();
+        if(index >= 0){
+            key += args[index];
+        }
 
         // 检查缓存是否存在
         Object cachedValue = servletContext.getAttribute(key);

@@ -15,7 +15,7 @@ public class RoleServiceImpl implements IRoleService {
     @Resource
     private RoleMapper roleMapper;
     @Override
-    @Cacheable(key = "role::userId::#userId")
+    @Cacheable(key = "role::userId::",index = 0)
     public String getRoleNameByUserId(Integer userId) {
         return roleMapper.getRoleByUserId(userId);
     }

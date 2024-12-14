@@ -2,6 +2,7 @@ package usst.web.service.impl;
 
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import usst.web.annotation.CacheEvict;
 import usst.web.dto.UserGeneralDTO;
 import usst.web.dto.UserInfoDTO;
 import usst.web.entity.User;
@@ -49,5 +50,11 @@ public class UserServiceImpl implements IUserService {
     @Override
     public List<UserGeneralDTO> getUsers() {
         return userMapper.getUsers();
+    }
+
+    @Override
+    @CacheEvict(key = "role::userId::", index = 0)
+    public boolean deleteUserById(Integer id) {
+        return userMapper.deleteUserById(id);
     }
 }

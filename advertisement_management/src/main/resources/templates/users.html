@@ -14,8 +14,8 @@
     <!-- Custom fonts for this template -->
     <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../static/css/sb-admin-2.min.css" rel="stylesheet">
@@ -27,113 +27,118 @@
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+<!-- Page Wrapper -->
+<div id="wrapper">
 
-        <!-- Sidebar -->
-        <div th:replace="sidebar.html :: sidebar"></div>
+    <!-- Sidebar -->
+    <div th:replace="sidebar.html :: sidebar"></div>
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+        <!-- Main Content -->
+        <div id="content">
 
-                <!-- Topbar -->
-                <div th:replace="topbar.html :: topbar"></div>
+            <!-- Topbar -->
+            <div th:replace="topbar.html :: topbar"></div>
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">用户列表</h1>
-                    <p class="mb-4">你可以在这里进行用户的管理</p>
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">用户列表</h1>
+                <p class="mb-4">你可以在这里进行用户的管理</p>
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-<!--                        <div class="card-header py-3">-->
-<!--                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>-->
-<!--                        </div>-->
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>用户编号</th>
-                                            <th>用户名</th>
-                                            <th>创建时间</th>
-                                            <th>最近更改时间</th>
-                                            <th>用户角色</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <!-- 使用 th:each 遍历用户列表 -->
-                                    <tr th:each="user : ${userList}">
-                                        <td th:text="${user.id}"></td>   <!-- 用户编号 -->
-                                        <td th:text="${user.username}"></td>  <!-- 用户名 -->
-                                        <td th:text="${user.createdAt}"></td>  <!-- 创建时间 -->
-                                        <td th:text="${user.updatedAt}"></td>  <!-- 最近更改时间 -->
-                                        <td>
-                                            <!-- Dropdown -->
-                                            <div class="dropdown">
-                                                <button class="btn btn-primary btn-light btn-sm dropdown-toggle" type="button" id="roleSelectButton"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                        th:text="${user.roleName ? '站长'}">
-                                                >
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">广告主</a>
-                                                </div>
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <!--                        <div class="card-header py-3">-->
+                    <!--                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>-->
+                    <!--                        </div>-->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>用户编号</th>
+                                    <th>用户名</th>
+                                    <th>创建时间</th>
+                                    <th>最近更改时间</th>
+                                    <th>用户角色</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- 使用 th:each 遍历用户列表 -->
+                                <tr th:each="user : ${userList}">
+                                    <td th:text="${user.id}"></td>   <!-- 用户编号 -->
+                                    <td th:text="${user.username}"></td>  <!-- 用户名 -->
+                                    <td th:text="${user.createdAt}"></td>  <!-- 创建时间 -->
+                                    <td th:text="${user.updatedAt}"></td>  <!-- 最近更改时间 -->
+                                    <td>
+                                        <!-- Dropdown -->
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary btn-light btn-sm dropdown-toggle"
+                                                    type="button" id="roleSelectButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                    th:text="${user.roleName}"></button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a th:if="${user.roleName}" class="dropdown-item" href="#">站长</a>
+                                                <a th:if="${user.roleName!='advertisers'}" class="dropdown-item"
+                                                   href="#">广告主</a>
+                                                <a th:if="${user.roleName!='admin'}" class="dropdown-item"
+                                                   href="#">管理员</a>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <!-- Dropdown -->
-                                            <div class="dropdown">
-                                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    操作
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">编辑</a>
-                                                    <a class="dropdown-item text-danger" href="#">删除</a>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td th:if="${user.roleName=='admin'}">
+                                        <!-- Dropdown -->
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                操作
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">编辑</a>
+                                                <a class="dropdown-item text-danger" href="javascript:void(0);"
+                                                   onclick="deleteUser(${user.id})">删除</a>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
                 </div>
-                <!-- /.container-fluid -->
 
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; 上海理工大学Web开发大作业</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+            <!-- /.container-fluid -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; 上海理工大学Web开发大作业</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
 
     </div>
-    <!-- End of Page Wrapper -->
+    <!-- End of Content Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+</div>
+<!-- End of Page Wrapper -->
 
-    <!-- Logout Modal-->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
 <!--    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"-->
 <!--        aria-hidden="true">-->
 <!--        <div class="modal-dialog" role="document">-->
@@ -153,23 +158,43 @@
 <!--        </div>-->
 <!--    </div>-->
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../static/vendor/jquery/jquery.min.js"></script>
-    <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="../static/vendor/jquery/jquery.min.js"></script>
+<script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="../static/js/sb-admin-2.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="../static/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="../static/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="../static/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<!-- Page level plugins -->
+<script src="../static/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="../static/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="../static/js/demo/datatables-demo.js"></script>
-
+<!-- Page level custom scripts -->
+<script src="../static/js/demo/datatables-demo.js"></script>
+<script>
+    function deleteUser(userId) {
+        if (confirm('确定要删除此用户吗？')) {
+            fetch(`/user/${userId}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('删除成功');
+                        location.reload(); // 删除成功后刷新页面
+                    } else {
+                        response.text().then(msg => alert(`删除失败: ${msg}`));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('删除请求失败');
+                });
+        }
+    }
+</script>
 </body>
 
 </html>

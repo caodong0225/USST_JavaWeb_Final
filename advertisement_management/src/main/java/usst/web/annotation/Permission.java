@@ -4,13 +4,12 @@ import java.lang.annotation.*;
 
 /**
  * @author jyzxc
- * @since 2024-12-12
+ * @since 2024-12-14
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Cacheable {
-    // 缓存的 key
-    String key();
-    int index() default -1;
+public @interface Permission {
+    // 需要的权限
+    String role();
 }
