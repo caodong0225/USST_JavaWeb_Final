@@ -11,7 +11,7 @@ import usst.web.entity.UserRole;
  * @since 2024-12-11
  */
 public interface RoleMapper {
-    @Select("select * from user_role where user_id = #{userId}")
+    @Select("select user_role.role_name from user_role where user_id = #{userId}")
     String getRoleByUserId(Integer userId);
     @Insert("insert into user_role (role_name, user_id) values (#{roleName}, #{userId})")
     boolean insertRole(UserRole role);

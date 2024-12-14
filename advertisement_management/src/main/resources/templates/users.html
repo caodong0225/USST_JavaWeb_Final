@@ -68,23 +68,23 @@
                                 </thead>
                                 <tbody>
                                 <!-- 使用 th:each 遍历用户列表 -->
-                                <tr th:each="user : ${userList}">
-                                    <td th:text="${user.id}"></td>   <!-- 用户编号 -->
-                                    <td th:text="${user.username}"></td>  <!-- 用户名 -->
-                                    <td th:text="${user.createdAt}"></td>  <!-- 创建时间 -->
-                                    <td th:text="${user.updatedAt}"></td>  <!-- 最近更改时间 -->
+                                <tr th:each="users : ${userList}">
+                                    <td th:text="${users.id}"></td>   <!-- 用户编号 -->
+                                    <td th:text="${users.username}"></td>  <!-- 用户名 -->
+                                    <td th:text="${users.createdAt}"></td>  <!-- 创建时间 -->
+                                    <td th:text="${users.updatedAt}"></td>  <!-- 最近更改时间 -->
                                     <td>
                                         <!-- Dropdown -->
                                         <div class="dropdown">
                                             <button class="btn btn-primary btn-light btn-sm dropdown-toggle"
                                                     type="button" id="roleSelectButton"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                    th:text="${user.roleName}"></button>
+                                                    th:text="${users.roleName == 'advertisers' ? '广告主' : (users.roleName == 'admin' ? '管理员' : '站长')}"></button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a th:if="${user.roleName}" class="dropdown-item" href="#">站长</a>
-                                                <a th:if="${user.roleName!='advertisers'}" class="dropdown-item"
+                                                <a th:if="${users.roleName}" class="dropdown-item" href="#">站长</a>
+                                                <a th:if="${users.roleName!='advertisers'}" class="dropdown-item"
                                                    href="#">广告主</a>
-                                                <a th:if="${user.roleName!='admin'}" class="dropdown-item"
+                                                <a th:if="${users.roleName!='admin'}" class="dropdown-item"
                                                    href="#">管理员</a>
                                             </div>
                                         </div>
@@ -99,8 +99,8 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" href="#">编辑</a>
-                                                <a class="dropdown-item text-danger" href="javascript:void(0);"
-                                                   onclick="deleteUser(${user.id})">删除</a>
+                                                <a class="dropdown-item text-danger" href="#"
+                                                   th:onclick="'deleteUser(' + ${users.id} + ')'">删除</a>
                                             </div>
                                         </div>
                                     </td>
@@ -176,16 +176,17 @@
 <script src="../static/js/demo/datatables-demo.js"></script>
 <script>
     function deleteUser(userId) {
+        console.log('delete user:', userId)
         if (confirm('确定要删除此用户吗？')) {
             fetch(`/user/${userId}`, {
                 method: 'DELETE'
             })
-                .then(response => {
-                    if (response.ok) {
-                        alert('删除成功');
+                .then(async response => {
+                    response = JSON.parse(await response.text());
+                    if (response.code === 200) {
                         location.reload(); // 删除成功后刷新页面
                     } else {
-                        response.text().then(msg => alert(`删除失败: ${msg}`));
+                        alert(`删除失败: ${response.message}`);
                     }
                 })
                 .catch(error => {

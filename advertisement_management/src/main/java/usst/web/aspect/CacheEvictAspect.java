@@ -4,8 +4,8 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 import usst.web.annotation.CacheEvict;
 
@@ -21,8 +21,8 @@ public class CacheEvictAspect {
     @Resource
     private HttpServletRequest request;
 
-    @Before("@annotation(cacheEvict)")
-    public void handleCacheEvict(ProceedingJoinPoint joinPoint, CacheEvict cacheEvict) {
+    @Around("@annotation(cacheEvict)")
+    public Object handleCacheEvict(ProceedingJoinPoint joinPoint, CacheEvict cacheEvict) throws Throwable {
         // 获取注解中的 key
         String key = cacheEvict.key();
         int index = cacheEvict.index();
@@ -38,6 +38,8 @@ public class CacheEvictAspect {
         if (cachedValue != null) {
             servletContext.removeAttribute(key);
         }
+        // 执行目标方法
+        return joinPoint.proceed();
     }
 }
 
