@@ -13,7 +13,7 @@ CREATE TABLE `advertisement` (
                                  `ad_name` varchar(45) DEFAULT NULL,
                                  `ad_url` varchar(255) DEFAULT NULL,
                                  `ad_image` varchar(255) DEFAULT NULL,
-                                 `ad_create_time` timestamp(4) NULL DEFAULT NULL,
+                                 `ad_create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                  `ad_start_time` timestamp(4) NULL DEFAULT NULL,
                                  `ad_end_time` timestamp(4) NULL DEFAULT NULL,
                                  `ad_use` tinyint DEFAULT NULL,
