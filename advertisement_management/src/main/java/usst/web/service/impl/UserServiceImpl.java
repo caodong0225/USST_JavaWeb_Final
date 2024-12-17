@@ -81,4 +81,10 @@ public class UserServiceImpl implements IUserService {
     public boolean deleteUserRoleById(Integer id) {
         return roleMapper.deleteRoleByUserId(id);
     }
+
+    @Override
+    public boolean updatePasswordById(Integer id, String password) {
+        String hash = SafetyUtils.doBCrypt(password);
+        return userMapper.updatePasswordById(id, hash);
+    }
 }

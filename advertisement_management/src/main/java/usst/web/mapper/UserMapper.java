@@ -3,6 +3,7 @@ package usst.web.mapper;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import usst.web.dto.UserGeneralDTO;
 import usst.web.dto.UserInfoDTO;
 import usst.web.entity.User;
@@ -31,4 +32,9 @@ public interface UserMapper {
             left join (select role_name,user_id from user_role) as ur on user.id = ur.user_id
             """)
     List<UserGeneralDTO> getUsers();
+
+    @Update("""
+        update user set user.password = #{password} where id = #{id}
+    """)
+    boolean updatePasswordById(Integer id,String password);
 }

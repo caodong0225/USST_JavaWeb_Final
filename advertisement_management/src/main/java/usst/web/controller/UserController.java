@@ -1,13 +1,16 @@
 package usst.web.controller;
 
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import usst.web.annotation.Permission;
+import usst.web.dto.UpdatePasswordDTO;
 import usst.web.dto.UpdateUserRoleDTO;
 import usst.web.dto.UserGeneralDTO;
 import usst.web.dto.UserInfoDTO;
+import usst.web.entity.User;
 import usst.web.response.BaseDataResponse;
 import usst.web.response.BaseResponse;
 import usst.web.service.IUserService;
@@ -82,6 +85,35 @@ public class UserController {
             if (!userService.updateUserRoleById(id, role)) {
                 return new BaseResponse(400, "修改失败");
             }
+        }
+        return new BaseResponse(200, "修改成功");
+    }
+
+    @PutMapping(value = "/password/{id}", produces = "application/json")
+    @Permission(role = "admin")
+    @ResponseBody
+    public BaseResponse updatePasswordById(@PathVariable("id") Integer id,
+                                           @RequestBody UpdatePasswordDTO updatePasswordDTO) {
+        UserInfoDTO user = userService.getUserById(id);
+        if (user == null) {
+            return new BaseResponse(400, "用户不存在");
+        }
+        if("admin".equals(user.getRoleName())){
+            return new BaseResponse(400, "无法修改管理员用户的密码");
+        }
+        if (!userService.updatePasswordById(id, updatePasswordDTO.getPassword())) {
+            return new BaseResponse(400, "修改失败");
+        }
+        return new BaseResponse(200, "修改成功");
+    }
+
+    @PutMapping("/password/me")
+    @ResponseBody
+    public BaseResponse modifySelfPassword(@RequestBody UpdatePasswordDTO updatePasswordDTO,
+                                           HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if (!userService.updatePasswordById(user.getId(), updatePasswordDTO.getPassword())) {
+            return new BaseResponse(400, "修改失败");
         }
         return new BaseResponse(200, "修改成功");
     }

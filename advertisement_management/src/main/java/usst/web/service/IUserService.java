@@ -26,4 +26,6 @@ public interface IUserService {
     boolean updateUserRoleById(Integer id, String roleName);
 
     boolean deleteUserRoleById(Integer id);
+
+    boolean updatePasswordById(Integer id,String password);
 }
