@@ -80,10 +80,12 @@
                                                     type="button" id="roleSelectButton"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                     th:text="${users.roleName == 'advertisers' ? '广告主' : (users.roleName == 'admin' ? '管理员' : '站长')}"></button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" th:if="${user.roleName=='admin'}">
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                                 th:if="${user.roleName=='admin'}">
                                                 <a th:if="${users.roleName}" class="dropdown-item" href="#"
                                                    th:onclick="'updateUserRole(' + ${users.id} + ', 0)'">站长</a>
-                                                <a th:if="${users.roleName!='advertisers'}" class="dropdown-item" href="#"
+                                                <a th:if="${users.roleName!='advertisers'}" class="dropdown-item"
+                                                   href="#"
                                                    th:onclick="'updateUserRole(' + ${users.id} + ', 1)'">广告主</a>
                                                 <a th:if="${users.roleName!='admin'}" class="dropdown-item" href="#"
                                                    th:onclick="'updateUserRole(' + ${users.id} + ', 2)'">管理员</a>
@@ -99,7 +101,9 @@
                                                 操作
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">编辑</a>
+                                                <a class="dropdown-item" href="#"
+                                                   data-toggle="modal" data-target="#modifyPasswordModal"
+                                                   th:userId="${users.id}">编辑</a>
                                                 <a class="dropdown-item text-danger" href="#"
                                                    th:onclick="'deleteUser(' + ${users.id} + ')'">删除</a>
                                             </div>
@@ -139,25 +143,38 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<!--    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"-->
-<!--        aria-hidden="true">-->
-<!--        <div class="modal-dialog" role="document">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>-->
-<!--                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">-->
-<!--                        <span aria-hidden="true">×</span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>-->
-<!--                    <a class="btn btn-primary" href="login.html">Logout</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+<!--修改password model-->
+<div class="modal fade" id="modifyPasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passwordModalLabel">修改密码</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form class="password"
+                  onsubmit="changeOthersPassword(event)">
+                <div class="form-group">
+                    <input type="password"
+                           class="form-control form-control-user"
+                           name="password"
+                           id="password" aria-describedby="emailHelp"
+                           placeholder="请输入密码">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user"
+                           id="rePassword" placeholder="请确认密码">
+                </div>
+                <button type="submit" class="btn btn-primary btn-user btn-block">
+                    确定
+                </button>
+                <hr>
+            </form>
+        </div>
+    </div>
+</div>
 
 <!-- Bootstrap core JavaScript-->
 <script src="../static/vendor/jquery/jquery.min.js"></script>
@@ -176,6 +193,7 @@
 <!-- Page level custom scripts -->
 <script src="../static/js/demo/datatables-demo.js"></script>
 <script>
+    let userId;
     function deleteUser(userId) {
         console.log('delete user:', userId)
         if (confirm('确定要删除此用户吗？')) {
@@ -198,7 +216,7 @@
     }
 
     function updateUserRole(userId, index) {
-        const roleList = ['siteOwner','advertisers','admin'];
+        const roleList = ['siteOwner', 'advertisers', 'admin'];
         const userRole = roleList[index];
         fetch(`/user/role/${userId}`, {
             method: 'PUT',
@@ -220,6 +238,43 @@
                 alert('请求失败');
             });
     }
+
+    function changeOthersPassword(event) {
+        event.preventDefault()
+        const password = document.getElementById("password").value;
+        const rePassword = document.getElementById("rePassword").value;
+        if (password !== rePassword) {
+            alert("两次输入的密码不一致");
+        } else {
+            fetch(`/user/password/` + userId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({password: password}),
+            })
+                .then(async response => {
+                    response = JSON.parse(await response.text());
+                    if (response.code === 200) {
+                        alert("修改成功");
+                        location.reload(); // 删除成功后刷新页面
+                    } else {
+                        alert(`${response.message}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('请求失败');
+                });
+        }
+    }
+
+    $(document).ready(function () {
+        $('#modifyPasswordModal').on('shown.bs.modal', function (event) {
+            const user = event.relatedTarget;
+            userId = user.getAttribute('userId');
+        });
+    });
 </script>
 </body>
 

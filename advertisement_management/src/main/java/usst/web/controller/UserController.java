@@ -89,7 +89,7 @@ public class UserController {
         return new BaseResponse(200, "修改成功");
     }
 
-    @PutMapping(value = "/password/{id}", produces = "application/json")
+    @PostMapping(value = "/password/{id}", produces = "application/json")
     @Permission(role = "admin")
     @ResponseBody
     public BaseResponse updatePasswordById(@PathVariable("id") Integer id,
@@ -107,7 +107,7 @@ public class UserController {
         return new BaseResponse(200, "修改成功");
     }
 
-    @PutMapping("/password/me")
+    @PostMapping("/password/me")
     @ResponseBody
     public BaseResponse modifySelfPassword(@RequestBody UpdatePasswordDTO updatePasswordDTO,
                                            HttpSession session){

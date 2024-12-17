@@ -97,7 +97,7 @@ public class AuthController {
         // 登录成功后重定向到用户详情页面
         return "redirect:/home/index";
     }
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpSession session) {
         // 使 Session 失效
         session.invalidate();
