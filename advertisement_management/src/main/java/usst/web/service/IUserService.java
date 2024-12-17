@@ -12,9 +12,18 @@ import java.util.List;
  */
 public interface IUserService {
     UserInfoDTO getUserById(Integer id);
+
     boolean isUserExist(String username);
+
     User isCorrect(String username, String password);
+
     boolean registerUser(User user);
+
     List<UserGeneralDTO> getUsers();
+
     boolean deleteUserById(Integer id);
+
+    boolean updateUserRoleById(Integer id, String roleName);
+
+    boolean deleteUserRoleById(Integer id);
 }

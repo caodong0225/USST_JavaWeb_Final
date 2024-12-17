@@ -80,12 +80,13 @@
                                                     type="button" id="roleSelectButton"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                     th:text="${users.roleName == 'advertisers' ? '广告主' : (users.roleName == 'admin' ? '管理员' : '站长')}"></button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a th:if="${users.roleName}" class="dropdown-item" href="#">站长</a>
-                                                <a th:if="${users.roleName!='advertisers'}" class="dropdown-item"
-                                                   href="#">广告主</a>
-                                                <a th:if="${users.roleName!='admin'}" class="dropdown-item"
-                                                   href="#">管理员</a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" th:if="${user.roleName=='admin'}">
+                                                <a th:if="${users.roleName}" class="dropdown-item" href="#"
+                                                   th:onclick="'updateUserRole(' + ${users.id} + ', 0)'">站长</a>
+                                                <a th:if="${users.roleName!='advertisers'}" class="dropdown-item" href="#"
+                                                   th:onclick="'updateUserRole(' + ${users.id} + ', 1)'">广告主</a>
+                                                <a th:if="${users.roleName!='admin'}" class="dropdown-item" href="#"
+                                                   th:onclick="'updateUserRole(' + ${users.id} + ', 2)'">管理员</a>
                                             </div>
                                         </div>
                                     </td>
@@ -194,6 +195,30 @@
                     alert('删除请求失败');
                 });
         }
+    }
+
+    function updateUserRole(userId, index) {
+        const roleList = ['siteOwner','advertisers','admin'];
+        const userRole = roleList[index];
+        fetch(`/user/role/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({roleName: userRole}),
+        })
+            .then(async response => {
+                response = JSON.parse(await response.text());
+                if (response.code === 200) {
+                    location.reload(); // 删除成功后刷新页面
+                } else {
+                    alert(`${response.message}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('请求失败');
+            });
     }
 </script>
 </body>
