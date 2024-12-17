@@ -8,7 +8,7 @@ import usst.web.service.AdvertisementService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/advertisements")
+@RequestMapping("/advertisements")
 public class AdvertisementController {
 
     @Autowired
@@ -16,6 +16,9 @@ public class AdvertisementController {
 
     @PostMapping("/create")
     public void createAdvertisement(@RequestBody Advertisement advertisement) {
+//        Advertisement advertisement = new Advertisement();
+//        advertisement.setAdName(adTitle);
+//        advertisement.setAdUrl(adUrl);
         advertisementService.createAdvertisement(advertisement);
     }
 

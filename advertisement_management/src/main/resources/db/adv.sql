@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS `advertisement`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `advertisement` (
-                                 `ad_id` int NOT NULL,
+                                 `ad_id` int NOT NULL AUTO_INCREMENT,
                                  `ad_name` varchar(45) DEFAULT NULL,
                                  `ad_url` varchar(255) DEFAULT NULL,
                                  `ad_image` varchar(255) DEFAULT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE `advertisement` (
                                  `ad_use` tinyint DEFAULT NULL,
                                  `ad_feature` varchar(255) DEFAULT NULL,
                                  PRIMARY KEY (`ad_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 -- ----------------------------

@@ -15,4 +15,9 @@ public class HomeController {
     public String index() {
         return "index";
     }
+
+    @GetMapping("/advertisements")
+    public String advertisements() {
+        return "advertisements";
+    }
 }

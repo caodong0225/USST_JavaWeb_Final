@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const adUrl = e.target.adUrl.value;
 
         const advertisement = {
-            title: adTitle,
+            adName: adTitle,
             adUrl: adUrl
         };
 
@@ -20,21 +20,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function fetchAllAdvertisements() {
-        fetch('/api/advertisements/all')
+        fetch('/advertisements/all')
             .then(response => response.json())
             .then(data => {
                 adList.innerHTML = '';
                 data.forEach(ad => {
                     const li = document.createElement('li');
-                    li.textContent = ad.title;
-                    li.addEventListener('click', () => fetchAdvertisementDetails(ad.id));
+                    li.textContent = ad.adName || 'Untitled'; // 使用 ad.adName 或者提供默认值
+                    li.addEventListener('click', () => fetchAdvertisementDetails(ad.adId)); // 确认这里使用的是 adId
                     adList.appendChild(li);
                 });
-            });
+            })
+            .catch(error => console.error('Error fetching advertisements:', error));
     }
 
     function createAdvertisement(advertisement) {
-        fetch('/api/advertisements/create', {
+        fetch('/advertisements/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -45,13 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function fetchAdvertisementDetails(adId) {
-        fetch(`/api/advertisements/${adId}`)
+        fetch(`/advertisements/${adId}`)
             .then(response => response.json())
             .then(data => {
                 adDetails.innerHTML = `
-                    <p><strong>Title:</strong> ${data.title}</p>
-                    <p><strong>URL:</strong> <a href="${data.adUrl}" target="_blank">${data.adUrl}</a></p>
-                `;
-            });
+                <p><strong>Title:</strong> ${data.adName || 'Untitled'}</p>
+                <p><strong>URL:</strong> <a href="${data.adUrl}" target="_blank">${data.adUrl || 'No URL provided'}</a></p>
+            `;
+            })
+            .catch(error => console.error('Error fetching advertisement details:', error));
     }
 });
