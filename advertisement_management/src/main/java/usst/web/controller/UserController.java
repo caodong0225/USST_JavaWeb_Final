@@ -6,10 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import usst.web.annotation.Permission;
-import usst.web.dto.UpdatePasswordDTO;
-import usst.web.dto.UpdateUserRoleDTO;
-import usst.web.dto.UserGeneralDTO;
-import usst.web.dto.UserInfoDTO;
+import usst.web.dto.*;
 import usst.web.entity.User;
 import usst.web.response.BaseDataResponse;
 import usst.web.response.BaseResponse;
@@ -116,5 +113,21 @@ public class UserController {
             return new BaseResponse(400, "修改失败");
         }
         return new BaseResponse(200, "修改成功");
+    }
+
+    @PostMapping("/add")
+    @Permission(role = "admin")
+    @ResponseBody
+    public BaseResponse addUser(@RequestBody CreateUserDTO createUserDTO){
+        User user = new User();
+        user.setUsername(createUserDTO.getUsername());
+        user.setPassword(createUserDTO.getPassword());
+        if(userService.isUserExist(user.getUsername())){
+            return new BaseResponse(400, "用户名已存在");
+        }
+        if(!userService.registerUser(user)){
+            return new BaseResponse(400, "添加失败");
+        }
+        return new BaseResponse(200, "添加成功");
     }
 }

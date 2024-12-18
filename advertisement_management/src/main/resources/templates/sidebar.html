@@ -29,25 +29,12 @@
 <!--      Interface-->
 <!--    </div>-->
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-         aria-controls="collapseTwo"
-      >
-        <i class="fas fa-fw fa-cog"></i>
-        <span>用户管理</span>
-      </a>
-      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-           data-parent="#accordionSidebar"
-           th:classappend="${currentPath == '/user/list' || currentPath == '/user/add' || currentPath == '/user/edit'} ? 'show'">
-        <div class="bg-white py-2 collapse-inner rounded">
-<!--          <h6 class="collapse-header"></h6>-->
-          <a class="collapse-item" th:href="@{/user/list}" th:classappend="${currentPath == '/user/list'} ? 'active'">用户列表</a>
-          <a class="collapse-item" th:href="@{/user/add}" th:classappend="${currentPath == '/user/add'} ? 'active'">添加用户</a>
-          <a class="collapse-item" th:href="@{/user/edit}" th:classappend="${currentPath == '/user/edit'} ? 'active'">编辑用户</a>
-        </div>
-      </div>
-    </li>
+
+  <li class="nav-item" th:classappend="${currentPath == '/user/list'} ? 'active'">
+      <a class="nav-link" th:href="@{/user/list}">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>用户管理</span></a>
+  </li>
 
 <!--    &lt;!&ndash; Nav Item - Utilities Collapse Menu &ndash;&gt;-->
 <!--    <li class="nav-item">-->

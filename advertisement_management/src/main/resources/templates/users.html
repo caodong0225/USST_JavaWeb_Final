@@ -45,9 +45,13 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading -->
                 <h1 class="h3 mb-2 text-gray-800">用户列表</h1>
-                <p class="mb-4">你可以在这里进行用户的管理</p>
+                <!-- Page Heading -->
+                <div class="d-flex flex-row flex-wrap">
+                    <p class="mb-4">你可以在这里进行用户的管理</p>
+                    <button class="btn btn-primary btn-user ml-sm-auto mb-4" data-toggle="modal" data-target="#addUser"
+                            th:if="${user.roleName=='admin'}">新建用户</button>
+                </div>
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
@@ -176,6 +180,39 @@
     </div>
 </div>
 
+<!--修改addUser model-->
+<div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">新建用户</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form class="user"
+                  onsubmit="createUser(event)">
+                <div class="form-group">
+                    <input
+                            class="form-control form-control-user"
+                            name="username"
+                            id="exampleInputEmail" aria-describedby="emailHelp"
+                            placeholder="请输入用户名">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user"
+                           name = "password"
+                           id="exampleInputPassword" placeholder="请输入用户密码">
+                </div>
+                <button type="submit" class="btn btn-primary btn-user btn-block">
+                    创建用户
+                </button>
+                <hr>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="../static/vendor/jquery/jquery.min.js"></script>
 <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -267,6 +304,31 @@
                     alert('请求失败');
                 });
         }
+    }
+
+    function createUser(event) {
+        event.preventDefault()
+        const username = document.getElementById("exampleInputEmail").value;
+        const password = document.getElementById("exampleInputPassword").value;
+        fetch(`/user/add`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username: username, password: password}),
+        })
+            .then(async response => {
+                response = JSON.parse(await response.text());
+                if (response.code === 200) {
+                    location.reload(); // 删除成功后刷新页面
+                } else {
+                    alert(`${response.message}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('请求失败');
+            });
     }
 
     $(document).ready(function () {
