@@ -8,16 +8,25 @@ document.addEventListener('DOMContentLoaded', () => {
     createAdForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const adTitle = e.target.adTitle.value;
-        const adUrl = e.target.adUrl.value;
+        const adImage = e.target.adImage.files[0];
+        const adFeature = e.target.adFeature.value;
 
-        const advertisement = {
-            adName: adTitle,
-            adUrl: adUrl
-        };
+        const formData = new FormData();
+        formData.append('adName', adTitle);
+        formData.append('adImage', adImage);
+        formData.append('adFeature', adFeature);
 
-        createAdvertisement(advertisement);
+        createAdvertisement(formData);
         e.target.reset();
     });
+
+    function createAdvertisement(advertisement) {
+        fetch('/advertisements/create', {
+            method: 'POST',
+            body: advertisement
+        })
+            .then(() => fetchAllAdvertisements());
+    }
 
     function fetchAllAdvertisements() {
         fetch('/advertisements/all')
@@ -34,16 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error fetching advertisements:', error));
     }
 
-    function createAdvertisement(advertisement) {
-        fetch('/advertisements/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(advertisement)
-        })
-            .then(() => fetchAllAdvertisements());
-    }
 
     function fetchAdvertisementDetails(adId) {
         fetch(`/advertisements/${adId}`)
@@ -51,9 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 adDetails.innerHTML = `
                 <p><strong>Title:</strong> ${data.adName || 'Untitled'}</p>
-                <p><strong>URL:</strong> <a href="${data.adUrl}" target="_blank">${data.adUrl || 'No URL provided'}</a></p>
+                <p><strong>Feature:</strong> ${data.adFeature || 'No feature provided'}</p>
+                <p><strong>Image:</strong></p>
+                <img src="${data.adImageUrl || 'no-image.jpg'}" alt="Advertisement Image">
             `;
             })
             .catch(error => console.error('Error fetching advertisement details:', error));
     }
+
 });

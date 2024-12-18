@@ -1,25 +1,70 @@
 package usst.web.controller;
 
+import jakarta.servlet.annotation.MultipartConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import usst.web.entity.Advertisement;
 import usst.web.service.AdvertisementService;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
+@MultipartConfig
 @RequestMapping("/advertisements")
 public class AdvertisementController {
 
     @Autowired
     private AdvertisementService advertisementService;
 
+    @Value("${upload.dir}")
+    private String UPLOAD_DIR;
+
     @PostMapping("/create")
-    public void createAdvertisement(@RequestBody Advertisement advertisement) {
-//        Advertisement advertisement = new Advertisement();
-//        advertisement.setAdName(adTitle);
-//        advertisement.setAdUrl(adUrl);
+    public void createAdvertisement(@RequestParam("adName") String adName,
+                                    @RequestParam("adImage") MultipartFile adImage,
+                                    @RequestParam("adFeature") String adFeature) throws IOException {
+        // 保存文件
+        String fileName = UUID.randomUUID().toString() + "-" + adImage.getOriginalFilename();
+        String filePath = UPLOAD_DIR + fileName;
+        adImage.transferTo(Paths.get(filePath));
+
+        // 创建广告对象
+        Advertisement advertisement = new Advertisement();
+        advertisement.setAdName(adName);
+        advertisement.setAdImageUrl("/advertisements/images/" + fileName); // 设置图片的URL
+        advertisement.setAdFeature(adFeature);
+
+        // 保存到数据库
         advertisementService.createAdvertisement(advertisement);
+    }
+
+    @GetMapping("/images/{fileName}")
+    public ResponseEntity<Resource> getImage(@PathVariable String fileName) {
+        Path filePath = Paths.get(UPLOAD_DIR).resolve(fileName).normalize();
+        Resource resource;
+        try {
+            resource = new UrlResource(filePath.toUri());
+            if (resource.exists()) {
+                return ResponseEntity.ok()
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(resource);
+            } else {
+                throw new RuntimeException("File not found " + fileName);
+            }
+        } catch (MalformedURLException ex) {
+            throw new RuntimeException("File not found " + fileName, ex);
+        }
     }
 
     @PutMapping("/update")

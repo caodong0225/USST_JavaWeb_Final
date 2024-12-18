@@ -11,9 +11,10 @@
   <h1>Advertisement Management</h1>
 
   <h2>Create Advertisement</h2>
-  <form id="createAdForm">
-    <input type="text" id="adTitle" placeholder="Title" required>
-    <input type="text" id="adUrl" placeholder="URL" required>
+  <form id="createAdForm" enctype="multipart/form-data">
+    <input type="text" id="adTitle" name="adName" placeholder="Title" required>
+    <input type="file" id="adImage" name="adImage" accept="image/*" required>
+    <input type="text" id="adFeature" name="adFeature" placeholder="Feature" required>
     <button type="submit">Create</button>
   </form>
 

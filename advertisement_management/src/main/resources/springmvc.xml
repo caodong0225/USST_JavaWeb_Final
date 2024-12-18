@@ -61,6 +61,11 @@
         <property name="basePackage" value="usst.web.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
+    <bean id="commonsMultipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+
+    <!-- 加载config.properties文件 -->
+    <context:property-placeholder location="classpath:config.properties" />
+
     <!-- 配置静态资源 -->
     <mvc:resources mapping="/static/**" location="classpath:/static/" />
 </beans>

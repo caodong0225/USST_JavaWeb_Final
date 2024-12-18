@@ -2,7 +2,13 @@
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
-<web-app>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                      https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0"
+         metadata-complete="true">
+
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
     <servlet-name>dispatcherServlet</servlet-name>
@@ -12,6 +18,16 @@
       <param-value>classpath:springmvc.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
+    <!--       MultipartFile核心配置     -->
+    <multipart-config>
+      <!--         上传文件最大多少   -->
+      <max-file-size>10485760</max-file-size>
+      <!--         最大请求大小   -->
+      <max-request-size>10485760</max-request-size>
+      <!--         多大以上的文件可以上传   -->
+      <file-size-threshold>0</file-size-threshold>
+    </multipart-config>
+
   </servlet>
   <servlet-mapping>
     <servlet-name>dispatcherServlet</servlet-name>
