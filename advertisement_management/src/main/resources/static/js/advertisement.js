@@ -8,13 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
     createAdForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const adTitle = e.target.adTitle.value;
-        const adImage = e.target.adImage.files[0];
+        const adImages = e.target.adImage.files;
         const adFeature = e.target.adFeature.value;
 
         const formData = new FormData();
         formData.append('adName', adTitle);
-        formData.append('adImage', adImage);
         formData.append('adFeature', adFeature);
+
+        // 遍历并添加所有图片文件
+        for (let i = 0; i < adImages.length; i++) {
+            formData.append('adImages', adImages[i]);
+        }
 
         createAdvertisement(formData);
         e.target.reset();
@@ -25,7 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
             method: 'POST',
             body: advertisement
         })
-            .then(() => fetchAllAdvertisements());
+            .then(() => fetchAllAdvertisements())
+            .catch(error => console.error('Error creating advertisement:', error));
     }
 
     function fetchAllAdvertisements() {
@@ -35,27 +40,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 adList.innerHTML = '';
                 data.forEach(ad => {
                     const li = document.createElement('li');
-                    li.textContent = ad.adName || 'Untitled'; // 使用 ad.adName 或者提供默认值
-                    li.addEventListener('click', () => fetchAdvertisementDetails(ad.adId)); // 确认这里使用的是 adId
+                    li.textContent = ad.adName || 'Untitled';
+                    li.addEventListener('click', () => fetchAdvertisementDetails(ad.adId));
                     adList.appendChild(li);
                 });
             })
             .catch(error => console.error('Error fetching advertisements:', error));
     }
 
-
     function fetchAdvertisementDetails(adId) {
         fetch(`/advertisements/${adId}`)
             .then(response => response.json())
             .then(data => {
+                // 解析图片URL的JSON字符串
+                const imageUrls = JSON.parse(data.adImageUrl);
+
                 adDetails.innerHTML = `
                 <p><strong>Title:</strong> ${data.adName || 'Untitled'}</p>
                 <p><strong>Feature:</strong> ${data.adFeature || 'No feature provided'}</p>
-                <p><strong>Image:</strong></p>
-                <img src="${data.adImageUrl || 'no-image.jpg'}" alt="Advertisement Image">
+                <p><strong>Images:</strong></p>
             `;
+
+                // 遍历所有图片URL，并为每个URL创建一个img元素
+                imageUrls.forEach(imageUrl => {
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    img.alt = 'Advertisement Image';
+                    adDetails.appendChild(img);
+                });
             })
             .catch(error => console.error('Error fetching advertisement details:', error));
     }
-
 });

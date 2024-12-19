@@ -1,5 +1,6 @@
 package usst.web.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.annotation.MultipartConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,17 +34,31 @@ public class AdvertisementController {
 
     @PostMapping("/create")
     public void createAdvertisement(@RequestParam("adName") String adName,
-                                    @RequestParam("adImage") MultipartFile adImage,
+                                    @RequestParam("adImages") MultipartFile[] adImages,
                                     @RequestParam("adFeature") String adFeature) throws IOException {
-        // 保存文件
-        String fileName = UUID.randomUUID().toString() + "-" + adImage.getOriginalFilename();
-        String filePath = UPLOAD_DIR + fileName;
-        adImage.transferTo(Paths.get(filePath));
+        List<String> imageUrls = new ArrayList<>();
+
+        // 保存文件并记录URL
+        for (MultipartFile adImage : adImages) {
+            if (!adImage.isEmpty()) {
+                String fileName = UUID.randomUUID().toString() + "-" + adImage.getOriginalFilename();
+                String filePath = UPLOAD_DIR + fileName;
+                adImage.transferTo(Paths.get(filePath));
+                imageUrls.add("/advertisements/images/" + fileName);
+            }
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonImageUrls = objectMapper.writeValueAsString(imageUrls);
+        String jsonKeywords = objectMapper.writeValueAsString(new ArrayList<>()); // 假设初始关键词为空列表
+        String jsonPlacementLocation = objectMapper.writeValueAsString(new ArrayList<>()); // 假设初始投放位置为空列表
 
         // 创建广告对象
         Advertisement advertisement = new Advertisement();
         advertisement.setAdName(adName);
-        advertisement.setAdImageUrl("/advertisements/images/" + fileName); // 设置图片的URL
+        advertisement.setAdImageUrl(jsonImageUrls); // 设置JSON字符串
+        advertisement.setKeywords(jsonKeywords);     // 设置JSON字符串
+        advertisement.setPlacementLocation(jsonPlacementLocation); // 设置JSON字符串
         advertisement.setAdFeature(adFeature);
 
         // 保存到数据库
