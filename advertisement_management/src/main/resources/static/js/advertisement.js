@@ -68,6 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     img.alt = 'Advertisement Image';
                     adDetails.appendChild(img);
                 });
+
+                // 添加跳转到广告详细页面的链接
+                const viewDetailsLink = document.createElement('a');
+                viewDetailsLink.href = `/ad/${adId}`;
+                viewDetailsLink.textContent = 'View Details';
+                adDetails.appendChild(viewDetailsLink);
             })
             .catch(error => console.error('Error fetching advertisement details:', error));
     }

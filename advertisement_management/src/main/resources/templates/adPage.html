@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${ad.adName}">Default Title</title>
+</head>
+<body>
+<h1 th:text="${ad.adName}">Default Heading</h1>
+<p th:text="${ad.adFeature}">Default Feature Description</p>
+<div>
+    <h2>Images:</h2>
+    <div th:each="imageUrl : ${imageUrls}">
+        <img th:src="${imageUrl}" alt="Advertisement Image">
+    </div>
+</div>
+</body>
+</html>
