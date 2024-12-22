@@ -59,6 +59,20 @@ CREATE TABLE `advertisement` (
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+
+-- ----------------------------
+-- Table structure for article
+-- ----------------------------
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE `article` (
+                           `id` int(11) NOT NULL AUTO_INCREMENT,
+                           `title` varchar(255) NOT NULL,
+                           `author` varchar(255) NOT NULL,
+                           `content` longtext NOT NULL,
+                           PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
 --
 -- Table structure for table `user`
 --

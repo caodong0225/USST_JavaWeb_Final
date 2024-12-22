@@ -20,4 +20,14 @@ public class HomeController {
     public String advertisements() {
         return "advertisements";
     }
+
+    @GetMapping("/article")
+    public String articles() {
+        return "article";
+    }
+
+    @GetMapping("/markdown")
+    public String markdown() {
+        return "edit";
+    }
 }

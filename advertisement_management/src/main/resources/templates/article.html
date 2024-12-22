@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>文章</title>
+    <link rel="stylesheet" href="/static/css/examples/style.css" />
+    <link rel="stylesheet" href="/static/css/editormd.css" />
+    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+
+<div id="layout">
+    <header>
+        <h1 th:text="${article.title}"></h1>
+        <h2 th:text="${article.author}"></h2>
+    </header>
+    <div id="test-editormd">
+                <textarea style="display:none;" th:text="${article.content}"></textarea>
+    </div>
+</div>
+
+
+<script src="../static/js/examples/jquery.min.js"></script>
+<script src="../static/lib/marked.min.js"></script>
+<script src="../static/lib/prettify.min.js"></script>
+<script src="../static/lib/raphael.min.js"></script>
+<script src="../static/lib/underscore.min.js"></script>
+<script src="../static/lib/sequence-diagram.min.js"></script>
+<script src="../static/lib/flowchart.min.js"></script>
+<script src="../static/lib/jquery.flowchart.min.js"></script>
+<script src="../static/js/editormd.min.js"></script>
+<script type="text/javascript">
+
+    var testEditor;
+
+    $(function () {
+        testEditor = editormd.markdownToHTML("test-editormd", {
+            width: "90%",
+            height: 700,
+            path: "../lib/",
+            preview: true,
+            watch: true,
+            editor: false,
+        })
+    })
+
+</script>
+</body>
+</html>
