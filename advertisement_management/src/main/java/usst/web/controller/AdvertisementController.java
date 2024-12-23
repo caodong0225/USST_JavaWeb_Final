@@ -33,7 +33,7 @@ public class AdvertisementController {
     private String UPLOAD_DIR;
 
     @PostMapping("/create")
-    public void createAdvertisement(@RequestParam("adName") String adName,
+    public ResponseEntity<Integer> createAdvertisement(@RequestParam("adName") String adName,
                                     @RequestParam("adImages") MultipartFile[] adImages,
                                     @RequestParam("adFeature") String adFeature) throws IOException {
         List<String> imageUrls = new ArrayList<>();
@@ -63,6 +63,9 @@ public class AdvertisementController {
 
         // 保存到数据库
         advertisementService.createAdvertisement(advertisement);
+
+        int adId = advertisement.getAdId();
+        return ResponseEntity.ok(adId);
     }
 
     @GetMapping("/images/{fileName}")

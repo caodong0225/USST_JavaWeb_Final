@@ -10,8 +10,15 @@
 <body>
 <div id="layout">
     <header>
-        <h1>Simple example</h1>
+        <h1>广告创建</h1>
     </header>
+    <!-- Advertisement Form -->
+    <form id="createAdForm" name="createAdForm" enctype="multipart/form-data">
+        <input type="text" id="adTitle" name="adName" placeholder="Ad Title" required><br>
+        <input type="file" id="adImage" name="adImages" accept="image/*" multiple required><br>
+        <input type="text" id="adFeature" name="adFeature" placeholder="Feature" required>
+    </form>
+
     <form name="mdEditorForm">
         标题:<input type="text" name="title"><br>
         作者:<input type="text" name="author">
@@ -19,6 +26,8 @@
             <textarea style="display:none;" name="content"></textarea>
         </div>
     </form>
+    <!-- Submit Button -->
+    <button id="submitAll">Submit All</button>
 
 </div>
 <script src="../static/js/examples/jquery.min.js"></script>
@@ -45,9 +54,41 @@
 
             toolbarHandlers : {
                 publish: function (cm, icon, cursor, selection) {
-                    mdEditorForm.method = "post";
-                    mdEditorForm.action = "/article/publish";//提交至服务器的路径
-                    mdEditorForm.submit();
+                    const createAdForm = document.getElementById('createAdForm');
+                    event.preventDefault();
+
+                    const adTitle = createAdForm.adTitle.value;
+                    const adImages = createAdForm.adImage.files;
+                    const adFeature = createAdForm.adFeature.value;
+
+                    const formData = new FormData();
+                    formData.append('adName', adTitle);
+                    formData.append('adFeature', adFeature);
+
+                    for (let i = 0; i < adImages.length; i++) {
+                        formData.append('adImages', adImages[i]);
+                    }
+
+                    fetch('/advertisements/create', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => response.json())  // 将响应解析为 JSON
+                        .then(adId => {
+                            mdEditorForm.method = "post";
+                            mdEditorForm.action = "/article/publish";
+
+                            const hiddenInput = document.createElement('input');
+                            hiddenInput.setAttribute('type', 'hidden');
+                            hiddenInput.setAttribute('name', 'ad_id');
+                            hiddenInput.setAttribute('value', adId);
+                            mdEditorForm.appendChild(hiddenInput);
+
+                            mdEditorForm.submit();
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
                 }
             }
         });

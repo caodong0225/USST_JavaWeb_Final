@@ -44,7 +44,7 @@ CREATE TABLE `advertisement` (
   `conversion_rate` double DEFAULT NULL,
   `revenue` double DEFAULT NULL,
   `last_visit_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `advertiser_id` varchar(255) DEFAULT NULL,
+  `advertiser_id` int DEFAULT NULL,
   `placement_location` json DEFAULT NULL,
   `target_audience` varchar(255) DEFAULT NULL,
   `impression_count` int DEFAULT NULL,
@@ -55,23 +55,30 @@ CREATE TABLE `advertisement` (
   `ad_create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `keywords` json DEFAULT NULL,
   `ad_category_id` int DEFAULT NULL,
-  PRIMARY KEY (`ad_id`)
+  PRIMARY KEY (`ad_id`),
+  KEY `fk_advertisement_user` (`advertiser_id`),
+  CONSTRAINT `fk_advertisement_user` FOREIGN KEY (`advertiser_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `article`
+--
 
--- ----------------------------
--- Table structure for article
--- ----------------------------
 DROP TABLE IF EXISTS `article`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `article` (
-                           `id` int(11) NOT NULL AUTO_INCREMENT,
-                           `title` varchar(255) NOT NULL,
-                           `author` varchar(255) NOT NULL,
-                           `content` longtext NOT NULL,
-                           PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ad_id` int DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `author` varchar(255) NOT NULL,
+  `content` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_article_advertisement` (`ad_id`),
+  CONSTRAINT `fk_article_advertisement` FOREIGN KEY (`ad_id`) REFERENCES `advertisement` (`ad_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `user`
@@ -88,7 +95,7 @@ CREATE TABLE `user` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `user_pk2` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10003 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=10004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,4 +124,4 @@ CREATE TABLE `user_role` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-19 23:44:19
+-- Dump completed on 2024-12-23 16:33:55

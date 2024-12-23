@@ -5,7 +5,7 @@ import usst.web.pojo.Article;
 
 public interface ArticleMapper {
 
-    @Insert("INSERT INTO article(title, author, content) VALUES(#{title}, #{author}, #{content})")
+    @Insert("INSERT INTO article(ad_id, title, author, content) VALUES(#{ad_id}, #{title}, #{author}, #{content})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insertArticle(Article article);
 

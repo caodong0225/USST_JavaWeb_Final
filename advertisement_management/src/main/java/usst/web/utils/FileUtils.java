@@ -1,5 +1,6 @@
 package usst.web.utils;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -11,7 +12,8 @@ import java.util.UUID;
  */
 public class FileUtils {
 
-    private static final String prePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
+    // private static final String prePath = new File(System.getProperty("user.dir"), "src/main/webapp/upload/").getAbsolutePath();
+    private static final String prePath = "C:\\Users\\tianqianjia\\Desktop\\USST_JavaWeb_ADTool\\advertisement_management\\src\\main\\resources\\uploads\\";
 
     /**
      * 上传文件
@@ -29,7 +31,7 @@ public class FileUtils {
         assert originFileName != null;
         String suffix = originFileName.substring(originFileName.lastIndexOf('.') + 1);
         String path = prePath + uid + "." + suffix;
-        String returnPath = "/upload/" + uid + "." + suffix;
+        String returnPath = "/advertisements/images/" + uid + "." + suffix;
         File newFile = new File(path);
         if(newFile.getParentFile() != null && !newFile.getParentFile().exists()) {
             System.out.println("创建目录ing");

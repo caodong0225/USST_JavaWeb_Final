@@ -95,7 +95,7 @@ public class AuthController {
         // 将用户信息写入 Session
         session.setAttribute("user", user);
         // 登录成功后重定向到用户详情页面
-        return "redirect:/home/markdown";
+        return "redirect:/home/index";
     }
     @GetMapping("/logout")
     public String logout(HttpSession session) {
