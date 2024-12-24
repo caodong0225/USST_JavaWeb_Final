@@ -2,42 +2,97 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
-    <title>Simple example - Editor.md examples</title>
-    <link rel="stylesheet" href="/static/css/examples/style.css" />
+    <title>广告创建</title>
+    <!-- Bootstrap CSS -->
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template -->
+    <link href="../static/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Editor.md CSS -->
     <link rel="stylesheet" href="/static/css/editormd.css" />
     <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
 </head>
-<body>
-<div id="layout">
-    <header>
-        <h1>广告创建</h1>
-    </header>
-    <!-- Advertisement Form -->
-    <form id="createAdForm" name="createAdForm" enctype="multipart/form-data">
-        <input type="text" id="adTitle" name="adName" placeholder="Ad Title" required><br>
-        <input type="file" id="adImage" name="adImages" accept="image/*" multiple required><br>
-        <input type="text" id="adFeature" name="adFeature" placeholder="Feature" required>
-    </form>
+<body id="page-top">
 
-    <form id="mdEditorForm" name="mdEditorForm">
-        标题:<input type="text" id="title" name="title"><br>
-        作者:<input type="text" id="author" name="author">
-        <div id="test-editormd">
-            <textarea style="display:none;" id="content" name="content"></textarea>
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="main-content">
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">广告创建</h1>
+
+                <!-- Advertisement Form -->
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <form id="createAdForm" name="createAdForm" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="adTitle">广告标题</label>
+                                <input type="text" class="form-control" id="adTitle" name="adName" placeholder="输入广告标题" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="adImage">上传图片</label>
+                                <input type="file" class="form-control-file" id="adImage" name="adImages" accept="image/*" multiple required>
+                            </div>
+                            <div class="form-group">
+                                <label for="adFeature">特色描述</label>
+                                <input type="text" class="form-control" id="adFeature" name="adFeature" placeholder="输入特色描述" required>
+                            </div>
+                        </form>
+
+                        <form id="mdEditorForm" name="mdEditorForm">
+                            <div class="form-group">
+                                <label for="title">标题</label>
+                                <input type="text" class="form-control" id="title" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="author">作者</label>
+                                <input type="text" class="form-control" id="author" name="author">
+                            </div>
+                            <div id="test-editormd">
+                                <textarea style="display:none;" id="content" name="content" class="form-control"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
         </div>
-    </form>
-    <!-- Submit Button -->
-    <button id="submitAll">Submit All</button>
+        <!-- End of Main Content -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
 </div>
-<script src="../static/js/examples/jquery.min.js"></script>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Bootstrap core JavaScript-->
+<script src="../static/vendor/jquery/jquery.min.js"></script>
+<script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Editor.md JavaScript -->
 <script src="../static/js/editormd.min.js"></script>
+<!-- Page level custom scripts -->
 <script type="text/javascript">
     var testEditor;
 
     $(function() {
         testEditor = editormd("test-editormd", {
-            width   : "90%",
+            width   : "100%",
             height  : 640,
             syncScrolling : "single",
             path    : "../static/lib/",
@@ -47,21 +102,13 @@
             toolbarIcons : function () {
                 return ["undo","redo","|","bold","del","italic","quote","ucwords","uppercase","lowercase","|","h1","h2","h3","h4","h5","h6","|","list-ul","list-ol","hr","|","link","reference-link","image","code","preformatted-text","code-block","table","datetime","emoji","html-entities","pagebreak","|","goto-line","watch","preview","fullscreen","clear","search","|","help","info", "||", "publish"];
             },
-
             toolbarIconTexts: {
                 publish: "<span bgcolor='gray'>发布</span>"
             },
-
             toolbarHandlers : {
                 publish: function (cm, icon, cursor, selection) {
                     const mdEditorForm = document.getElementById('mdEditorForm');
-                    const mdFormData = new FormData();
-                    const title = mdEditorForm.title.value;
-                    const author = mdEditorForm.author.value;
-                    const content = mdEditorForm.content.value;
-                    mdFormData.append('title', title);
-                    mdFormData.append('author', author);
-                    mdFormData.append('content', content);
+                    const mdFormData = new FormData(mdEditorForm);
 
                     fetch('/article/publish', {
                         method: 'POST',
@@ -69,21 +116,11 @@
                     }).then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                const articleId = data.articleId; // 假设后端返回的文章ID字段为'articleId'
+                                const articleId = data.articleId;
 
                                 const createAdForm = document.getElementById('createAdForm');
-                                const adTitle = createAdForm.adTitle.value;
-                                const adImages = createAdForm.adImage.files;
-                                const adFeature = createAdForm.adFeature.value;
-
-                                const adFormData = new FormData();
-                                adFormData.append('adName', adTitle);
-                                adFormData.append('adFeature', adFeature);
-                                adFormData.append('articleId', articleId); // 添加文章ID
-
-                                for (let i = 0; i < adImages.length; i++) {
-                                    adFormData.append('adImages', adImages[i]);
-                                }
+                                const adFormData = new FormData(createAdForm);
+                                adFormData.append('articleId', articleId);
 
                                 fetch('/advertisements/create', {
                                     method: 'POST',
@@ -98,54 +135,9 @@
                                     });
                             }
                         })
-                    // const createAdForm = document.getElementById('createAdForm');
-                    // event.preventDefault();
-                    //
-                    // const adTitle = createAdForm.adTitle.value;
-                    // const adImages = createAdForm.adImage.files;
-                    // const adFeature = createAdForm.adFeature.value;
-                    //
-                    // const formData = new FormData();
-                    // formData.append('adName', adTitle);
-                    // formData.append('adFeature', adFeature);
-                    //
-                    // for (let i = 0; i < adImages.length; i++) {
-                    //     formData.append('adImages', adImages[i]);
-                    // }
-                    //
-                    // fetch('/advertisements/create', {
-                    //     method: 'POST',
-                    //     body: formData
-                    // })
-                    //     .then(response => response.json())  // 将响应解析为 JSON
-                    //     .then(adId => {
-                    //         mdEditorForm.method = "post";
-                    //         mdEditorForm.action = "/article/publish";
-                    //
-                    //         const hiddenInput = document.createElement('input');
-                    //         hiddenInput.setAttribute('type', 'hidden');
-                    //         hiddenInput.setAttribute('name', 'ad_id');
-                    //         hiddenInput.setAttribute('value', adId);
-                    //         mdEditorForm.appendChild(hiddenInput);
-                    //
-                    //         mdEditorForm.submit();
-                    //     })
-                    //     .catch(error => {
-                    //         console.error('Error:', error);
-                    //     });
                 }
             }
         });
-
-        /*
-        // or
-        testEditor = editormd({
-            id      : "test-editormd",
-            width   : "90%",
-            height  : 640,
-            path    : "../lib/"
-        });
-        */
     });
 </script>
 </body>
