@@ -8,15 +8,7 @@
 </head>
 <body>
 <div class="container">
-  <h1>Advertisement Management</h1>
-
-  <h2>Create Advertisement</h2>
-  <form id="createAdForm" enctype="multipart/form-data">
-    <input type="text" id="adTitle" name="adName" placeholder="Title" required>
-    <input type="file" id="adImage" name="adImages" accept="image/*" multiple required>
-    <input type="text" id="adFeature" name="adFeature" placeholder="Feature" required>
-    <button type="submit">Create</button>
-  </form>
+  <h1>Advertisements</h1>
 
   <h2>Advertisements List</h2>
   <ul id="adList"></ul>
@@ -27,39 +19,10 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const createAdForm = document.getElementById('createAdForm');
     const adList = document.getElementById('adList');
     const adDetails = document.getElementById('adDetails');
 
     fetchAllAdvertisements();
-
-    createAdForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const adTitle = e.target.adTitle.value;
-      const adImages = e.target.adImage.files;
-      const adFeature = e.target.adFeature.value;
-
-      const formData = new FormData();
-      formData.append('adName', adTitle);
-      formData.append('adFeature', adFeature);
-
-      // 遍历并添加所有图片文件
-      for (let i = 0; i < adImages.length; i++) {
-        formData.append('adImages', adImages[i]);
-      }
-
-      createAdvertisement(formData);
-      e.target.reset();
-    });
-
-    function createAdvertisement(advertisement) {
-      fetch('/advertisements/create', {
-        method: 'POST',
-        body: advertisement
-      })
-              .then(() => fetchAllAdvertisements())
-              .catch(error => console.error('Error creating advertisement:', error));
-    }
 
     function fetchAllAdvertisements() {
       fetch('/advertisements/all')

@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 public class Advertisement implements Serializable {
     private Integer adId;
+    private Integer articleId;
     private String adName;
     private String adDescription; // 广告详细描述
     private String adImageUrl; // JSON 字符串，存储图片URL列表
@@ -28,7 +29,7 @@ public class Advertisement implements Serializable {
     private Double conversionRate; // 转化率
     private Double revenue; // 广告收益
     private Timestamp lastVisitTime; // 最后访问时间
-    private String advertiserId; // 广告主ID
+    private Integer advertiserId; // 广告主ID
     private String placementLocation; // JSON 字符串，存储投放位置列表
     private String targetAudience; // 目标受众描述
     private Integer impressionCount; // 展示次数

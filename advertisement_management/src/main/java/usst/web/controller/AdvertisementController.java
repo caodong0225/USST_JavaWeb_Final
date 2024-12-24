@@ -2,6 +2,7 @@ package usst.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import usst.web.entity.Advertisement;
+import usst.web.entity.User;
 import usst.web.service.AdvertisementService;
 
 import java.io.IOException;
@@ -34,9 +36,12 @@ public class AdvertisementController {
 
     @PostMapping("/create")
     public ResponseEntity<Integer> createAdvertisement(@RequestParam("adName") String adName,
-                                    @RequestParam("adImages") MultipartFile[] adImages,
-                                    @RequestParam("adFeature") String adFeature) throws IOException {
+                                                       @RequestParam("articleId") Integer articleId,
+                                                       @RequestParam("adImages") MultipartFile[] adImages,
+                                                       @RequestParam("adFeature") String adFeature,
+                                                       HttpSession session) throws IOException {
         List<String> imageUrls = new ArrayList<>();
+        User user = (User) session.getAttribute("user");
 
         // 保存文件并记录URL
         for (MultipartFile adImage : adImages) {
@@ -56,8 +61,11 @@ public class AdvertisementController {
         // 创建广告对象
         Advertisement advertisement = new Advertisement();
         advertisement.setAdName(adName);
+        advertisement.setArticleId(articleId);
         advertisement.setAdImageUrl(jsonImageUrls); // 设置JSON字符串
         advertisement.setKeywords(jsonKeywords);     // 设置JSON字符串
+        advertisement.setVisitCount(0);
+        advertisement.setAdvertiserId(user.getId());
         advertisement.setPlacementLocation(jsonPlacementLocation); // 设置JSON字符串
         advertisement.setAdFeature(adFeature);
 
@@ -102,8 +110,9 @@ public class AdvertisementController {
     }
 
     @GetMapping("/all")
-    public List<Advertisement> getAllAdvertisements() {
-        return advertisementService.getAllAdvertisements();
+    public List<Advertisement> getAllAdvertisementsSelf(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        return advertisementService.getAllAdvertisementsByAdvertiserId(user.getId());
     }
 
     // 开放接口供其他网站跳转广告

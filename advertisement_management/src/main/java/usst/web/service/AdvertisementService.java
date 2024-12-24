@@ -8,5 +8,7 @@ public interface AdvertisementService {
     void updateAdvertisement(Advertisement advertisement);
     void deleteAdvertisement(int adId);
     Advertisement getAdvertisementById(int adId);
+    Advertisement getAdvertisementByArticleId(int adId);
     List<Advertisement> getAllAdvertisements();
+    List<Advertisement> getAllAdvertisementsByAdvertiserId(int advertiserId);
 }

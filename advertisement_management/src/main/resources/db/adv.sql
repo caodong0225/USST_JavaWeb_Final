@@ -26,6 +26,7 @@ DROP TABLE IF EXISTS `advertisement`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `advertisement` (
   `ad_id` int NOT NULL AUTO_INCREMENT,
+  `article_id` int DEFAULT NULL,
   `ad_name` varchar(45) DEFAULT NULL,
   `ad_description` mediumtext,
   `ad_image_url` json DEFAULT NULL,
@@ -57,8 +58,10 @@ CREATE TABLE `advertisement` (
   `ad_category_id` int DEFAULT NULL,
   PRIMARY KEY (`ad_id`),
   KEY `fk_advertisement_user` (`advertiser_id`),
+  KEY `fk_advertisement_article` (`article_id`),
+  CONSTRAINT `fk_advertisement_article` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_advertisement_user` FOREIGN KEY (`advertiser_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,10 +77,8 @@ CREATE TABLE `article` (
   `title` varchar(255) NOT NULL,
   `author` varchar(255) NOT NULL,
   `content` longtext NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_article_advertisement` (`ad_id`),
-  CONSTRAINT `fk_article_advertisement` FOREIGN KEY (`ad_id`) REFERENCES `advertisement` (`ad_id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +96,7 @@ CREATE TABLE `user` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `user_pk2` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=10005 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,4 +125,4 @@ CREATE TABLE `user_role` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-23 16:33:55
+-- Dump completed on 2024-12-24 23:36:34

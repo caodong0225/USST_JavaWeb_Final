@@ -35,7 +35,17 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     @Override
+    public Advertisement getAdvertisementByArticleId(int adId) {
+        return advertisementMapper.selectAdvByArticleId(adId);
+    }
+
+    @Override
     public List<Advertisement> getAllAdvertisements() {
         return advertisementMapper.selectAll();
+    }
+
+    @Override
+    public List<Advertisement> getAllAdvertisementsByAdvertiserId(int advertiserId) {
+        return advertisementMapper.selectAllByAdvertiserId(advertiserId);
     }
 }

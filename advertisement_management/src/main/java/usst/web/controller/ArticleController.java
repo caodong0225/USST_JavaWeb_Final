@@ -36,12 +36,22 @@ public class ArticleController {
 
     @RequestMapping("/publish")
     @ResponseBody
-    public String publishArticle(Article article) {
+    public JSONObject publishArticle(Article article) {
         boolean res = articleService.publishArticle(article);
-        if(res) {
-            return "success";
+
+        if(article.getId() > 0) {
+            JSONObject response = new JSONObject();
+            response.put("success", true);
+            response.put("articleId", article.getId());
+            return response;
         }
-        return "false";
+        JSONObject response = new JSONObject();
+        response.put("success", false);
+        return response;
+//        if(res) {
+//            return "success";
+//        }
+//        return "false";
     }
 
 
