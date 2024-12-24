@@ -26,6 +26,10 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 从 Session 中获取用户信息
         User userSession = (User) request.getSession().getAttribute("user");
+        System.out.println(request.getRequestURI());
+        if (request.getRequestURI().startsWith("/ad/")) {
+            return true;
+        }
 
         // 检查用户是否已登录
         if (userSession == null) {
