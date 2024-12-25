@@ -1,6 +1,7 @@
 package usst.web.utils;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -10,10 +11,15 @@ import java.util.UUID;
 /**
  * 文件上传工具类
  */
+@Component
 public class FileUtils {
 
-    // private static final String prePath = new File(System.getProperty("user.dir"), "src/main/webapp/upload/").getAbsolutePath();
-    private static final String prePath = "C:\\Users\\tianqianjia\\Desktop\\USST_JavaWeb_ADTool\\advertisement_management\\src\\main\\resources\\uploads\\";
+    private static String prePath;
+
+    @Value("${upload.dir}")
+    public void setPrePath(String prePath) {
+        FileUtils.prePath = prePath;
+    }
 
     /**
      * 上传文件
