@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 
 @RestController
 public class PyController {
-    @Value("${python.path}") String pythonPath;
+      private static  String pythonPath="python ?????????????????????????????/api.py";
     @GetMapping("/executePython")
     public void   executePython(HttpServletRequest request, HttpServletRequest response) {
         Process proc;
