@@ -89,20 +89,19 @@
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="./script/loginPage.js"></script>
+    <script src="script/loginPage.js"></script>
 </head>
 <body>
 <div class="login-container">
     <h2>登录</h2>
-    <form action="api/login" method="post">
+    <form>
         <label>
-            <input type="text" name="username" placeholder="Username" id="username" required>
+            <input type="text" name="username" placeholder="用户名" id="username" required>
         </label>
         <label>
-            <input type="password" name="password" placeholder="Password" id="password" required>
+            <input type="password" name="password" placeholder="密码" id="password" required>
         </label>
         <input type="button" value="登录" onclick="submitForm()">
-        <input type="submit" value="测试">
     </form>
     <form id="register" action="register" method="get">
         <button>注册</button>
