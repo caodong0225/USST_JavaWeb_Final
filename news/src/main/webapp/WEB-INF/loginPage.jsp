@@ -3,6 +3,7 @@
 <head>
     <title>新闻登录页面</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="script/util.js"></script>
     <script src="script/loginPage.js"></script>
     <link rel="stylesheet" href="style/loginPage.css">
 </head>

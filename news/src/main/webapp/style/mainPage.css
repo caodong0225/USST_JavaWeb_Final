@@ -88,7 +88,7 @@
 }
 .thumbnail img {
     width: 100%;
-    height: auto;
+    height: 30%;
     display: block;
 }
 .thumbnail h3 {
@@ -97,6 +97,8 @@
     margin: 0;
 }
 .featured-image {
+    width: 70%;
+    height: 100%;
     flex-grow: 1;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -108,12 +110,15 @@
     transform: scale(101%);
 }
 .featured-image img {
-    width: 100%;
-    height: auto;
+    width: calc(100% - 20px);
+    height: calc(90% - 20px);
+    padding: 10px;
     display: block;
 }
 .featured-image h2 {
-    padding: 20px;
+    padding: 10px;
+    height: 10%;
+    text-align: center;
     background-color: #f4f4f4;
     margin: 0;
 }

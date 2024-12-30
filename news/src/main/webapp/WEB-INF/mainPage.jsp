@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/mainPage.css">
+    <script src="script/util.js"></script>
     <script src="script/mainPage.js"></script>
     <title>新闻页面</title>
 </head>
 <body>
 <div class="header">
     <div class="user-info">
-        <span>用户信息栏</span>
-        <button onclick="onclick_login()">登录</button>
+        <span id="user-info">用户信息栏</span>
+        <button id="login-button" onclick="onclick_login()">登录</button>
     </div>
 </div>
 
@@ -21,26 +22,14 @@
 </div>
 
 <div class="top-news">
-    <div class="thumbnail-list">
-        <div class="thumbnail">
-            <img src="img/undefined.png" alt="新闻缩略图">
-        </div>
-        <div class="thumbnail">
-            <img src="img/undefined.png" alt="新闻缩略图">
-        </div>
-        <div class="thumbnail">
-            <img src="img/undefined.png" alt="新闻缩略图">
-        </div>
-        <div class="thumbnail">
-            <img src="img/undefined.png" alt="新闻缩略图">
-        </div>
-        <div class="thumbnail">
-            <img src="img/undefined.png" alt="新闻缩略图">
-        </div>
+    <div id="thumbnail-list" class="thumbnail-list">
+<%--        <div class="thumbnail">--%>
+<%--            <img src="img/undefined.png" alt="新闻缩略图">--%>
+<%--        </div>--%>
     </div>
     <div class="featured-image">
-        <img src="img/undefined.png" alt="新闻大图">
-        <h2>新闻1标题</h2>
+        <img id="featured-image" src="img/undefined.png" alt="新闻大图">
+        <h2 id="featured-image-title">新闻1标题</h2>
     </div>
 </div>
 <div class="select-class-list">
