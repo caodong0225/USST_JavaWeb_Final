@@ -15,7 +15,7 @@ public class PyController {
     @GetMapping("/executePython")
     public void   executePython(HttpServletRequest request, HttpServletRequest response) {
         Process proc;
-
+        // python文件路11111111
         try {
             proc = Runtime.getRuntime().exec(pythonPath);// 执行py文件
             //用输入输出流来截取结果
