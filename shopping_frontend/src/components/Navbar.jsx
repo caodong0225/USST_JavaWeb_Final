@@ -5,13 +5,12 @@ function Navigation() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="#">电商网站</Navbar.Brand>
+        <Navbar.Brand href="#">USST-Onlineshop</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">首页</Nav.Link>
-            <Nav.Link href="#products">产品</Nav.Link>
-            <Nav.Link href="#contact">联系我们</Nav.Link>
+            <Nav.Link href="/">首页</Nav.Link>
+            <Nav.Link href="/products">产品</Nav.Link>
           </Nav>
           <Form className="d-flex">
             <FormControl
