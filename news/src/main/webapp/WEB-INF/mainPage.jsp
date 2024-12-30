@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/mainPage.css">
+    <script src="script/mainPage.js"></script>
     <title>新闻页面</title>
 </head>
 <body>
 <div class="header">
     <div class="user-info">
         <span>用户信息栏</span>
-        <button>登录</button>
-        <button>注册</button>
+        <button onclick="onclick_login()">登录</button>
     </div>
 </div>
 
 <div class="search-bar">
-    <input type="text" placeholder="搜索新闻...">
-    <button>搜索</button>
+    <input id="search-content" type="text" placeholder="搜索新闻...">
+    <button onclick="onclick_search()">搜索</button>
 </div>
 
 <div class="top-news">

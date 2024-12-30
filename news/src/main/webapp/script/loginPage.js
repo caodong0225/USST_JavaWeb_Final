@@ -1,4 +1,4 @@
-﻿function submitForm() {
+﻿function onclick_login() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
     if (! username || !password) {
@@ -35,4 +35,7 @@ function encryptText(text) {
     // 将ArrayBuffer转换为Base64字符串
     const encryptedText = btoa(String.fromCharCode.apply(null, buffer));
     return encryptedText;
+}
+function onclick_register(){
+    location.href = "register";
 }
