@@ -1,29 +1,71 @@
-def predict_preferences(model, X_test, label_encoder):
-    """
-    使用训练好的模型预测用户的偏好。
+import numpy as np
+import sys
+import json
 
-    参数:
-    model : Sequential
-        训练好的Keras模型。
-    X_test : numpy.ndarray
-        测试数据的特征部分。
-    label_encoder : LabelEncoder
-        用于逆变换预测结果的LabelEncoder对象。
 
-    返回:
-    predictions : numpy.ndarray
-        预测的用户偏好。
-    """
+gender_dict = {
+    '男': 1, '女': 2, '不愿透露': 3
+}
 
-    # 预测测试数据
-    X_test = X_test.astype('float32')
-    predictions = model.predict(X_test)
+occupation_dict = {
+    '学生': 1, '老师': 2, '白领': 3, '蓝领': 4, '研究工作者': 5,
+    '工程师': 6, '服务工作者': 7, '不愿透露': 8
+}
 
-    # 将预测结果转换回原始类别
-    predictions_class = np.argmax(predictions, axis=1)
-    predictions_class = label_encoder.inverse_transform(predictions_class)
+education_dict = {
+    '初中': 1, '高中': 2, '大学': 3, '不愿透露': 4
+}
 
-    return predictions_class
+region_dict = {
+    '上海': 1, '北京': 2, '广州': 3, '深圳': 4, '武汉': 5,
+    '成都': 6, '西安': 7, '杭州': 8, '南京': 9, '重庆': 10,
+    '天津': 11, '苏州': 12, '长沙': 13, '青岛': 14, '大连': 15,
+    '厦门': 16, '宁波': 17, '沈阳': 18, '昆明': 19, '无锡': 20
+    '不愿透露': 21
+}
+
+country_dict = {
+    '中国': 1
+}
+
+preference_dict = {
+    'Fashion': 1, 'Technology': 2, 'Gourmet': 3, 'Home': 4, 'Travel': 5,
+    'Sports': 6, 'Parenting': 7, 'Festival': 8, 'Eco': 9, 'Luxury': 10,
+    'Education': 11, 'Pets': 12, 'Art': 13, 'Cars': 14, 'Finance': 15,
+    'Healthcare': 16, 'Real Estate': 17, 'Digital': 18, 'Entertainment': 19,
+    'Leisure': 20
+}
+
+
+# 使用设备的字典对应关系
+device_dict = {
+    '台式设备': 1, '笔记本电脑': 2, '平板电脑': 3, '智能手机': 4, '其他设备': 5,
+    '智能手表': 6, '游戏机': 7, '电子书阅读器': 8
+}
+
+# 假设模型和标签编码器已经加载
+model = None  # 这里应该是加载的训练好的模型
+label_encoder = None  # 这里应该是加载的LabelEncoder对象
+
+def predict_preferences(X_test):
+    if model is None or label_encoder is None:
+        # 返回预设的预测结果
+        return np.array(["预设偏好1", "预设偏好2", "预设偏好3"])  # 根据需要自定义预设的偏好
+    else:
+        # 预测测试数据
+        X_test = X_test.astype('float32')
+        predictions = model.predict(X_test)
+        # 将预测结果转换回原始类别
+        predictions_class = np.argmax(predictions, axis=1)
+        predictions_class = label_encoder.inverse_transform(predictions_class)
+        return predictions_class
+
+if __name__ == "__main__":
+    # 从命令行参数获取numpy数组格式的字符串
+    numpy_array_str = sys.argv[1]
+    X_test = np.array(json.loads(numpy_array_str))
+    predictions_class = predict_preferences(X_test)
+    print(json.dumps(predictions_class.tolist()))
 
 # 假设您已经有了训练数据和测试数据，它们都是numpy数组的形式
 # train_data = np.array([...])  # 您的训练数据
@@ -113,3 +155,4 @@ def predict_preferences(model, X_test, label_encoder):
 #     [46, '蓝领', '研究工作者', '大学', '广州', '中国', '平板电脑', 'Gourmet'],
 #     [18, '男', '学生', '初中', '深圳', '中国', '智能手机', 'Home']
 # ])
+
