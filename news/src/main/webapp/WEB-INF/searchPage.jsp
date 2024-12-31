@@ -21,25 +21,8 @@
     <input id="search-content" type="text" placeholder="搜索新闻...">
     <button onclick="onclick_search()">搜索</button>
 </div>
-<div class="searched-news-list">
-    <div class="news">
-        <div class="news-image">
-            <img src="img/undefined.png" alt="新闻缩略图">
-        </div>
-        <div class="news-content">
-            <h3>新闻1标题</h3>
-            <p>新闻1内容</p>
-        </div>
-    </div>
-    <div class="news">
-        <div class="news-image">
-            <img src="img/undefined.png" alt="新闻缩略图">
-        </div>
-        <div class="news-content">
-            <h3>新闻2标题</h3>
-            <p>新闻2内容</p>
-        </div>
-    </div>
+<div class="searched-news-list" id="searched-news-list">
+
 </div>
 </body>
 </html>
