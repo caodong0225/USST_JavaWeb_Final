@@ -154,11 +154,7 @@
     gap: 20px;
     padding: 10px;
     margin-top: 20px;
-}
-.more-news-list {
-    display: block;
-    justify-content: space-between;
-    margin-top: 20px;
+    float: left;
 }
 .more-news {
     width: 100%;
@@ -208,7 +204,9 @@
     width: 15%;
     padding: 20px;
     display: block;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-left: 20px;
+    float: right;
 }
 .advertisement {
     width: 90%;
