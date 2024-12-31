@@ -46,15 +46,26 @@ public class GetNewsListServlet extends HttpServlet {
         result.put("success", true);
         var data = new HashMap<String, Object>();
         var topList = NewsService.getInstance().getTopNewsList(5);
-        Logger.log("获取到置顶新闻列表："+topList.size());
         for (var news : topList) {
             data.put(news.getId(), news);
         }
         result.put("data", data);
-        Logger.log("GetNewsListServlet: 获取新闻列表api调用成功，结果："+new ObjectMapper().writeValueAsString(result));
+//        Logger.log("GetNewsListServlet: 获取新闻列表api调用成功，结果："+new ObjectMapper().writeValueAsString(result));
         out.println(new ObjectMapper().writeValueAsString(result));
     }
     private void getNewsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+        Logger.log("GetNewsListServlet: 获取新闻列表api调用");
+        var session = request.getSession();
+        response.setContentType("application/json;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        var out = response.getWriter();
+        var result = new HashMap<String, Object>();
+        result.put("success", true);
+        var data = new HashMap<String, Object>();
+        var newsList = NewsService.getInstance().getNewsList("all",5);
+        for (var news : newsList) {
+            data.put(news.getId(), news);
+        }
+        result.put("data", data);
     }
 }

@@ -71,12 +71,13 @@ public class FakeNewsDao implements NewsDao {
     }
     @Override
     public List<News> getTopNewsList(int num) {
+        var random = new java.util.Random();
+        var keys = new ArrayList<>(newsMap.keySet());
         var list = new ArrayList<News>();
-        for (var entry : newsMap.entrySet()) {
-            if (list.size() >= num) {
-                break;
-            }
-            list.add(entry.getValue());
+        for (int i = 0; i < num; i++) {
+            var key = keys.get(random.nextInt(keys.size()));
+            list.add(newsMap.get(key));
+            keys.remove(key);
         }
         return list;
     }
