@@ -18,11 +18,14 @@ public class SearchServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("WEB-INF/searchPage.jsp").forward(req, resp);
+
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        Logger.log("GetNewsListServlet: 获取新闻列表api调用");
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Logger.log("SearchServlet: 搜索新闻api调用");
+
+        String searchText = req.getParameter("search");
         var session = req.getSession();
         resp.setContentType("application/json;charset=UTF-8");
         resp.setCharacterEncoding("UTF-8");
@@ -30,12 +33,14 @@ public class SearchServlet extends HttpServlet {
         var result = new HashMap<String, Object>();
         result.put("success", true);
         var data = new HashMap<String, Object>();
-        var topList = NewsService.getInstance().getTopNewsList(5);
-        for (var news : topList) {
-            data.put(news.getId(), news);
+
+        for (var news : NewsService.getInstance().getAllNewsList()) {
+            if (news.getTitle().contains(searchText)) {
+                data.put(news.getId(), news);
+            }
         }
         result.put("data", data);
-//        Logger.log("GetNewsListServlet: 获取新闻列表api调用成功，结果："+new ObjectMapper().writeValueAsString(result));
+        Logger.log("SearchServlet: 搜索新闻api调用成功，结果：" + new ObjectMapper().writeValueAsString(result));
         out.println(new ObjectMapper().writeValueAsString(result));
     }
 }

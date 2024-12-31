@@ -67,7 +67,7 @@ public class GetNewsListServlet extends HttpServlet {
         var result = new HashMap<String, Object>();
         result.put("success", true);
         var data = new HashMap<String, Object>();
-        var newsList = NewsService.getInstance().getNewsList(zone,5);
+        var newsList = NewsService.getInstance().getNewsByZoneList(zone,5);
         for (var news : newsList) {
             data.put(news.getId(), news);
         }

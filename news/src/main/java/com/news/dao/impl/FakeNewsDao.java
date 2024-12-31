@@ -96,7 +96,7 @@ public class FakeNewsDao implements NewsDao {
     }
 
     @Override
-    public List<News> getNewsList(String zone,int num) {
+    public List<News> getNewsByZoneList(String zone,int num) {
         var result = new ArrayList<News>();
         if (zone.equals("全部")) {
             return getTopNewsList(num);
@@ -108,7 +108,7 @@ public class FakeNewsDao implements NewsDao {
                 var index = random.nextInt(list.size());
                 result.add(list.get(index));
                 list.remove(index);
-                if (list.size() == 0) {
+                if (list.isEmpty()) {
                     break;
                 }
             }
@@ -118,4 +118,15 @@ public class FakeNewsDao implements NewsDao {
         }
         return result;
     }
+
+    @Override
+    public List<News> getAllNewsList() {
+        var keys = new ArrayList<>(newsMap.keySet());
+        var list = new ArrayList<News>();
+        for (var key : keys) {
+            list.add(newsMap.get(key));
+        }
+        return list;
+    }
+
 }

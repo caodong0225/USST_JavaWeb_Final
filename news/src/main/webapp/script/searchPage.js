@@ -14,17 +14,20 @@ function onclick_search() {
         alert("搜索内容不能为空");
         return;
     }
-    alert("搜索内容为：" + search);
+    location.href = "search?search=" + search;
 }
 
 function back_main_page() {
     location.href = "mainPage";
 }
 
-function fillSearchBar() {
+function getSearchText() {
     const searchParams = new URLSearchParams(window.location.search);
-    const searchBar = document.getElementById("search-content")
-    searchBar.value = searchParams.get('search')
+    return searchParams.get('search')
+}
+
+function fillSearchBar() {
+    document.getElementById("search-content").value = getSearchText()
 }
 
 function createSearchedNews(newsData) {
@@ -35,27 +38,21 @@ function createSearchedNews(newsData) {
         var newsItem = newsData[newKey];
         var newsDiv = document.createElement('div');
         newsDiv.className = 'news';
-        var newsImageDiv = document.createElement('div');
-        newsImageDiv.className = 'news-image';
-        var img = document.createElement('img');
-        img.src = `${"api/getImage?imageUrl=" + newsItem["cover"]}`;
-        img.alt = '新闻缩略图';
-        newsImageDiv.appendChild(img);
-        var newsContentDiv = document.createElement('div');
-        newsContentDiv.className = 'news-content';
-        var newsTitle = document.createElement('h3');
-        newsTitle.textContent = `${newsItem["title"]}`;
-        var newsContent = document.createElement('p');
-        newsContent.textContent = `${newsItem["content"].substring(0, 20)}`;
-        newsContentDiv.appendChild(newsTitle);
-        newsContentDiv.appendChild(newsContent);
-        newsDiv.appendChild(newsImageDiv);
-        newsDiv.appendChild(newsContentDiv);
+        newsDiv.dataset.newsId = `${newsItem["id"]}`;
+        newsDiv.innerHTML +=`
+            <div class="news-image">
+                <img src='${"api/getImage?imageUrl=" + newsItem["cover"]}' alt="新闻缩略图">
+            </div>
+            <div class="news-content">
+                <h3>${newsItem["title"]}</h3>
+                <p>${cutText(newsItem["content"], 200)}</p>
+            </div>
+        `;
         searchedNewsList.appendChild(newsDiv);
 
-        //为新闻容器div添加监视器，用于跳转到详情页面
+        //为新闻容器div添加监听器，用于跳转到详情页面
         newsDiv.addEventListener('click', function () {
-            alert("点击")
+            location.href = "detail?newsId=" + newsDiv.dataset.userId;
         });
     });
 
@@ -64,6 +61,7 @@ function createSearchedNews(newsData) {
 function loadSearchedNews() {
     var xhr = new XMLHttpRequest();
     xhr.open('Post', 'search', false);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             var response = JSON.parse(xhr.responseText);
@@ -75,5 +73,5 @@ function loadSearchedNews() {
     xhr.onerror = function () {
         return null;
     };
-    xhr.send();
+    xhr.send(`search=${getSearchText()}`);
 }

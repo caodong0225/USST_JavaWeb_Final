@@ -29,8 +29,12 @@ public class NewsService {
         return newsDao.getTopNewsList(num);
     }
 
-    public List<News> getNewsList(String zone,int num) {
-        return newsDao.getNewsList(zone,num);
+    public List<News> getNewsByZoneList(String zone,int num) {
+        return newsDao.getNewsByZoneList(zone,num);
+    }
+
+    public List<News> getAllNewsList() {
+        return newsDao.getAllNewsList();
     }
 
 }
