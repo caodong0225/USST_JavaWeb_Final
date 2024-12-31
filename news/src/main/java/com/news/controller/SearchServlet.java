@@ -24,8 +24,9 @@ public class SearchServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Logger.log("SearchServlet: 搜索新闻api调用");
-
         String searchText = req.getParameter("search");
+        if (searchText.isBlank()) return;
+
         var session = req.getSession();
         resp.setContentType("application/json;charset=UTF-8");
         resp.setCharacterEncoding("UTF-8");

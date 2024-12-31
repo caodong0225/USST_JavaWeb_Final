@@ -46,15 +46,11 @@
 }
 .search-bar button {
     padding: 10px 20px;
-    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
-.search-bar button:hover {
-    background-color: #218838;
 }
 
 .searched-news-list {
@@ -91,4 +87,21 @@
 }
 .news-content {
     padding: 10px;
+}
+
+
+.search-button{
+    background-color: #28a745;
+}
+
+.search-button:hover{
+    background-color: #218838;
+}
+
+.back-to-main-page-button {
+    background-color: #888888;
+}
+
+.back-to-main-page-button:hover {
+    background-color: #666666;
 }

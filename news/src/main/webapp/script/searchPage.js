@@ -39,23 +39,24 @@ function createSearchedNews(newsData) {
         var newsDiv = document.createElement('div');
         newsDiv.className = 'news';
         newsDiv.dataset.newsId = `${newsItem["id"]}`;
-        newsDiv.innerHTML +=`
+        newsDiv.innerHTML += `
             <div class="news-image">
                 <img src='${"api/getImage?imageUrl=" + newsItem["cover"]}' alt="新闻缩略图">
             </div>
             <div class="news-content">
                 <h3>${newsItem["title"]}</h3>
-                <p>${cutText(newsItem["content"], 200)}</p>
+                <p>${cutText(newsItem["content"], 100)}</p>
             </div>
         `;
         searchedNewsList.appendChild(newsDiv);
 
         //为新闻容器div添加监听器，用于跳转到详情页面
-        newsDiv.addEventListener('click', function () {
-            location.href = "detail?newsId=" + newsDiv.dataset.userId;
-        });
+        newsDiv.addEventListener('click', goToNewsDetail);
     });
+}
 
+function goToNewsDetail(e) {
+    location.href = "detail?newsId=" + e.target.dataset.newsId;//此处得到的newsId是undefine,但完全相同的代码在另一个环境下可以跑通，原因不明
 }
 
 function loadSearchedNews() {

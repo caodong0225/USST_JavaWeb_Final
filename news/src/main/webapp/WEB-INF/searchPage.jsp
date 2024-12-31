@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style/searchPage.css">
     <script src="script/util.js"></script>
     <script src="script/searchPage.js"></script>
-    <title>新闻页面</title>
+    <title>搜索新闻</title>
 </head>
 <body>
 <div class="header">
@@ -19,8 +19,8 @@
 <div class="search-bar">
     <label for="search-content"></label>
     <input id="search-content" type="text" placeholder="搜索新闻...">
-    <button onclick="onclick_search()">搜索</button>
-    <button onclick="back_main_page()" style="background-color: #888888">返回主页</button>
+    <button class="search-button" onclick="onclick_search()">搜索</button>
+    <button class="back-to-main-page-button" onclick="back_main_page()">返回主页</button>
 </div>
 <div class="searched-news-list" id="searched-news-list">
 

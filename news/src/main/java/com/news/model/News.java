@@ -24,7 +24,7 @@ public class News {
         this.date = date;
         this.tags = tags;
 
-        if (tags.size() > 0) {
+        if (!tags.isEmpty()) {
             this.zone = tags.get(0);
         }
         else {
@@ -37,7 +37,7 @@ public class News {
     }
     public void initZone()
     {
-        if (tags.size() > 0) {
+        if (!tags.isEmpty()) {
             this.zone = tags.get(0);
         }
         else {
