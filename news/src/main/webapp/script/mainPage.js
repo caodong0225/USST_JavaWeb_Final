@@ -1,7 +1,6 @@
 ﻿document.addEventListener('DOMContentLoaded', function() {
     // 检查登录状态并更新用户信息栏
     checkLoginStatus();
-
     loadTopNews();
 });
 
@@ -28,12 +27,12 @@ function updateUserInfo(username, userInfo, loginButton) {
 
 function onclick_search(){
     var search = document.getElementById("search-content").value;
-    if(search == ""){
+    if(search === ""){
         alert("搜索内容不能为空");
         return;
     }
-    alert("搜索内容为：" + search);
-    // location.href = "/search?search=" + search;
+    // alert("搜索内容为：" + search);
+    location.href = "search?search=" + search;
 }
 function onclick_login(){
     location.href = "login";

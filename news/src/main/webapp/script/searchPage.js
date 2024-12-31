@@ -33,8 +33,15 @@ function onclick_search(){
         return;
     }
     alert("搜索内容为：" + search);
-    // location.href = "/search?search=" + search;
 }
 function onclick_login(){
     location.href = "login";
 }
+
+function fillSearchBar(){
+    const searchParams = new URLSearchParams(window.location.search);
+    const searchBar=document.getElementById("search-content")
+    searchBar.value = searchParams.get('search')
+}
+
+window.onload = fillSearchBar
