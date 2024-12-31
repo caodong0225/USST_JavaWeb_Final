@@ -28,7 +28,7 @@ public class GetImageServlet extends HttpServlet {
                     continue;
                 }
                 var fileName = file.getName().split("\\.")[0];
-                Logger.log("GetImageServlet: 读取到图片文件" + fileName);
+//                Logger.log("GetImageServlet: 读取到图片文件" + fileName);
                 imageMap.put(fileName, file.getPath());
             }
         }

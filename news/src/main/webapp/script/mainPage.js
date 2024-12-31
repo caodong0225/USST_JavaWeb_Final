@@ -18,10 +18,12 @@ function checkLoginStatus() {
 function updateUserInfo(username, userInfo, loginButton) {
     if (username) {
         userInfo.textContent = "欢迎，" + username;
-        loginButton.style.display = "none";
+        loginButton.textContent = "登出";
+        loginButton.onclick = onclick_logout;
     } else {
         userInfo.textContent = "请先登录";
         loginButton.textContent = "登录";
+        loginButton.onclick = onclick_login;
     }
 }
 
@@ -37,6 +39,17 @@ function onclick_search(){
 function onclick_login(){
     location.href = "login";
 }
+function onclick_logout(){
+    var xhr = new XMLHttpRequest();
+    xhr.open('Post', 'api/logout', true);
+    xhr.onload = function() {
+        location.reload();
+    };
+    xhr.onerror = function() {
+        location.reload();
+    };
+    xhr.send();
+}
 function createTopNews(newsData) {
     const topNews = document.getElementById("top-news");
     var thumbnailList = document.getElementById("thumbnail-list");
@@ -47,16 +60,17 @@ function createTopNews(newsData) {
     var i = 0;
     Object.keys(newsData).forEach(function(newKey) {
         var newsItem = newsData[newKey];
+        var cover="api/getImage?imageUrl=" + newsItem["cover"];
         if (i == 0) {
-            featuredImage.src = "api/getImage?imageUrl=" + newsItem["cover"];
+            featuredImage.src = cover;
             featuredTitle.textContent = newsItem["title"];
             i++;
         }
         const thumbnailDiv = document.createElement('div');
         thumbnailDiv.className = 'thumbnail';
-        thumbnailDiv.innerHTML = `<img src=api/getImage?imageUrl=${newsItem["cover"]} alt="新闻缩略图" />`;
+        thumbnailDiv.innerHTML = `<img src=${cover} alt="新闻缩略图" />`;
         thumbnailDiv.addEventListener('click', function() {
-            featuredImage.src = newsItem["cover"];
+            featuredImage.src = cover;
             featuredTitle.textContent = newsItem["title"];
         });
         thumbnailList.appendChild(thumbnailDiv);
