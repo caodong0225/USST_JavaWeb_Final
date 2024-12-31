@@ -15,7 +15,7 @@ public class PredictionService {
         String numpyArrayStr = convertToJsonArrayString(jsonInput);
 
         // 调用Python脚本
-        String pythonPath = "D:\\大学\\大三上\\web\\USST_JavaWeb_ADTool\\advertisement_management\\src\\main\\resources\\templates\\result_api.py";
+        String pythonPath = "";
         Process proc;
         StringBuilder output = new StringBuilder();
         try {

@@ -26,6 +26,9 @@ public class StatisticsController {
         List<Integer> visited = top10.stream().map(Advertisement::getVisitCount).toList();
         model.addAttribute("labels", labels);
         model.addAttribute("visited", visited);
+        model.addAttribute("totalNum", statisticsService.getTotalNum());
+        model.addAttribute("totalVisit", statisticsService.getTotalVisit());
+        model.addAttribute("recentVisited", statisticsService.getRecentVisited());
         return "index";
     }
 }

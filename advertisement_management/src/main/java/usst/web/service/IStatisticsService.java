@@ -1,6 +1,7 @@
 package usst.web.service;
 
 import usst.web.entity.Advertisement;
+import usst.web.pojo.DailyVisited;
 
 import java.util.List;
 
@@ -10,4 +11,7 @@ import java.util.List;
  */
 public interface IStatisticsService {
     List<Advertisement> getTop10();
+    Integer getTotalNum();
+    Integer getTotalVisit();
+    List<DailyVisited> getRecentVisited();
 }
