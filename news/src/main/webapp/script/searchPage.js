@@ -8,30 +8,6 @@
 
 });
 
-function checkLoginStatus() {
-    const userInfo = document.getElementById('user-info');
-    const loginButton = document.getElementById('login-button');
-
-    getUserName(function (json) {
-        // alert("json"+JSON.stringify(json));
-        updateUserInfo(json.username, userInfo, loginButton);
-    }, function () {
-        updateUserInfo(null, userInfo, loginButton);
-    });
-}
-
-function updateUserInfo(username, userInfo, loginButton) {
-    if (username) {
-        userInfo.textContent = "欢迎，" + username;
-        loginButton.textContent = "登出";
-        loginButton.onclick = onclick_logout;
-    } else {
-        userInfo.textContent = "请先登录";
-        loginButton.textContent = "登录";
-        loginButton.onclick = onclick_login;
-    }
-}
-
 function onclick_search() {
     var search = document.getElementById("search-content").value;
     if (search === "") {
@@ -43,23 +19,6 @@ function onclick_search() {
 
 function back_main_page() {
     location.href = "mainPage";
-}
-
-
-function onclick_login() {
-    location.href = "login";
-}
-
-function onclick_logout() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('Post', 'api/logout', true);
-    xhr.onload = function () {
-        location.reload();
-    };
-    xhr.onerror = function () {
-        location.reload();
-    };
-    xhr.send();
 }
 
 function fillSearchBar() {
