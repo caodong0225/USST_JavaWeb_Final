@@ -33,7 +33,7 @@ preference_dict = {
     'Sports': 6, 'Parenting': 7, 'Festival': 8, 'Eco': 9, 'Luxury': 10,
     'Education': 11, 'Pets': 12, 'Art': 13, 'Cars': 14, 'Finance': 15,
     'Healthcare': 16, 'Real Estate': 17, 'Digital': 18, 'Entertainment': 19,
-    'Leisure': 20
+    'Leisure': 20,'政治': 21, '气象': 22
 }
 
 
