@@ -1,0 +1,94 @@
+﻿body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    color: #333;
+}
+.header, .search-bar, .top-news, .more-stories {
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    margin: 20px;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.user-info {
+    text-align: right;
+}
+.user-info button, .category-buttons button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.user-info button:hover, .category-buttons button:hover {
+    background-color: #0056b3;
+}
+.search-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.search-bar input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.search-bar button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.search-bar button:hover {
+    background-color: #218838;
+}
+
+.searched-news-list {
+    width: 95%;
+    display: block;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.news {
+    width: 100%;
+    height: 10vi;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px;
+    display: flex;
+    transition: transform 0.3s;
+}
+.news:hover{
+    transform: translateY(-5px);
+}
+.news-image {
+    width: 20%;
+    height: 100%;
+    overflow: hidden;
+}
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.news-content {
+    padding: 10px;
+}
