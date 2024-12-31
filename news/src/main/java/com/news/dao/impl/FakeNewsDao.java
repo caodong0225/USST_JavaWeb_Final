@@ -10,9 +10,12 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class FakeNewsDao implements NewsDao {
     private HashMap<String, News> newsMap = new HashMap<>();
+    private HashMap<String,List<News>> newsZoneMap=new HashMap<>();
+    private Random random = new Random();
     public FakeNewsDao() {
         init();
     }
@@ -32,6 +35,17 @@ public class FakeNewsDao implements NewsDao {
                 var news = loadNewsFromFile(file);
                 if (news != null) {
                     newsMap.put(news.getId(), news);
+                    news.initZone();
+                    if(newsZoneMap.containsKey(news.getZone()))
+                    {
+                        newsZoneMap.get(news.getZone()).add(news);
+                    }
+                    else
+                    {
+                        var list=new ArrayList<News>();
+                        list.add(news);
+                        newsZoneMap.put(news.getZone(),list);
+                    }
                 }
 
             }
@@ -71,7 +85,6 @@ public class FakeNewsDao implements NewsDao {
     }
     @Override
     public List<News> getTopNewsList(int num) {
-        var random = new java.util.Random();
         var keys = new ArrayList<>(newsMap.keySet());
         var list = new ArrayList<News>();
         for (int i = 0; i < num; i++) {
@@ -84,6 +97,25 @@ public class FakeNewsDao implements NewsDao {
 
     @Override
     public List<News> getNewsList(String zone,int num) {
-        return List.of();
+        var result = new ArrayList<News>();
+        if (zone.equals("全部")) {
+            return getTopNewsList(num);
+        }
+        if(newsZoneMap.containsKey(zone))
+        {
+            var list=new ArrayList<>(newsZoneMap.get(zone));
+            for (int i = 0; i < num; i++) {
+                var index = random.nextInt(list.size());
+                result.add(list.get(index));
+                list.remove(index);
+                if (list.size() == 0) {
+                    break;
+                }
+            }
+        }
+        else {
+            Logger.log("FakeNewsDao: 未找到分区"+zone);
+        }
+        return result;
     }
 }

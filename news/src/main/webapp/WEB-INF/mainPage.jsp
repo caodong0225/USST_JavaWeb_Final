@@ -36,32 +36,14 @@
         </div>
     </div>
 </div>
-<div class="select-class-list">
-    <div class="select">
-        <button>全部</button>
-    </div>
+<div class="select-zone-list" id="select-zone-list">
+<%--    <div class="zone">--%>
+<%--        <button>全部</button>--%>
+<%--    </div>--%>
 </div>
 <div class="more-news-and-advertisement">
 
-    <div class="more-news-list">
-        <div class="more-news">
-            <div class="more-news-image">
-                <img src="img/undefined.png" alt="新闻缩略图">
-            </div>
-            <div class="more-news-content">
-                <h3>新闻1标题</h3>
-                <p>新闻1内容</p>
-            </div>
-        </div>
-        <div class="more-news">
-            <div class="more-news-image">
-                <img src="img/undefined.png" alt="新闻缩略图">
-            </div>
-            <div class="more-news-content">
-                <h3>新闻1标题</h3>
-                <p>新闻1内容</p>
-            </div>
-        </div>
+    <div class="more-news-list" id="more-news-list">
     </div>
     <div class="advertisement-list">
         <div class="advertisement">

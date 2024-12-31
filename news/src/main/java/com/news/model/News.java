@@ -35,6 +35,15 @@ public class News {
     {
 
     }
+    public void initZone()
+    {
+        if (tags.size() > 0) {
+            this.zone = tags.get(0);
+        }
+        else {
+            this.zone = "全部";
+        }
+    }
     public String setId(String id) {
         return this.id = id;
     }
