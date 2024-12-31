@@ -48,7 +48,6 @@ public class GetNewsListServlet extends HttpServlet {
         var topList = NewsService.getInstance().getTopNewsList(5);
         Logger.log("获取到置顶新闻列表："+topList.size());
         for (var news : topList) {
-            news.setCover("img/news/"+news.getCover()+".jpg");
             data.put(news.getId(), news);
         }
         result.put("data", data);
@@ -56,20 +55,6 @@ public class GetNewsListServlet extends HttpServlet {
         out.println(new ObjectMapper().writeValueAsString(result));
     }
     private void getNewsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Logger.log("GetNewsListServlet: 获取新闻列表api调用");
-        var session = request.getSession();
-        response.setContentType("application/json;charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        var out = response.getWriter();
-        var result = new HashMap<String, Object>();
-        result.put("success", true);
-        var data = new HashMap<String, Object>();
-        var topList = NewsService.getInstance().getTopNewsList(5);
-        for (var news : topList) {
-            news.setCover("img/news/"+news.getCover()+".jpg");
-            data.put(news.getId(), news);
-        }
-        result.put("data", data);
-        out.println(new ObjectMapper().writeValueAsString(result));
+
     }
 }

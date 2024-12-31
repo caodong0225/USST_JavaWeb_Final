@@ -49,13 +49,13 @@ function createTopNews(newsData) {
     Object.keys(newsData).forEach(function(newKey) {
         var newsItem = newsData[newKey];
         if (i == 0) {
-            featuredImage.src = newsItem["cover"];
+            featuredImage.src = "api/getImage?imageUrl=" + newsItem["cover"];
             featuredTitle.textContent = newsItem["title"];
             i++;
         }
         const thumbnailDiv = document.createElement('div');
         thumbnailDiv.className = 'thumbnail';
-        thumbnailDiv.innerHTML = `<img src="${newsItem["cover"]}" alt="新闻缩略图" />`;
+        thumbnailDiv.innerHTML = `<img src=api/getImage?imageUrl=${newsItem["cover"]} alt="新闻缩略图" />`;
         thumbnailDiv.addEventListener('click', function() {
             featuredImage.src = newsItem["cover"];
             featuredTitle.textContent = newsItem["title"];
@@ -66,7 +66,7 @@ function createTopNews(newsData) {
 }
 function loadTopNews() {
     var xhr = new XMLHttpRequest();
-    xhr.open('Post', 'api/getTopNewsList', true);
+    xhr.open('Post', 'api/getTopNewsList', false);
     xhr.onload = function() {
         if (xhr.status >= 200 && xhr.status < 300) {
             var response = JSON.parse(xhr.responseText);
