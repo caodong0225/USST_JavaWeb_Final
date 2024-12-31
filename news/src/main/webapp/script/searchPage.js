@@ -41,6 +41,11 @@ function onclick_search() {
     alert("搜索内容为：" + search);
 }
 
+function back_main_page() {
+    location.href = "mainPage";
+}
+
+
 function onclick_login() {
     location.href = "login";
 }
@@ -82,24 +87,24 @@ function createSearchedNews(newsData) {
         var newsTitle = document.createElement('h3');
         newsTitle.textContent = `${newsItem["title"]}`;
         var newsContent = document.createElement('p');
-        newsContent.textContent = `${newsItem["content"].substring(0,20)}`;
+        newsContent.textContent = `${newsItem["content"].substring(0, 20)}`;
         newsContentDiv.appendChild(newsTitle);
         newsContentDiv.appendChild(newsContent);
         newsDiv.appendChild(newsImageDiv);
         newsDiv.appendChild(newsContentDiv);
+        searchedNewsList.appendChild(newsDiv);
+
         //为新闻容器div添加监视器，用于跳转到详情页面
         newsDiv.addEventListener('click', function () {
             alert("点击")
         });
-        // 将新闻容器div添加到目标容器div中
-        searchedNewsList.appendChild(newsDiv);
     });
 
 }
 
 function loadSearchedNews() {
     var xhr = new XMLHttpRequest();
-    xhr.open('Post', 'api/getTopNewsList', false);
+    xhr.open('Post', 'search', false);
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             var response = JSON.parse(xhr.responseText);

@@ -20,6 +20,7 @@
     <label for="search-content"></label>
     <input id="search-content" type="text" placeholder="搜索新闻...">
     <button onclick="onclick_search()">搜索</button>
+    <button onclick="back_main_page()" style="background-color: #888888">返回主页</button>
 </div>
 <div class="searched-news-list" id="searched-news-list">
 
