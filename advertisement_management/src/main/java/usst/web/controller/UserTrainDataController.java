@@ -1,11 +1,11 @@
 package usst.web.controller;
 
-import usst.web.service.UserTrainDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import usst.web.service.UserTrainDataService;
 
 @RestController
-@RequestMapping("/user-train-data")
+@RequestMapping("/user-predict")
 public class UserTrainDataController {
 
     @Autowired
@@ -14,5 +14,10 @@ public class UserTrainDataController {
     @PostMapping("/save")
     public String saveUserTrainData(@RequestBody String userTrainDataJson) {
         return userTrainDataService.saveUserTrainDataToDatabase(userTrainDataJson);
+    }
+
+    @PostMapping("/get-preferences")
+    public String getPreferences(@RequestBody String userTrainDataJson) {
+        return userTrainDataService.getPreferences(userTrainDataJson);
     }
 }
