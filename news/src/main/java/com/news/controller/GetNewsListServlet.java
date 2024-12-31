@@ -72,7 +72,7 @@ public class GetNewsListServlet extends HttpServlet {
             data.put(news.getId(), news);
         }
         result.put("data", data);
-        Logger.log("GetNewsListServlet: 获取新闻列表api调用成功，结果："+new ObjectMapper().writeValueAsString(result));
+//        Logger.log("GetNewsListServlet: 获取新闻列表api调用成功，结果："+new ObjectMapper().writeValueAsString(result));
         out.println(new ObjectMapper().writeValueAsString(result));
     }
     private void getNewsZoneList(HttpServletRequest request, HttpServletResponse response) throws IOException {

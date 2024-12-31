@@ -2,7 +2,8 @@
     // 检查登录状态并更新用户信息栏
     checkLoginStatus();
     loadTopNews();
-    loadNewsZone();
+    loadNewsZoneSelect();
+    loadNewsZoneData("全部");
 });
 
 function checkLoginStatus() {
@@ -36,20 +37,6 @@ function onclick_search(){
     }
     // alert("搜索内容为：" + search);
     location.href = "search?search=" + search;
-}
-function onclick_login(){
-    location.href = "login";
-}
-function onclick_logout(){
-    var xhr = new XMLHttpRequest();
-    xhr.open('Post', 'api/logout', true);
-    xhr.onload = function() {
-        location.reload();
-    };
-    xhr.onerror = function() {
-        location.reload();
-    };
-    xhr.send();
 }
 function loadTopNews() {
     var xhr = new XMLHttpRequest();
@@ -93,14 +80,14 @@ function createTopNews(newsData) {
         thumbnailList.appendChild(thumbnailDiv);
     });
 }
-function loadNewsZone(){
+function loadNewsZoneSelect(){
     var xhr = new XMLHttpRequest();
     xhr.open('Post', 'api/getNewsZoneList', false);
     xhr.onload = function() {
         if (xhr.status >= 200 && xhr.status < 300) {
             var response = JSON.parse(xhr.responseText);
             if (response.success) {
-                createNewsZone(response.data);
+                createNewsZoneSelect(response.data);
             }
         }
     };
@@ -109,7 +96,7 @@ function loadNewsZone(){
     };
     xhr.send();
 }
-function createNewsZone(zoneData) {
+function createNewsZoneSelect(zoneData) {
     var newsZoneList = document.getElementById("select-zone-list");
     for(var i = 0; i < zoneData.length; i++){
         var zone = zoneData[i];
@@ -156,7 +143,7 @@ function createNewsList(newsData) {
             </div>
             <div class="more-news-content">
                 <h3>${newsItem["title"]}</h3>
-                <p>${newsItem["content"]}</p>
+                <p>${cutText(newsItem["content"],200)}</p>
             </div>
         `;
         newsList.appendChild(newsDiv);

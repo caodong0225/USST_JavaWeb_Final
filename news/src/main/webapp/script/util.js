@@ -34,3 +34,24 @@ function encryptText(text) {
     const encryptedText = btoa(String.fromCharCode.apply(null, buffer));
     return encryptedText;
 }
+function cutText(text, maxLength) {
+    if (text.length > maxLength) {
+        text = text.substring(0, maxLength) + '.....';
+    }
+    return text;
+}
+
+function onclick_login(){
+    location.href = "login";
+}
+function onclick_logout(){
+    var xhr = new XMLHttpRequest();
+    xhr.open('Post', 'api/logout', true);
+    xhr.onload = function() {
+        location.reload();
+    };
+    xhr.onerror = function() {
+        location.reload();
+    };
+    xhr.send();
+}

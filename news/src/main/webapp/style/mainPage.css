@@ -141,6 +141,12 @@
 .zone button:hover {
     background-color: #e9ecef;
 }
+
+.more-news-and-advertisement{
+    width: 100%;
+    display: flex;
+    padding: 20px;
+}
 .more-news-list {
     width: 80%;
     display: block;
@@ -163,12 +169,13 @@
     margin: 10px;
     display: flex;
     transition: transform 0.3s;
+    padding: 20px;
 }
 .more-news:hover{
     transform: translateY(-5px);
 }
 .more-news-image {
-    width: 20%;
+    width: 30%;
     height: 100%;
     overflow: hidden;
 }
@@ -178,22 +185,33 @@
     object-fit: cover;
 }
 .more-news-content {
+    width: 70%;
     padding: 10px;
+    display: block;
+    overflow: hidden;
 }
-.more-news-and-advertisement{
-    width: 100%;
-    display: flex;
-    padding: 20px;
+.more-news-content h3 {
+    height: 20%;
+    padding: 10px;
+    margin: 0;
+}
+.more-news-content p {
+    height: 60%;
+    padding: 10px;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 .advertisement-list {
     width: 15%;
-    padding: 10px;
+    padding: 20px;
     display: block;
-    justify-content: space-between;
     margin-top: 20px;
 }
 .advertisement {
-    width: 100%;
+    width: 90%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     overflow: hidden;
@@ -201,6 +219,7 @@
     display: block;
     transition: transform 0.3s;
     text-align: center;
+    padding: 10px;
 }
 .advertisement:hover{
     transform: translateY(-5px);
