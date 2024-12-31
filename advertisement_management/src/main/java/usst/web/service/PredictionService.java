@@ -1,6 +1,7 @@
 package usst.web.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 
@@ -9,13 +10,14 @@ import java.nio.charset.StandardCharsets;
 
 @Service
 public class PredictionService {
+    @Value("${python.path}")
+    private String pythonPath;
 
     public String predict(String jsonInput) {
         // 将JSON输入转换为numpy数组格式的字符串
         String numpyArrayStr = convertToJsonArrayString(jsonInput);
 
         // 调用Python脚本
-        String pythonPath = "";
         Process proc;
         StringBuilder output = new StringBuilder();
         try {
