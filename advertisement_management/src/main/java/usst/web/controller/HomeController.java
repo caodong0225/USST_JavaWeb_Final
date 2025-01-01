@@ -18,11 +18,16 @@ public class HomeController {
 
     @GetMapping("/article")
     public String articles() {
-        return "article";
+        return "updateAd";
     }
 
     @GetMapping("/markdown")
     public String markdown() {
         return "edit";
+    }
+
+    @GetMapping("/updateAdDetails")
+    public String updateAdDetails() {
+        return "updateAdDetails";
     }
 }

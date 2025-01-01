@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advertisement Management</title>
+  <link rel="stylesheet" href="/static/css/advertisement.css">
+  <!-- 引入Bootstrap和自定义CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body id="page-top">
+
+<div id="wrapper">
+
+  <!-- Sidebar (这里假设已经包含在你的HTML中或通过其他方式加载) -->
+  <!-- <div th:replace="sidebar.html :: sidebar"></div> -->
+  <div th:replace="sidebar.html :: sidebar"></div>
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+      <!-- Topbar (这里假设已经包含在你的HTML中或通过其他方式加载) -->
+      <!-- <div th:replace="topbar.html :: topbar"></div> -->
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+
+        <h1 class="h3 mb-4 text-gray-800">Advertisements</h1>
+
+        <!-- Advertisements List -->
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Advertisements List</h6>
+          </div>
+          <div class="card-body">
+            <ul id="adList" class="list-unstyled"></ul>
+          </div>
+        </div>
+
+        <!-- Advertisement Details -->
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Advertisement Details</h6>
+          </div>
+          <div class="card-body">
+            <div id="adDetails"></div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+      <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+          <span>Copyright &copy; Your Company 2023</span>
+        </div>
+      </div>
+    </footer>
+    <!-- End of Footer -->
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Bootstrap core JavaScript-->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/static/js/sb-admin-2.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const adList = document.getElementById('adList');
+    const adDetails = document.getElementById('adDetails');
+
+    fetchAllAdvertisements();
+
+    function fetchAllAdvertisements() {
+      fetch('/advertisements/all')
+              .then(response => response.json())
+              .then(data => {
+                adList.innerHTML = '';
+                data.forEach(ad => {
+                  const li = document.createElement('li');
+                  li.classList.add('list-group-item');
+                  li.textContent = ad.adName || 'Untitled';
+                  li.addEventListener('click', () => fetchAdvertisementDetails(ad.adId));
+                  adList.appendChild(li);
+                });
+              })
+              .catch(error => console.error('Error fetching advertisements:', error));
+    }
+
+    function fetchAdvertisementDetails(adId) {
+      fetch(`/advertisements/${adId}`)
+              .then(response => response.json())
+              .then(data => {
+                // 解析图片URL的JSON字符串
+                const imageUrls = JSON.parse(data.adImageUrl);
+
+                adDetails.innerHTML = `
+                <p><strong>Title:</strong> ${data.adName || 'Untitled'}</p>
+                <p><strong>Feature:</strong> ${data.adFeature || 'No feature provided'}</p>
+                <p><strong>Images:</strong></p>
+                <div class="row">
+                `;
+
+                // 遍历所有图片URL，并为每个URL创建一个img元素
+                imageUrls.forEach(imageUrl => {
+                  const col = document.createElement('div');
+                  col.classList.add('col-md-4');
+                  const img = document.createElement('img');
+                  img.src = imageUrl;
+                  img.alt = 'Advertisement Image';
+                  img.classList.add('img-fluid');
+                  col.appendChild(img);
+                  adDetails.appendChild(col);
+                });
+
+                adDetails.innerHTML += `
+                </div>
+                <a href="/home/updateAdDetails?adId=${adId}&articleId=${data.articleId}" class="btn btn-primary btn-block mt-3">View Details</a>
+                `;
+              })
+              .catch(error => console.error('Error fetching advertisement details:', error));
+    }
+  });
+</script>
+</body>
+</html>
