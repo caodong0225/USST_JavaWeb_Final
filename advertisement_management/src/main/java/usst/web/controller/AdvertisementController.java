@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import usst.web.annotation.Permission;
 import usst.web.entity.Advertisement;
 import usst.web.entity.User;
 import usst.web.service.AdvertisementService;
@@ -35,6 +36,7 @@ public class AdvertisementController {
     private String UPLOAD_DIR;
 
     @PostMapping("/create")
+    @Permission(role = "admin,advertisers")
     public ResponseEntity<Integer> createAdvertisement(@RequestParam("adName") String adName,
                                                        @RequestParam("articleId") Integer articleId,
                                                        @RequestParam("adImages") MultipartFile[] adImages,
@@ -94,10 +96,51 @@ public class AdvertisementController {
         }
     }
 
-    @PutMapping("/update")
-    public void updateAdvertisement(@RequestBody Advertisement advertisement) {
+    @PostMapping("/update")
+    public ResponseEntity<Void> updateAdvertisement(@RequestParam("adId") int adId,
+                                                    @RequestParam("adName") String adName,
+                                                    @RequestParam("articleId") Integer articleId,
+                                                    @RequestParam("adImages") MultipartFile[] adImages,
+                                                    @RequestParam("adFeature") String adFeature,
+                                                    HttpSession session) throws IOException {
+        User user = (User) session.getAttribute("user");
+
+        Advertisement advertisement = advertisementService.getAdvertisementById(adId);
+        if (advertisement == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<String> imageUrls = new ArrayList<>();
+
+        // 保存新上传的文件并记录URL
+        for (MultipartFile adImage : adImages) {
+            if (!adImage.isEmpty()) {
+                String fileName = UUID.randomUUID().toString() + "-" + adImage.getOriginalFilename();
+                String filePath = UPLOAD_DIR + fileName;
+                adImage.transferTo(Paths.get(filePath));
+                imageUrls.add("/advertisements/images/" + fileName);
+            }
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonImageUrls = objectMapper.writeValueAsString(imageUrls);
+        String jsonPlacementLocation = objectMapper.writeValueAsString(new ArrayList<>()); // 假设投放位置不变
+
+        // 更新广告对象
+        advertisement.setAdId(adId);
+        advertisement.setAdName(adName);
+        advertisement.setArticleId(articleId);
+        advertisement.setAdImageUrl(jsonImageUrls);
+        advertisement.setAdFeature(adFeature);
+        advertisement.setAdvertiserId(user.getId());
+        advertisement.setPlacementLocation(jsonPlacementLocation);
+
+        // 更新数据库
         advertisementService.updateAdvertisement(advertisement);
+
+        return ResponseEntity.ok().build();
     }
+
 
     @DeleteMapping("/delete/{adId}")
     public void deleteAdvertisement(@PathVariable int adId) {

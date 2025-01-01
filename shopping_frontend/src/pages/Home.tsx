@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { fetchGoods, searchGoods, addToCart } from "../api";
 import Navbar from "../components/Navbar";
+import Toast from "../components/Toast";
 import { Link } from "react-router-dom";
 
 function Home() {
   const [goods, setGoods] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   useEffect(() => {
     fetchGoods().then((data) => setGoods(data));
+  }, []);
+  useEffect(() => {
+    document.title = 'USST小超市'; // 设置页面标题
   }, []);
 
   const handleSearch = async () => {
@@ -26,10 +31,10 @@ function Home() {
 
   const handleAddToCart = async (goodsId: number) => {
     try {
-      await addToCart(goodsId, 1); // 默认加入一个
-      alert("商品已加入购物车");
+      await addToCart(goodsId, 1);
+      setToastMessage("商品已加入购物车");
     } catch (error) {
-      alert("加入购物车失败");
+      setToastMessage("加入购物车失败");
     }
   };
 
@@ -93,6 +98,11 @@ function Home() {
           )}
         </div>
       </div>
+
+      {/* Toast 显示 */}
+      {toastMessage && (
+        <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
+      )}
     </div>
   );
 }

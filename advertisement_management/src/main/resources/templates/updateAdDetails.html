@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>广告更新</title>
+    <!-- Bootstrap CSS -->
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template -->
+    <link href="../static/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Editor.md CSS -->
+    <link rel="stylesheet" href="/static/css/editormd.css" />
+    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
+</head>
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="sidebar.html :: sidebar"></div>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="main-content">
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">广告创建</h1>
+
+                <!-- Advertisement Form -->
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <form id="createAdForm" name="createAdForm" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="adTitle">广告标题</label>
+                                <input type="text" class="form-control" id="adTitle" name="adName" placeholder="输入广告标题" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="adImage">上传图片</label>
+                                <input type="file" class="form-control-file" id="adImage" name="adImages" accept="image/*" multiple required>
+                            </div>
+                            <div class="form-group">
+                                <label for="adFeature">广告简介</label>
+                                <input type="text" class="form-control" id="adFeature" name="adFeature" placeholder="输入特色描述" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="keywords">标签</label>
+                                <input type="text" class="form-control" id="keywords" name="keywords" placeholder="输入广告标签" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="adStartTime">投放日期</label>
+                                <input id="adStartTime" type="text" class="form-control" name="adStartTime" value="2015-11-11">
+                                <span id="zhi" class="form-control">至</span>
+                                <input id="adEndTime" type="text" class="form-control" name="adEndTime" value="2015-11-17">
+                            </div>
+                        </form>
+
+                        <form id="mdEditorForm" name="mdEditorForm">
+                            <div class="form-group">
+                                <label for="title">标题</label>
+                                <input type="text" class="form-control" id="title" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="author">作者</label>
+                                <input type="text" class="form-control" id="author" name="author">
+                            </div>
+                            <div id="test-editormd">
+                                <textarea style="display:none;" id="content" name="content" class="form-control"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Bootstrap core JavaScript-->
+<script src="../static/vendor/jquery/jquery.min.js"></script>
+<script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Editor.md JavaScript -->
+<script src="../static/js/editormd.min.js"></script>
+<!-- Page level custom scripts -->
+<script type="text/javascript">
+    var testEditor;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialAdId = urlParams.get('adId');
+    const initialArticleId = urlParams.get('articleId');
+
+    document.addEventListener('DOMContentLoaded', () => {
+// 页面加载完成后，调用函数
+        fetchAdvertisementDetails(initialAdId);
+
+        function fetchAdvertisementDetails(adId) {
+            fetch(`/advertisements/${adId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // 解析图片URL的JSON字符串
+                    const imageUrls = JSON.parse(data.adImageUrl);
+
+                    // 预填充表单
+                    document.getElementById('adTitle').value = data.adName || 'Untitled';
+                    document.getElementById('adFeature').value = data.adFeature || 'No feature provided';
+                    document.getElementById('title').value = data.article.title || 'Untitled';
+                    document.getElementById('author').value = data.article.author || 'Anonymous';
+                    document.getElementById('content').value = data.article.content || '';
+
+                    // 显示图片
+                    const adDetailsImages = document.querySelector('#adDetails img');
+                    if (adDetailsImages) {
+                        adDetailsImages.forEach(img => img.src = imageUrls[0]); // 假设只显示第一张图片
+                    }
+
+                    // 显示广告详情
+                    adDetails.innerHTML = `
+                        <p><strong>Title:</strong> ${data.adName || 'Untitled'}</p>
+                        <p><strong>Feature:</strong> ${data.adFeature || 'No feature provided'}</p>
+                        <p><strong>Images:</strong></p>
+                        <div class="row">
+                            `;
+
+                    imageUrls.forEach(imageUrl => {
+                        const col = document.createElement('div');
+                        col.classList.add('col-md-4');
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.alt = 'Advertisement Image';
+                        img.classList.add('img-fluid');
+                        col.appendChild(img);
+                        adDetails.appendChild(col);
+                    });
+
+                    adDetails.innerHTML += `
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block mt-3" onclick="updateAdvertisement(${adId})">Update Advertisement</button>
+                    `;
+                })
+                .catch(error => console.error('Error fetching advertisement details:', error));
+        }
+
+
+    });
+    $(function() {
+        testEditor = editormd("test-editormd", {
+            width   : "100%",
+            height  : 640,
+            syncScrolling : "single",
+            path    : "../static/lib/",
+            imageUpload : true,
+            imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL : "/article/image/upload",
+            toolbarIcons : function () {
+                return ["undo","redo","|","bold","del","italic","quote","ucwords","uppercase","lowercase","|","h1","h2","h3","h4","h5","h6","|","list-ul","list-ol","hr","|","link","reference-link","image","code","preformatted-text","code-block","table","datetime","emoji","html-entities","pagebreak","|","goto-line","watch","preview","fullscreen","clear","search","|","help","info", "||", "publish"];
+            },
+            toolbarIconTexts: {
+                publish: "<span bgcolor='gray'>发布</span>"
+            },
+            toolbarHandlers : {
+                publish: function (cm, icon, cursor, selection) {
+                    const mdEditorForm = document.getElementById('mdEditorForm');
+                    const mdFormData = new FormData(mdEditorForm);
+                    mdFormData.append('id', initialArticleId)
+                    fetch('/article/update', {
+                        method: 'POST',
+                        body: mdFormData
+                    }).then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const articleId = initialArticleId;
+
+                                const createAdForm = document.getElementById('createAdForm');
+                                const adFormData = new FormData(createAdForm);
+                                adFormData.append('articleId', articleId);
+                                adFormData.append('adId', initialAdId)
+                                fetch('/advertisements/update', {
+                                    method: 'POST',
+                                    body: adFormData
+                                })
+                                    .then(response => response.json())
+                                    .then(adData => {
+                                        console.log('Ad created:', adData);
+                                    })
+                                    .catch(error => {
+                                        console.error('Error creating ad:', error);
+                                    });
+                            }
+                        })
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

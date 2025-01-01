@@ -85,7 +85,6 @@ def clear_cart():
     db.session.commit()
     return jsonify({'message': '购物车已清空'})
 
-# 提交购物车为订单
 @cart_bp.route('/orders', methods=['POST'])
 def create_order_from_cart():
     cart_items = Cart.query.filter_by(user_id=1).all()
@@ -99,14 +98,30 @@ def create_order_from_cart():
 
     # 添加商品到订单商品表
     for item in cart_items:
+        # 查询商品
+        goods = Goods.query.get(item.goods_id)
+        if not goods:
+            return jsonify({'error': f'商品ID {item.goods_id} 不存在'}), 404
+
+        # 检查库存是否足够
+        if goods.stock < item.quantity:
+            return jsonify({'error': f'商品 {goods.name} 库存不足'}), 400
+
+        # 减少库存
+        goods.stock -= item.quantity
+
+        # 创建订单商品记录
         order_item = OrderItems(
             order_id=new_order.id,
             goods_id=item.goods_id,
             quantity=item.quantity,
-            total_price=item.quantity * item.goods.price
+            total_price=item.quantity * goods.price
         )
         db.session.add(order_item)
-        db.session.delete(item)  # 从购物车移除
-    db.session.commit()
+
+        # 删除购物车中的商品
+        db.session.delete(item)
+
+    db.session.commit()  # 提交所有更改
 
     return jsonify({'message': '订单创建成功', 'order_id': new_order.id})

@@ -89,3 +89,23 @@ body {
     color: #666;
   }
   
+
+  /* Toast 容器默认样式 */
+.toast-container {
+    opacity: 0;
+    transform: translateY(50px); /* 初始位置为稍微向下 */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  /* 进入动画 */
+  .toast-enter {
+    opacity: 1;
+    transform: translateY(0); /* 恢复到正常位置 */
+  }
+  
+  /* 退出动画 */
+  .toast-exit {
+    opacity: 0;
+    transform: translateY(50px); /* 向下移出 */
+  }
+  
