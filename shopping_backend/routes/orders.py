@@ -34,6 +34,8 @@ def get_order(order_id):
             'goods_id': order.goods_id,
             'quantity': order.quantity,
             'total_price': str(order.total_price),
-            'order_time': order.order_time
+            'order_time': order.order_time,
+            'goods_name': order.goods.name,
+            'goods_price': str(order.goods.price)
         })
     return jsonify({'error': '订单不存在'}), 404
