@@ -1,0 +1,30 @@
+# DataSource Config
+spring:
+  application:
+    name: gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+    gateway:
+      routes:
+        - id: user-login
+          uri: lb://login
+          predicates:
+              - Path=/user/**
+        - id: order-goods
+          uri: lb://order
+          predicates:
+              - Path=/goods/**
+        - id: order-order
+          uri: lb://order
+          predicates:
+            - Path=/order/**
+        - id: alipay
+          uri: lb://alipay
+          predicates:
+            - Path=/alipay/**
+server:
+  port: 9527

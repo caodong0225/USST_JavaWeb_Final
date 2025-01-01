@@ -1,3 +1,9 @@
-# 说明
+# Hello!😘
+This is shopping backend!
+Made by react+ts!
 
-这是电商的前端
+# How to run?
+```
+npm i
+npm run dev
+```
