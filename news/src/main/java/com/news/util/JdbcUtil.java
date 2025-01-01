@@ -19,8 +19,7 @@ public class JdbcUtil {
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
                 if (connection != null) {
                     Logger.log("数据库连接成功");
-                }
-                else {
+                } else {
                     Logger.log("数据库连接失败");
                 }
             } catch (ClassNotFoundException e) {

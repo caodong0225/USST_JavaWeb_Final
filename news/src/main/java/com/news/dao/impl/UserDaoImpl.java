@@ -11,9 +11,11 @@ import java.sql.SQLException;
 
 public class UserDaoImpl implements UserDao {
     private Connection connection;
+
     public UserDaoImpl() {
         init();
     }
+
     private void init() {
         try {
             connection = JdbcUtil.getConnection();

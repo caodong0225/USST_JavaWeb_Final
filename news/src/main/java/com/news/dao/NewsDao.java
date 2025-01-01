@@ -6,7 +6,13 @@ import java.util.List;
 
 public interface NewsDao {
     List<News> getTopNewsList(int num);
-    List<News> getNewsByZoneList(String zone,int num);
-    List<News> getAllNewsList();
+
+    List<News> getNewsByZoneList(String zone, int num);
+
     News getNewsById(String id);
+
+    boolean addNews(News news);
+
+    boolean deleteNews(String id);
+
 }
