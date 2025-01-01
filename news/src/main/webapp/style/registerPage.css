@@ -60,3 +60,48 @@
     border-radius: 4px;
     text-align: center;
 }
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: #333;
+    font-size: 16px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+/* 输入框样式 */
+input[type="date"] {
+    width: 100%; /* 使输入框宽度填满容器 */
+    padding: 10px; /* 添加内边距 */
+    border-radius: 5px; /* 边框圆角 */
+    border: 1px solid #ccc; /* 边框颜色和样式 */
+    background-color: white; /* 背景颜色 */
+    color: #333; /* 字体颜色 */
+    font-size: 16px; /* 字体大小 */
+    -webkit-appearance: none; /* 移除webkit默认样式 */
+    -moz-appearance: none; /* 移除firefox默认样式 */
+    appearance: none; /* 移除默认样式 */
+}
+
+/* 输入框焦点样式 */
+input[type="date"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* 添加一个日历图标 */
+input[type="date"] {
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 15px 15px;
+}

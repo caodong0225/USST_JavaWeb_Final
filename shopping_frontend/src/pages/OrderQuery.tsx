@@ -67,11 +67,18 @@ function OrderQuery() {
                 <div className="card">
                   <div className="card-body">
                     <h5 className="card-title">订单ID: {order.id}</h5>
-                    <p className="card-text">商品ID: {order.goods_id}</p>
-                    <p className="card-text">数量: {order.quantity}</p>
-                    <p className="card-text">总价: ¥{order.total_price}</p>
+                    <p className="card-text">订单状态: {order.status === 1 ? '待付款' : '已付款'}</p>
                     <p className="card-text">下单时间: {order.order_time}</p>
-                    {/* 删除按钮 */}
+                    <p className="card-text">
+                      商品列表:
+                      <ul>
+                        {order.items.map((item: any, index: number) => (
+                          <li key={index}>
+                            {item.goods_name} - 数量: {item.quantity} - 总价: ¥{item.total_price}
+                          </li>
+                        ))}
+                      </ul>
+                    </p>
                     <button
                       className="btn btn-danger w-100 mt-3"
                       onClick={() => handleDelete(order.id)}

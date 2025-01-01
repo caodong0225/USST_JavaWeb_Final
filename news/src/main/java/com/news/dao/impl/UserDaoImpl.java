@@ -27,10 +27,17 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean addUser(User user) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Users (username, password) VALUES (?, ?)");
+            var sql = "INSERT INTO Users (username, password,birthday,sex,career,country,educationBackground) VALUES (?, ?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setDate(3, new java.sql.Date(user.getBirthday().getTime()));
+            preparedStatement.setString(4, user.getSex());
+            preparedStatement.setString(5, user.getCareer());
+            preparedStatement.setString(6, user.getCountry());
+            preparedStatement.setString(7, user.getEducationBackground());
             preparedStatement.executeUpdate();
+
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,6 +56,12 @@ public class UserDaoImpl implements UserDao {
                 User user = new User();
                 user.setUsername(resultSet.getString("username"));
                 user.setPassword(resultSet.getString("password"));
+                user.setBirthday(resultSet.getDate("birthday"));
+                user.setSex(resultSet.getString("sex"));
+                user.setCareer(resultSet.getString("career"));
+                user.setCountry(resultSet.getString("country"));
+                user.setEducationBackground(resultSet.getString("educationBackground"));
+
                 return user;
             }
         } catch (Exception e) {

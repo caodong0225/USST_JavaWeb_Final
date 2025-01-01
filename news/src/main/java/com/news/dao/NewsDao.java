@@ -15,4 +15,5 @@ public interface NewsDao {
 
     boolean deleteNews(String id);
 
+    List<News> getNewsBysearch(String text, int top);
 }

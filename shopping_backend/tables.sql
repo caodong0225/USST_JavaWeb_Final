@@ -22,6 +22,30 @@ CREATE TABLE `orders` (
     FOREIGN KEY (`goods_id`) REFERENCES `goods`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
 
+DROP TABLE IF EXISTS `order_items`;
+CREATE TABLE `order_items` (
+    `id` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `order_id` INT NOT NULL COMMENT '订单ID',
+    `goods_id` INT NOT NULL COMMENT '商品ID',
+    `quantity` INT NOT NULL DEFAULT 1 COMMENT '商品数量',
+    `total_price` DECIMAL(10, 2) NOT NULL COMMENT '商品总价',
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`goods_id`) REFERENCES `goods`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单商品表';
+
+
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE `cart` (
+    `id` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `goods_id` INT NOT NULL COMMENT '商品ID',
+    `quantity` INT NOT NULL DEFAULT 1 COMMENT '商品数量',
+    `user_id` INT NOT NULL COMMENT '用户ID',
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`goods_id`) REFERENCES `goods`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='购物车表';
+
+
 INSERT INTO `goods` (`name`, `description`, `price`, `stock`, `image_path`) VALUES
 ('智能手机', '高性能的智能手机，适合日常使用', 3999.00, 100, '/static/uploads/goods/smartphone.jpg'),
 ('笔记本电脑', '轻薄便携的办公笔记本', 5999.00, 50, '/static/uploads/goods/laptop.jpg'),
