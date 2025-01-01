@@ -36,5 +36,8 @@ public class NewsService {
     public List<News> getAllNewsList() {
         return newsDao.getAllNewsList();
     }
+    public News getNewsById(int id) {
+        return newsDao.getNewsById(id);
+    }
 
 }
