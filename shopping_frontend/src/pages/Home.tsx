@@ -12,6 +12,9 @@ function Home() {
   useEffect(() => {
     fetchGoods().then((data) => setGoods(data));
   }, []);
+  useEffect(() => {
+    document.title = 'USST小超市'; // 设置页面标题
+  }, []);
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
