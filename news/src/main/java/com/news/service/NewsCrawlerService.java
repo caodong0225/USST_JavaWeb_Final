@@ -29,7 +29,8 @@ public class NewsCrawlerService {
             e.printStackTrace();
         }
     }
-    public static void crawNewsList(String savePath,String url,String zone) {
+
+    public static void crawNewsList(String savePath, String url, String zone) {
         try {
             // 这里以一个示例URL代替，你需要替换成合法的目标URL
             Document doc = Jsoup.connect(url).get();
@@ -44,7 +45,7 @@ public class NewsCrawlerService {
                 var author = CrawUtil.getAuthor(newsDoc);
                 var content = CrawUtil.getNewsContent(newsDoc);
                 var newsId = newsUrl.substring(newsUrl.lastIndexOf("/") + 1, newsUrl.lastIndexOf("."));
-                SaveNews(savePath,newsId,title, time, content, cover,author,zone);
+                SaveNews(savePath, newsId, title, time, content, cover, author, zone);
 
                 Thread.sleep(500);
             }
@@ -52,7 +53,8 @@ public class NewsCrawlerService {
             e.printStackTrace();
         }
     }
-    public static void SaveNews(String savePath,String newsId,String title, Date time, String content, String cover,String author,String zone) {
+
+    public static void SaveNews(String savePath, String newsId, String title, Date time, String content, String cover, String author, String zone) {
         var news = new News();
         news.setTitle(title);
         news.setDate(time);
@@ -78,6 +80,7 @@ public class NewsCrawlerService {
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) {
 
         var data = new ArrayList<String>();
@@ -90,13 +93,14 @@ public class NewsCrawlerService {
         data.add("政治");
         data.add("经济");
         for (var zone : data) {
-            crawlNewsByZone("D:\\yjj\\爬虫结果",zone,3);
+            crawlNewsByZone("D:\\yjj\\爬虫结果", zone, 3);
         }
     }
-    public static void crawlNewsByZone(String savePath,String zone,int pageNum) {
+
+    public static void crawlNewsByZone(String savePath, String zone, int pageNum) {
         for (int i = 1; i <= pageNum; i++) {
             var url = "https://search.cctv.com/search.php?qtext=" + zone + "&sort=relevance&type=web&vtime=&datepid=1&channel=&page=" + i;
-            NewsCrawlerService.crawNewsList(savePath,url,zone);
+            NewsCrawlerService.crawNewsList(savePath, url, zone);
         }
     }
 

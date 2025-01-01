@@ -22,6 +22,7 @@ public class CrawUtil {
         // 使用Jsoup清理HTML，不保留相对链接
         return Jsoup.clean(unsafeHtml, Safelist.basic());
     }
+
     public static String getNewsContent(Document html) {
         var bodyElement = html.getElementById("page_body");
         Element contentArea = null;
@@ -33,6 +34,7 @@ public class CrawUtil {
         }
         return "";
     }
+
     public static String getNewsTitle(Document html) {
         var bodyElement = html.getElementById("page_body");
         if (bodyElement == null) {
@@ -45,6 +47,7 @@ public class CrawUtil {
         Elements titleP = titleElement.select("h1");
         return titleP.text();
     }
+
     public static Date getNewsTime(Document html) {
         var bodyElement = html.getElementById("page_body");
         if (bodyElement == null) {
@@ -61,6 +64,7 @@ public class CrawUtil {
         String timeStr = timeP.get(0).text();
         return getTime(timeStr);
     }
+
     private static Date getTime(String timeStr) {
         String regex = "\\d{4}年\\d{1,2}月\\d{1,2}日";
         Pattern pattern = Pattern.compile(regex);
@@ -95,6 +99,7 @@ public class CrawUtil {
         return null;
 
     }
+
     public static String getAuthor(Document html) {
         var bodyElement = html.getElementById("page_body");
         if (bodyElement == null) {
@@ -117,6 +122,7 @@ public class CrawUtil {
         }
         return "";
     }
+
     public static String getString(String url) {
         try {
             Document doc = Jsoup.connect(url).get();
@@ -127,8 +133,7 @@ public class CrawUtil {
         }
     }
 
-    public static boolean downloadImage(String url, String destinationFile)
-    {
+    public static boolean downloadImage(String url, String destinationFile) {
         try (InputStream in = new BufferedInputStream(new URL(url).openStream());
              OutputStream out = new FileOutputStream(destinationFile)) {
             byte[] buffer = new byte[1024];

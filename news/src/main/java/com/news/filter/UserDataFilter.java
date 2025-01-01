@@ -1,11 +1,8 @@
 package com.news.filter;
 
-import com.news.Logger;
 import com.news.util.EncodeUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 

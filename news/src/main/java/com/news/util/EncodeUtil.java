@@ -4,13 +4,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class EncodeUtil {
-    public static String decodeTest(String encryptedText)
-    {
+    public static String decodeTest(String encryptedText) {
 
         // 解密Base64字符串
         String decryptedText = new String(Base64.getDecoder().decode(encryptedText), StandardCharsets.UTF_8);
         return decryptedText;
     }
+
     public static String decodeString(String encoded) {
         if (encoded == null || encoded.isEmpty()) {
             return null;

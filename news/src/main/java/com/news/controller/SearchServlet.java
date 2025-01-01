@@ -3,7 +3,6 @@ package com.news.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.news.Logger;
-import com.news.service.NewsService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -37,11 +36,11 @@ public class SearchServlet extends HttpServlet {
         result.put("success", true);
         var data = new HashMap<String, Object>();
 
-        for (var news : NewsService.getInstance().getAllNewsList()) {
-            if (news.getTitle().contains(searchText)) {
-                data.put(news.getId(), news);
-            }
-        }
+//        for (var news : NewsService.getInstance().getAllNewsList()) {
+//            if (news.getTitle().contains(searchText)) {
+//                data.put(news.getId(), news);
+//            }
+//        }
         result.put("data", data);
         Logger.log("SearchServlet: 搜索新闻api调用成功，结果：" + new ObjectMapper().writeValueAsString(result));
         out.println(new ObjectMapper().writeValueAsString(result));

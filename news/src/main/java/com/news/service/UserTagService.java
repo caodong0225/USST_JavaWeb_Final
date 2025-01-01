@@ -8,6 +8,7 @@ import java.util.List;
 
 public class UserTagService {
     private static UserTagService instance;
+
     public static UserTagService getInstance() {
         if (instance == null) {
             instance = new UserTagService();
@@ -15,7 +16,9 @@ public class UserTagService {
         }
         return instance;
     }
+
     private UserTagDao userTagDao;
+
     private void init() {
         userTagDao = new UserTagDaoImpl();
     }
@@ -27,6 +30,7 @@ public class UserTagService {
             return userTagDao.updateUserTag(userTag);
         }
     }
+
     public List<String> getTagsByUsername(String username) {
         return userTagDao.getTagsByUsername(username);
     }
