@@ -7,6 +7,7 @@ import com.news.model.News;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,15 +21,10 @@ public class FakeNewsDao implements NewsDao {
         init();
     }
     private void init() {
-        Logger.log("FakeNewsDao: 初始化");
-        var path = "WEB-INF/classes/News_json/";
-        var files=listFilesInDirectory(path);
-        for (var file : files) {
-            Logger.log("FakeNewsDao: 读取文件" + file.getName());
-        }
     }
     public void initList(String path)
     {
+
         var files=listFilesInDirectory(path);
         for (var file : files) {
             if (file.isFile()&&file.getName().endsWith(".json")) {
@@ -47,8 +43,11 @@ public class FakeNewsDao implements NewsDao {
                         newsZoneMap.put(news.getZone(),list);
                     }
                 }
-
             }
+        }
+        Logger.log("FakeNewsDao: 初始化完成");
+        for (var key : newsZoneMap.keySet()) {
+            Logger.log("FakeNewsDao: 分区"+key+"共"+newsZoneMap.get(key).size()+"条新闻");
         }
     }
     private News loadNewsFromFile(File file) {
@@ -57,7 +56,7 @@ public class FakeNewsDao implements NewsDao {
             var buffer = new byte[(int) file.length()];
             fis.read(buffer);
             fis.close();
-            var content = new String(buffer, "UTF-8");
+            var content = new String(buffer, StandardCharsets.UTF_8);
             var news = new ObjectMapper().readValue(content, News.class);
             news.setId(file.getName().replace(".json", ""));
             return news;
@@ -131,7 +130,7 @@ public class FakeNewsDao implements NewsDao {
     }
 
     @Override
-    public News getNewsById(int id) {
+    public News getNewsById(String id) {
         if (newsMap.containsKey(id)) {
             return newsMap.get(id);
         }
