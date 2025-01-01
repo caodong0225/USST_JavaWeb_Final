@@ -119,7 +119,6 @@ function createNewsList(newsData) {
         var newsDiv = document.createElement('div');
         newsDiv.className = 'more-news';
         newsDiv.innerHTML = `
-
             <div class="more-news-image">
                 <img src=${createImageSrc(newsItem["cover"])} alt="新闻缩略图">
             </div>

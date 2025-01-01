@@ -39,4 +39,7 @@ public class NewsService {
         return newsDao.addNews(news);
     }
 
+    public List<News> searchNewsByTitle(String text) {
+        return newsDao.searchNewsByTitle(text,20);
+    }
 }

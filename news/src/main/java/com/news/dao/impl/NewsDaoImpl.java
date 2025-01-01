@@ -143,4 +143,33 @@ public class NewsDaoImpl implements NewsDao {
         }
         return false;
     }
+
+
+    @Override
+    public List<News> searchNewsByTitle(String text, int top) {
+        var sql = "SELECT TOP " + top + " * FROM News WHERE title LIKE '%" + text + "%'";
+        try {
+            var preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setString(1, text);
+            var resultSet = preparedStatement.executeQuery();
+            var newsList = new ArrayList<News>();
+            while (resultSet.next()) {
+                var news = new News();
+                news.setId(resultSet.getString("id"));
+                news.setTitle(resultSet.getString("title"));
+                news.setContent(resultSet.getString("content"));
+                news.setAuthor(resultSet.getString("author"));
+                news.setCover(resultSet.getString("cover"));
+                news.setDate(resultSet.getDate("date"));
+                news.setTags(List.of(resultSet.getString("tags").split(",")));
+                news.setZone(resultSet.getString("zone"));
+                newsList.add(news);
+            }
+            return newsList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
