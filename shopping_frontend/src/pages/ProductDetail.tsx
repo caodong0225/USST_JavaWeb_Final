@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchProductDetail, createOrder } from '../api';
+import { fetchProductDetail, createOrder, addToCart } from '../api'; // 引入 addToCart API
 import Navbar from "../components/Navbar";
 
 function ProductDetail() {
@@ -23,6 +23,17 @@ function ProductDetail() {
       setMessage(`订单创建成功，订单ID: ${response.order_id}`);
     } catch (error: any) {
       setMessage(error.response?.data?.error || '订单创建失败');
+    }
+  };
+
+  const handleAddToCart = async () => {
+    if (!product) return;
+
+    try {
+      const response = await addToCart(product.id, quantity); // 调用加入购物车的 API
+      setMessage('商品已加入购物车');
+    } catch (error: any) {
+      setMessage(error.response?.data?.error || '加入购物车失败');
     }
   };
 
@@ -51,7 +62,7 @@ function ProductDetail() {
         <p>库存: {product.stock}</p>
 
         <div className="mt-4">
-          <h4>下订单</h4>
+          <h4>操作</h4>
           <div className="input-group mb-3" style={{ maxWidth: '300px' }}>
             <button className="btn btn-outline-secondary" onClick={decrementQuantity} disabled={quantity <= 1}>
               -
@@ -68,8 +79,11 @@ function ProductDetail() {
               +
             </button>
           </div>
-          <button className="btn btn-primary w-100" onClick={handleOrder}>
+          <button className="btn btn-primary w-100 mb-2" onClick={handleOrder}>
             提交订单
+          </button>
+          <button className="btn btn-success w-100" onClick={handleAddToCart}>
+            加入购物车
           </button>
           {message && <p className="text-success mt-3">{message}</p>}
         </div>
