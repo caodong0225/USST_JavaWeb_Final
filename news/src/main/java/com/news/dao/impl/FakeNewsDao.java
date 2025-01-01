@@ -20,15 +20,10 @@ public class FakeNewsDao implements NewsDao {
         init();
     }
     private void init() {
-        Logger.log("FakeNewsDao: 初始化");
-        var path = "WEB-INF/classes/News_json/";
-        var files=listFilesInDirectory(path);
-        for (var file : files) {
-            Logger.log("FakeNewsDao: 读取文件" + file.getName());
-        }
     }
     public void initList(String path)
     {
+
         var files=listFilesInDirectory(path);
         for (var file : files) {
             if (file.isFile()&&file.getName().endsWith(".json")) {
@@ -47,8 +42,11 @@ public class FakeNewsDao implements NewsDao {
                         newsZoneMap.put(news.getZone(),list);
                     }
                 }
-
             }
+        }
+        Logger.log("FakeNewsDao: 初始化完成");
+        for (var key : newsZoneMap.keySet()) {
+            Logger.log("FakeNewsDao: 分区"+key+"共"+newsZoneMap.get(key).size()+"条新闻");
         }
     }
     private News loadNewsFromFile(File file) {
