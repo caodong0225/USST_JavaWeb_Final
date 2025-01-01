@@ -16,3 +16,8 @@
 
 输入：http://localhost:8080/auth/login进入广告投放的登录界面。
 
+
+### 接口
+
+/ad/{fileName}  广告页面
+/ad/images/{fileName}   获取广告封面图片
