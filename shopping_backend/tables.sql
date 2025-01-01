@@ -21,3 +21,10 @@ CREATE TABLE `orders` (
     PRIMARY KEY (`id`),
     FOREIGN KEY (`goods_id`) REFERENCES `goods`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
+
+INSERT INTO `goods` (`name`, `description`, `price`, `stock`, `image_path`) VALUES
+('智能手机', '高性能的智能手机，适合日常使用', 3999.00, 100, '/static/uploads/goods/smartphone.jpg'),
+('笔记本电脑', '轻薄便携的办公笔记本', 5999.00, 50, '/static/uploads/goods/laptop.jpg'),
+('无线耳机', '高品质音效的蓝牙无线耳机', 299.00, 200, '/static/uploads/goods/earphones.jpg'),
+('智能手表', '监测健康数据的智能手表', 1299.00, 150, '/static/uploads/goods/smartwatch.jpg'),
+('台灯', '适合阅读的护眼LED台灯', 99.00, 500, '/static/uploads/goods/lamp.jpg');

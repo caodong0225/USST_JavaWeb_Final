@@ -5,12 +5,13 @@ from routes.orders import orders_bp
 from models import db
 
 app = Flask(__name__)
-app.config.from_object('config')
+app.config.from_object('config.Config') # 一定是要config.Config！！！
 
 # 初始化数据库
 db.init_app(app)
 # 初始化数据库
 with app.app_context():
+    db.drop_all()
     db.create_all()
     print("数据库表已创建！")
 # 注册蓝图
