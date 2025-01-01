@@ -21,3 +21,9 @@ export const fetchOrder = async (id: number) => {
   const response = await axios.get(`${API_URL}/orders/query/${id}`);
   return response.data;
 };
+
+export const searchGoods = async (query: string) => {
+    const response = await axios.get(`${API_URL}/goods/search?q=${query}`);
+    return response.data;
+  };
+  
