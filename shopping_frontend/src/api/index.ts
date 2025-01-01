@@ -15,7 +15,7 @@ export const fetchProductDetail = async (id: number) => {
 };
 
 // 创建订单
-export const createOrder = async (data: { goods_id: number; quantity: number }) => {
+export const createOrder = async (data: { items: { goods_id: number; quantity: number }[] }) => {
   const response = await axios.post(`${API_URL}/orders`, data);
   return response.data;
 };

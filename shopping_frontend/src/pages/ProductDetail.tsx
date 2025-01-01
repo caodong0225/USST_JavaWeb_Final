@@ -17,14 +17,22 @@ function ProductDetail() {
 
   const handleOrder = async () => {
     if (!product) return;
-
+  
     try {
-      const response = await createOrder({ goods_id: product.id, quantity });
+      const response = await createOrder({
+        items: [
+          {
+            goods_id: product.id,
+            quantity: quantity,
+          },
+        ],
+      });
       setMessage(`订单创建成功，订单ID: ${response.order_id}`);
     } catch (error: any) {
       setMessage(error.response?.data?.error || '订单创建失败');
     }
   };
+  
 
   const handleAddToCart = async () => {
     if (!product) return;
