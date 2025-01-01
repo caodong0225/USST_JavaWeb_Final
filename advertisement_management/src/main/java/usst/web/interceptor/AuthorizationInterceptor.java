@@ -33,6 +33,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         if (request.getRequestURI().startsWith("/recommend/")) {
             return true;
         }
+        if (request.getRequestURI().startsWith("/user-predict/")) {
+            return true;
+        }
 
         // 检查用户是否已登录
         if (userSession == null) {

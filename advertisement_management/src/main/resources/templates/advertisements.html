@@ -30,12 +30,12 @@
       <!-- Begin Page Content -->
       <div class="container-fluid">
 
-        <h1 class="h3 mb-4 text-gray-800">Advertisements</h1>
+        <h1 class="h3 mb-4 text-gray-800">你的广告</h1>
 
         <!-- Advertisements List -->
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Advertisements List</h6>
+            <h6 class="m-0 font-weight-bold text-primary">广告列表</h6>
           </div>
           <div class="card-body">
             <ul id="adList" class="list-unstyled"></ul>
@@ -45,7 +45,7 @@
         <!-- Advertisement Details -->
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Advertisement Details</h6>
+            <h6 class="m-0 font-weight-bold text-primary">广告详情</h6>
           </div>
           <div class="card-body">
             <div id="adDetails"></div>
@@ -118,9 +118,9 @@
                 const imageUrls = JSON.parse(data.adImageUrl);
 
                 adDetails.innerHTML = `
-                <p><strong>Title:</strong> ${data.adName || 'Untitled'}</p>
-                <p><strong>Feature:</strong> ${data.adFeature || 'No feature provided'}</p>
-                <p><strong>Images:</strong></p>
+                <p><strong>标题:</strong> ${data.adName || 'Untitled'}</p>
+                <p><strong>特征:</strong> ${data.adFeature || 'No feature provided'}</p>
+                <p><strong>图片:</strong></p>
                 <div class="row">
                 `;
 
@@ -138,7 +138,7 @@
 
                 adDetails.innerHTML += `
                 </div>
-                <a href="/ad/${adId}" class="btn btn-primary btn-block mt-3">View Details</a>
+                <a href="/ad/${adId}" class="btn btn-primary btn-block mt-3">查看广告详情</a>
                 `;
               })
               .catch(error => console.error('Error fetching advertisement details:', error));

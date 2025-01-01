@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import usst.web.annotation.Permission;
 import usst.web.entity.Advertisement;
 import usst.web.entity.User;
 import usst.web.service.AdvertisementService;
@@ -39,7 +40,7 @@ public class AdvertisementController {
                                                        @RequestParam("articleId") Integer articleId,
                                                        @RequestParam("adImages") MultipartFile[] adImages,
                                                        @RequestParam("adFeature") String adFeature,
-                                                       HttpSession session) throws IOException {
+                                                       HttpSession session) throws Exception {
         List<String> imageUrls = new ArrayList<>();
         User user = (User) session.getAttribute("user");
 
