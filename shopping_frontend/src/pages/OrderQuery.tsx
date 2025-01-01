@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { fetchOrders, fetchOrderById } from '../api';
+import { fetchOrders, fetchOrderById, deleteOrder } from '../api';
 import Navbar from '../components/Navbar';
 
 function OrderQuery() {
   const [orders, setOrders] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [message, setMessage] = useState('');
 
   // 获取所有订单
   useEffect(() => {
@@ -14,22 +15,31 @@ function OrderQuery() {
   // 搜索订单
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
-      // 如果搜索框为空，重新获取所有订单
       fetchOrders().then(data => setOrders(data));
       return;
     }
     try {
       const order = await fetchOrderById(Number(searchQuery));
-      setOrders([order]); // 将结果作为单个数组元素展示
+      setOrders([order]);
     } catch (error) {
-      setOrders([]); // 如果订单不存在，清空列表
+      setOrders([]);
+    }
+  };
+
+  // 删除订单
+  const handleDelete = async (orderId: number) => {
+    try {
+      await deleteOrder(orderId);
+      setOrders(orders.filter(order => order.id !== orderId)); // 删除成功后更新订单列表
+      setMessage(`订单 ${orderId} 已成功删除`);
+    } catch (error: any) {
+      setMessage(error.response?.data?.error || '删除订单失败');
     }
   };
 
   return (
     <div>
       <Navbar />
-      {/* 搜索框 */}
       <div className="container mt-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h1>订单列表</h1>
@@ -47,6 +57,8 @@ function OrderQuery() {
           </div>
         </div>
 
+        {message && <p className="text-success">{message}</p>}
+
         {/* 订单列表 */}
         <div className="row">
           {orders.length > 0 ? (
@@ -59,6 +71,13 @@ function OrderQuery() {
                     <p className="card-text">数量: {order.quantity}</p>
                     <p className="card-text">总价: ¥{order.total_price}</p>
                     <p className="card-text">下单时间: {order.order_time}</p>
+                    {/* 删除按钮 */}
+                    <button
+                      className="btn btn-danger w-100 mt-3"
+                      onClick={() => handleDelete(order.id)}
+                    >
+                      删除订单
+                    </button>
                   </div>
                 </div>
               </div>

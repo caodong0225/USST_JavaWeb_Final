@@ -34,3 +34,8 @@ export const searchGoods = async (query: string) => {
     return response.data;
   };
   
+// 删除订单
+export const deleteOrder = async (id: number) => {
+  const response = await axios.delete(`${API_URL}/orders/${id}`);
+  return response.data;
+};

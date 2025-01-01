@@ -51,3 +51,14 @@ def get_all_orders():
         'order_time': order.order_time
     } for order in orders]
     return jsonify(result)
+
+@orders_bp.route('/<int:order_id>', methods=['DELETE'])
+def delete_order(order_id):
+    order = Orders.query.get(order_id)
+    if not order:
+        return jsonify({'error': '订单不存在'}), 404
+
+    # 删除订单
+    db.session.delete(order)
+    db.session.commit()
+    return jsonify({'message': f'订单 {order_id} 已成功删除'}), 200
