@@ -32,9 +32,8 @@ function loadTopNews() {
     xhr.send();
 }
 function createTopNews(newsData) {
-    var topNews = document.getElementById("top-news");
+    var featuredDiv = document.getElementById("featured-div");
     var thumbnailList = document.getElementById("thumbnail-list");
-
     var featuredImage = document.getElementById("featured-image");
     var featuredTitle = document.getElementById("featured-image-title");
     // 动态生成缩略图
@@ -45,6 +44,9 @@ function createTopNews(newsData) {
         if (i == 0) {
             featuredImage.src = cover;
             featuredTitle.textContent = newsItem["title"];
+            featuredDiv.addEventListener('click',function(){
+                location.href = "detail?newsId=" + newsItem["id"];
+            })
             i++;
         }
         const thumbnailDiv = document.createElement('div');
@@ -53,6 +55,9 @@ function createTopNews(newsData) {
         thumbnailDiv.addEventListener('click', function() {
             featuredImage.src = cover;
             featuredTitle.textContent = newsItem["title"];
+            featuredDiv.addEventListener('click',function(){
+                location.href = "detail?newsId=" + newsItem["id"];
+            })
         });
         thumbnailList.appendChild(thumbnailDiv);
     });
@@ -123,6 +128,9 @@ function createNewsList(newsData) {
                 <p>${cutText(newsItem["content"],200)}</p>
             </div>
         `;
+        newsDiv.addEventListener('click', function(){
+            location.href = "detail?newsId=" + newsItem["id"];
+        });
         newsList.appendChild(newsDiv);
     });
 }
