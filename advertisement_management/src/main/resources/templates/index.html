@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>控制面板</title>
 
     <!-- Custom fonts for this template-->
     <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -147,7 +147,7 @@
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">近十天广告创建量</h6>
                                     <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenu"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                         </a>
@@ -396,6 +396,42 @@
 
     <!-- Page level plugins -->
     <script src="../static/vendor/chart.js/Chart.min.js"></script>
+
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const date = [[${date}]];
+            const visitData = [[${recentVisited}]];
+
+            const ctx = document.getElementById("myAreaChart");
+            if (ctx) {
+                const myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: date,
+                        datasets: [{
+                            label: "新增广告数",
+                            lineTension: 0.3,
+                            backgroundColor: "rgba(78, 115, 223, 0.05)",
+                            borderColor: "rgba(78, 115, 223, 1)",
+                            pointRadius: 3,
+                            pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                            data: visitData,
+                        }],
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        tooltips: {
+                            callbacks: {
+                                label: function (tooltipItem, chart) {
+                                    return "新建: " + tooltipItem.yLabel;
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 
     <!-- Page level custom scripts -->
     <script th:inline="javascript">

@@ -2,10 +2,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from routes.goods import goods_bp
 from routes.orders import orders_bp
+from routes.cart import cart_bp
 from models import db
 from flask_cors import CORS
-
-
 app = Flask(__name__)
 app.config.from_object('config.Config') # 一定是要config.Config！！！
 
@@ -22,6 +21,7 @@ with app.app_context():
 # 注册蓝图
 app.register_blueprint(goods_bp, url_prefix='/goods')
 app.register_blueprint(orders_bp, url_prefix='/orders')
+app.register_blueprint(cart_bp, url_prefix='/cart')
 
 if __name__ == '__main__':
     app.run(debug=True)

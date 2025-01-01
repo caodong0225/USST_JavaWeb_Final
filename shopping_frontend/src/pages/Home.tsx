@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { fetchGoods, searchGoods } from "../api";
+import { fetchGoods, searchGoods, addToCart } from "../api";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+
 function Home() {
   const [goods, setGoods] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,6 +21,15 @@ function Home() {
       setGoods(results);
     } catch (error) {
       setGoods([]);
+    }
+  };
+
+  const handleAddToCart = async (goodsId: number) => {
+    try {
+      await addToCart(goodsId, 1); // 默认加入一个
+      alert("商品已加入购物车");
+    } catch (error) {
+      alert("加入购物车失败");
     }
   };
 
@@ -60,12 +70,20 @@ function Home() {
                         库存: {item.stock > 0 ? item.stock : "已售罄"}
                       </p>
                     </div>
-                    <Link
-                      to={`/product/${item.id}`}
-                      className="btn btn-primary w-100"
-                    >
-                      查看详情
-                    </Link>
+                    <div className="d-flex">
+                      <Link
+                        to={`/product/${item.id}`}
+                        className="btn btn-primary flex-grow-1 me-2"
+                      >
+                        查看详情
+                      </Link>
+                      <button
+                        className="btn btn-success flex-grow-1"
+                        onClick={() => handleAddToCart(item.id)}
+                      >
+                        加入购物车
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
