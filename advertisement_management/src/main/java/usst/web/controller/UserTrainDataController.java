@@ -1,23 +1,21 @@
 package usst.web.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import usst.web.service.UserTrainDataService;
+import usst.web.dto.UserTrainDataDTO;
+import usst.web.service.impl.UserTrainDataServiceImpl;
+import usst.web.vo.UserTrainDataVO;
 
 @RestController
 @RequestMapping("/user-predict")
 public class UserTrainDataController {
 
     @Autowired
-    private UserTrainDataService userTrainDataService;
-
-    @PostMapping("/save")
-    public String saveUserTrainData(@RequestBody String userTrainDataJson) {
-        return userTrainDataService.saveUserTrainDataToDatabase(userTrainDataJson);
-    }
+    private UserTrainDataServiceImpl userTrainDataService;
 
     @PostMapping("/get-preferences")
-    public String getPreferences(@RequestBody String userTrainDataJson) {
-        return userTrainDataService.getPreferences(userTrainDataJson);
+    public UserTrainDataVO getPreferences(@RequestBody UserTrainDataDTO userTrainDataDTO, HttpServletRequest request) {
+        return userTrainDataService.getPreferences(userTrainDataDTO, request);
     }
 }
