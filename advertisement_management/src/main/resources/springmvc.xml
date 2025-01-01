@@ -26,6 +26,12 @@
         <property name="characterEncoding" value="UTF-8" />
     </bean>
 
+    <!-- 配置 RocketMQ 生产者 -->
+    <bean id="rocketMQProducer" class="org.apache.rocketmq.client.producer.DefaultMQProducer">
+        <property name="producerGroup" value="testConsumerGroup"/>
+        <property name="namesrvAddr" value="10.100.164.38:9876"/>
+    </bean>
+
     <!-- 注册拦截器 -->
     <mvc:interceptors>
         <mvc:interceptor>

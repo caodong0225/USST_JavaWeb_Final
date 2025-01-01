@@ -36,12 +36,11 @@ public class AdvertisementController {
     private String UPLOAD_DIR;
 
     @PostMapping("/create")
-    @Permission(role = "admin,advertisers")
     public ResponseEntity<Integer> createAdvertisement(@RequestParam("adName") String adName,
                                                        @RequestParam("articleId") Integer articleId,
                                                        @RequestParam("adImages") MultipartFile[] adImages,
                                                        @RequestParam("adFeature") String adFeature,
-                                                       HttpSession session) throws IOException {
+                                                       HttpSession session) throws Exception {
         List<String> imageUrls = new ArrayList<>();
         User user = (User) session.getAttribute("user");
 
