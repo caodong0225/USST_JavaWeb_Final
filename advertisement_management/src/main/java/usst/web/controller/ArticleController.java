@@ -54,6 +54,26 @@ public class ArticleController {
 //        return "false";
     }
 
+    @RequestMapping("/update")
+    @ResponseBody
+    public JSONObject updateArticle(Article article) {
+        boolean res = articleService.updateArticle(article);
+
+        if(article.getId() > 0) {
+            JSONObject response = new JSONObject();
+            response.put("success", true);
+            response.put("articleId", article.getId());
+            return response;
+        }
+        JSONObject response = new JSONObject();
+        response.put("success", false);
+        return response;
+//        if(res) {
+//            return "success";
+//        }
+//        return "false";
+    }
+
 
     @RequestMapping("/image/upload")
     @ResponseBody

@@ -16,6 +16,11 @@ public class ArticleServiceImpl {
         return res > 0;
     }
 
+    public boolean updateArticle(Article article) {
+        int res = articleMapper.updateArticle(article);
+        return res > 0;
+    }
+
     public Article getArticleById(int id) {
         return articleMapper.getArticleById(id);
     }
