@@ -43,11 +43,11 @@
         <div class="form-group">
             <label for="education">学历:</label>
             <select id="education" name="education" required>
-                <option value="high_school">高中</option>
-                <option value="associate">专科</option>
-                <option value="bachelor">本科</option>
-                <option value="master">硕士</option>
-                <option value="doctorate">博士</option>
+                <option value="高中">高中</option>
+                <option value="专科">专科</option>
+                <option value="本科">本科</option>
+                <option value="硕士">硕士</option>
+                <option value="博士">博士</option>
                 <!-- 其他学历选项 -->
             </select>
         </div>

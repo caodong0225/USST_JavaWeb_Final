@@ -1,24 +1,26 @@
-﻿document.addEventListener('DOMContentLoaded', function() {
+﻿document.addEventListener('DOMContentLoaded', function () {
     // 检查登录状态并更新用户信息栏
     checkLoginStatus();
     loadTopNews();
     loadNewsZoneSelect();
     loadNewsZoneData("全部");
+    loadAdvertisement()
 });
 
-function onclick_search(){
+function onclick_search() {
     var search = document.getElementById("search-content").value;
-    if(search === ""){
+    if (search === "") {
         alert("搜索内容不能为空");
         return;
     }
     // alert("搜索内容为：" + search);
     location.href = "search?search=" + search;
 }
+
 function loadTopNews() {
     var xhr = new XMLHttpRequest();
     xhr.open('Post', 'api/getTopNewsList', false);
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             var response = JSON.parse(xhr.responseText);
             if (response.success) {
@@ -26,11 +28,12 @@ function loadTopNews() {
             }
         }
     };
-    xhr.onerror = function() {
+    xhr.onerror = function () {
         return null;
     };
     xhr.send();
 }
+
 function createTopNews(newsData) {
     var featuredDiv = document.getElementById("featured-div");
     var thumbnailList = document.getElementById("thumbnail-list");
@@ -38,13 +41,13 @@ function createTopNews(newsData) {
     var featuredTitle = document.getElementById("featured-image-title");
     // 动态生成缩略图
     var i = 0;
-    Object.keys(newsData).forEach(function(newKey) {
+    Object.keys(newsData).forEach(function (newKey) {
         var newsItem = newsData[newKey];
-        var cover=createImageSrc(newsItem["cover"]);
+        var cover = createImageSrc(newsItem["cover"]);
         if (i == 0) {
             featuredImage.src = cover;
             featuredTitle.textContent = newsItem["title"];
-            featuredDiv.addEventListener('click',function(){
+            featuredDiv.addEventListener('click', function () {
                 location.href = "detail?newsId=" + newsItem["id"];
             })
             i++;
@@ -52,20 +55,21 @@ function createTopNews(newsData) {
         const thumbnailDiv = document.createElement('div');
         thumbnailDiv.className = 'thumbnail';
         thumbnailDiv.innerHTML = `<img src=${cover} alt="新闻缩略图" />`;
-        thumbnailDiv.addEventListener('click', function() {
+        thumbnailDiv.addEventListener('click', function () {
             featuredImage.src = cover;
             featuredTitle.textContent = newsItem["title"];
-            featuredDiv.addEventListener('click',function(){
+            featuredDiv.addEventListener('click', function () {
                 location.href = "detail?newsId=" + newsItem["id"];
             })
         });
         thumbnailList.appendChild(thumbnailDiv);
     });
 }
-function loadNewsZoneSelect(){
+
+function loadNewsZoneSelect() {
     var xhr = new XMLHttpRequest();
     xhr.open('Post', 'api/getNewsZoneList', false);
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             var response = JSON.parse(xhr.responseText);
             if (response.success) {
@@ -73,21 +77,22 @@ function loadNewsZoneSelect(){
             }
         }
     };
-    xhr.onerror = function() {
+    xhr.onerror = function () {
         return null;
     };
     xhr.send();
 }
+
 function createNewsZoneSelect(zoneData) {
     var newsZoneList = document.getElementById("select-zone-list");
-    for(var i = 0; i < zoneData.length; i++){
+    for (var i = 0; i < zoneData.length; i++) {
         var zone = zoneData[i];
         var zoneDiv = document.createElement('div');
         zoneDiv.className = 'zone';
         var button = document.createElement('button');
         button.textContent = zone;
-        (function(zone) {
-            button.addEventListener('click', function() {
+        (function (zone) {
+            button.addEventListener('click', function () {
                 loadNewsZoneData(zone);
             });
         })(zone);
@@ -95,10 +100,11 @@ function createNewsZoneSelect(zoneData) {
         newsZoneList.appendChild(zoneDiv);
     }
 }
-function loadNewsZoneData(zone){
+
+function loadNewsZoneData(zone) {
     var xhr = new XMLHttpRequest();
     xhr.open('Post', 'api/getNewsList?zone=' + zone, false);
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             var response = JSON.parse(xhr.responseText);
             if (response.success) {
@@ -106,15 +112,16 @@ function loadNewsZoneData(zone){
             }
         }
     };
-    xhr.onerror = function() {
+    xhr.onerror = function () {
         return null;
     };
     xhr.send();
 }
+
 function createNewsList(newsData) {
     var newsList = document.getElementById("more-news-list");
     newsList.innerHTML = '';
-    Object.keys(newsData).forEach(function(newsKey) {
+    Object.keys(newsData).forEach(function (newsKey) {
         var newsItem = newsData[newsKey];
         var newsDiv = document.createElement('div');
         newsDiv.className = 'more-news';
@@ -124,15 +131,43 @@ function createNewsList(newsData) {
             </div>
             <div class="more-news-content">
                 <h3>${newsItem["title"]}</h3>
-                <p>${cutText(newsItem["content"],200)}</p>
+                <p>${cutText(newsItem["content"], 200)}</p>
             </div>
         `;
-        newsDiv.addEventListener('click', function(){
+        newsDiv.addEventListener('click', function () {
             location.href = "detail?newsId=" + newsItem["id"];
         });
         newsList.appendChild(newsDiv);
     });
 }
-function createImageSrc(imageUrl){
+
+function createImageSrc(imageUrl) {
     return "api/getImage?imageUrl=" + imageUrl;
+}
+
+
+function createAdvertisement(adData) {
+    var advertisementList = document.getElementById('advertisement-list');
+    var adDiv = document.createElement('div');
+    adDiv.className = 'advertisement';
+    adDiv.innerHTML += `
+        <div class="advertisement-image">
+            <img src='${adData["adImgUrl"]}' alt="广告图片">
+        </div>
+        <h4>${adData["adName"]}</h4>
+    `;
+    advertisementList.appendChild(adDiv);
+    //为广告容器div添加监听器，用于跳转到广告界面
+    adDiv.addEventListener('click', function () {
+        location.href = adData["adUrl"];
+    });
+
+}
+
+
+function loadAdvertisement() {
+    const userInfo = getUserInfo()
+    userInfo.device = getUserDevice()
+    userInfo.preference = null
+    createAdvertisement(sendAdRequest(userInfo));//想要多个广告就重复几次
 }
