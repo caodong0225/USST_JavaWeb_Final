@@ -115,6 +115,7 @@ public class FakeNewsDao implements NewsDao {
         }
         else {
             Logger.log("FakeNewsDao: 未找到分区"+zone);
+            return getTopNewsList(num);
         }
         return result;
     }
@@ -127,6 +128,14 @@ public class FakeNewsDao implements NewsDao {
             list.add(newsMap.get(key));
         }
         return list;
+    }
+
+    @Override
+    public News getNewsById(int id) {
+        if (newsMap.containsKey(id)) {
+            return newsMap.get(id);
+        }
+        return null;
     }
 
 }
