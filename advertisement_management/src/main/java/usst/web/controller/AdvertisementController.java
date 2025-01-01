@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import usst.web.annotation.Permission;
 import usst.web.entity.Advertisement;
 import usst.web.entity.User;
 import usst.web.service.AdvertisementService;
@@ -35,6 +36,7 @@ public class AdvertisementController {
     private String UPLOAD_DIR;
 
     @PostMapping("/create")
+    @Permission(role = "admin,advertisers")
     public ResponseEntity<Integer> createAdvertisement(@RequestParam("adName") String adName,
                                                        @RequestParam("articleId") Integer articleId,
                                                        @RequestParam("adImages") MultipartFile[] adImages,
