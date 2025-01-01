@@ -40,6 +40,6 @@ public class NewsService {
     }
 
     public List<News> searchNewsByTitle(String text) {
-        return newsDao.searchNewsByTitle(text,20);
+        return newsDao.getNewsBysearch(text,20);
     }
 }
