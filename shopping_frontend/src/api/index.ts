@@ -17,8 +17,15 @@ export const createOrder = async (data: { goods_id: number; quantity: number }) 
   return response.data;
 };
 
-export const fetchOrder = async (id: number) => {
-  const response = await axios.get(`${API_URL}/orders/query/${id}`);
+// 获取所有订单
+export const fetchOrders = async () => {
+  const response = await axios.get(`${API_URL}/orders/`);
+  return response.data;
+};
+
+// 按订单号获取订单
+export const fetchOrderById = async (id: number) => {
+  const response = await axios.get(`${API_URL}/orders/${id}`);
   return response.data;
 };
 
@@ -27,3 +34,8 @@ export const searchGoods = async (query: string) => {
     return response.data;
   };
   
+// 删除订单
+export const deleteOrder = async (id: number) => {
+  const response = await axios.delete(`${API_URL}/orders/${id}`);
+  return response.data;
+};
