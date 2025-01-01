@@ -2,18 +2,13 @@ package com.news.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.news.Logger;
-import com.news.service.NewsService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @WebServlet(value = {"/api/getUserName"})
 public class GetUserNameServlet extends HttpServlet {

@@ -30,9 +30,8 @@ function encryptText(text) {
     const encodedText = utf8Encoder.encode(text);
     // 将二进制数据转换为ArrayBuffer
     const buffer = new Uint8Array(encodedText.buffer);
-    // 将ArrayBuffer转换为Base64字符串
-    const encryptedText = btoa(String.fromCharCode.apply(null, buffer));
-    return encryptedText;
+    // 将ArrayBuffer转换为Base64字符串并返回
+    return btoa(String.fromCharCode.apply(null, buffer));
 }
 function cutText(text, maxLength) {
     if (text.length > maxLength) {

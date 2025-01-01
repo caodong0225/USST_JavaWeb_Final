@@ -5,9 +5,12 @@ import com.news.model.UserTag;
 import java.util.List;
 
 public interface UserTagDao {
-    public boolean addUserTag(UserTag userTag);
-    public List<String> getTagsByUsername(String username);
-    public boolean updateUserTag(UserTag userTag);
-    public UserTag getUserTagByUsernameAndTag(String username, String tag);
+    boolean addUserTag(UserTag userTag);
+
+    List<String> getTagsByUsername(String username);
+
+    boolean updateUserTag(UserTag userTag);
+
+    UserTag getUserTagByUsernameAndTag(String username, String tag);
 
 }
