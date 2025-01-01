@@ -39,3 +39,15 @@ def get_order(order_id):
             'goods_price': str(order.goods.price)
         })
     return jsonify({'error': '订单不存在'}), 404
+
+@orders_bp.route('/', methods=['GET'])
+def get_all_orders():
+    orders = Orders.query.all()  # 查询所有订单
+    result = [{
+        'id': order.id,
+        'goods_id': order.goods_id,
+        'quantity': order.quantity,
+        'total_price': float(order.total_price),
+        'order_time': order.order_time
+    } for order in orders]
+    return jsonify(result)
