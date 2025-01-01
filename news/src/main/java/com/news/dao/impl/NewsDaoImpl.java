@@ -146,8 +146,8 @@ public class NewsDaoImpl implements NewsDao {
 
 
     @Override
-    public List<News> searchNewsByTitle(String text, int top) {
-        var sql = "SELECT TOP " + top + " * FROM News WHERE title LIKE '%" + text + "%'";
+    public List<News> getNewsBysearch(String text, int top) {
+        var sql = "SELECT TOP " + top + " * FROM News WHERE title LIKE '%" + text + "%'OR content LIKE '%" + text + "%'";
         try {
             var preparedStatement = connection.prepareStatement(sql);
 //            preparedStatement.setString(1, text);
