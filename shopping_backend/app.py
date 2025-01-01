@@ -11,7 +11,9 @@ app.config.from_object('config.Config') # 一定是要config.Config！！！
 
 # 初始化数据库
 db.init_app(app)
-CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+CORS(app, resources={r"/*": {"origins": "*"}})  # 允许所有来源跨域
+app.url_map.strict_slashes = False  # 忽略斜杠差异，加这句是防止前端最后api没有'/'结果出现cors错误
 # 初始化数据库
 with app.app_context():
     # db.drop_all()
