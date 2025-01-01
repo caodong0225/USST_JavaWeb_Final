@@ -27,7 +27,7 @@
 <%--            <img src="img/undefined.png" alt="新闻缩略图">--%>
 <%--        </div>--%>
     </div>
-    <div class="featured">
+    <div class="featured" id="featured-div">
         <div class="featured-image">
             <img id="featured-image" src="" alt="新闻大图">
         </div>

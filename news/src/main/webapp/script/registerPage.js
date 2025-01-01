@@ -12,8 +12,14 @@
     }
     username = encryptText(username);
     password = encryptText(password);
+    var birthday=document.getElementById("birthday").value;
+    var sex=document.getElementById("sex").value;
+    var career=document.getElementById("sex").value;
+    var country=document.getElementById("country").value;
+    var education=document.getElementById("education").value;
     var xhr = new XMLHttpRequest();
-    var apiUrl = "api/register"+"?username="+username+"&password="+password;
+
+    var apiUrl = "api/register"+"?username="+username+"&password="+password+"&birthday="+birthday+"&sex="+sex+"&career="+career+"&country="+country+"&education="+education;
     xhr.open("POST", apiUrl, true);
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {

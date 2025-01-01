@@ -11,9 +11,11 @@ import java.util.List;
 
 public class UserTagDaoImpl implements UserTagDao {
     private Connection connection;
+
     public UserTagDaoImpl() {
         init();
     }
+
     private void init() {
         try {
             connection = JdbcUtil.getConnection();
@@ -21,6 +23,7 @@ public class UserTagDaoImpl implements UserTagDao {
             e.printStackTrace();
         }
     }
+
     @Override
     public boolean addUserTag(UserTag userTag) {
         try {
