@@ -7,6 +7,7 @@ import com.news.model.News;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +58,7 @@ public class FakeNewsDao implements NewsDao {
             var buffer = new byte[(int) file.length()];
             fis.read(buffer);
             fis.close();
-            var content = new String(buffer, "UTF-8");
+            var content = new String(buffer, StandardCharsets.UTF_8);
             var news = new ObjectMapper().readValue(content, News.class);
             news.setId(file.getName().replace(".json", ""));
             return news;
@@ -131,7 +132,7 @@ public class FakeNewsDao implements NewsDao {
     }
 
     @Override
-    public News getNewsById(int id) {
+    public News getNewsById(String id) {
         if (newsMap.containsKey(id)) {
             return newsMap.get(id);
         }

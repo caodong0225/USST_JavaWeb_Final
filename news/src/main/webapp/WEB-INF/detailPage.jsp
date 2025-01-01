@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style/detailPage.css">
     <script src="script/util.js"></script>
     <script src="script/detailPage.js"></script>
-    <title>搜索新闻</title>
+    <title>新闻详情</title>
 </head>
 <body>
 <div class="header">
@@ -18,18 +18,18 @@
 
 <div class="news-body">
     <div class="news-header">
-        <h1>2025年的元旦是周三</h1>
+        <h1 id="news-title">标题</h1>
         <div>
-            <span class="news-author">环球网</span>
-            <span class="news-date">2025/01/01</span>
+            <span id="news-author">发布组织</span>
+            <span id="news-date">2025/01/01</span>
         </div>
     </div>
 </div>
 
 <div class="news-body">
     <div class="news-content">
-        <img class="news-image" alt="新闻封面" src="">
-        <p>正文正文正文正文正文正文正文正文</p>
+        <img id="news-cover" alt="新闻封面" src="">
+        <p id="news-content-text">正文</p>
     </div>
 </div>
 

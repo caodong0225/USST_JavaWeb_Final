@@ -25,9 +25,11 @@ public class SearchServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Logger.log("SearchServlet: 搜索新闻api调用");
         String searchText = req.getParameter("search");
-        if (searchText.isBlank()) return;
+        if (searchText.isBlank()) {
+            Logger.log("SearchServlet: 搜索新闻api调用失败，参数为空或参数只有空格");
+            return;
+        }
 
-        var session = req.getSession();
         resp.setContentType("application/json;charset=UTF-8");
         resp.setCharacterEncoding("UTF-8");
         var out = resp.getWriter();

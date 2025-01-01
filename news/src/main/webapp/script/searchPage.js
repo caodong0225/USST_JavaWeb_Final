@@ -60,12 +60,12 @@ function goToNewsDetail(e) {
 }
 
 function loadSearchedNews() {
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open('Post', 'search', false);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
-            var response = JSON.parse(xhr.responseText);
+            const response = JSON.parse(xhr.responseText);
             if (response.success) {
                 createSearchedNews(response.data);
             }
