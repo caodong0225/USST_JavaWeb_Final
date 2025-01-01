@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchProductDetail, createOrder } from '../api';
+import Navbar from "../components/Navbar";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -28,6 +29,8 @@ function ProductDetail() {
   if (!product) return <div>加载中...</div>;
 
   return (
+    <>
+    <Navbar />
     <div className="container mt-4">
       <h1>{product.name}</h1>
       <img src={product.image_path} alt={product.name} className="img-fluid mb-3" />
@@ -53,6 +56,7 @@ function ProductDetail() {
         {message && <p className="text-success">{message}</p>}
       </div>
     </div>
+    </>
   );
 }
 
