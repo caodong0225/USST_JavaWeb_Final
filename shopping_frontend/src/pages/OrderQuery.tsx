@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchOrders, fetchOrderById } from '../api';
+import Navbar from '../components/Navbar';
 
 function OrderQuery() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -27,6 +28,7 @@ function OrderQuery() {
 
   return (
     <div>
+      <Navbar />
       {/* 搜索框 */}
       <div className="container mt-4">
         <div className="d-flex justify-content-between align-items-center mb-4">

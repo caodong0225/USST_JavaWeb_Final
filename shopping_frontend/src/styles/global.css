@@ -44,8 +44,30 @@ body {
   }
   
   .card-text {
+    margin: 0;
+    font-size: 1rem;
     color: #666;
   }
+  
+  .card-text:first-child {
+    font-weight: bold;
+  }
+  
+  .card-text:last-child {
+    color: #007bff;
+  }
+  .card-text {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .card-text.stock {
+    font-weight: bold;
+  }
+  
+  .card-text.stock.out-of-stock {
+    color: red;
+  }  
   
   /* 页面 404 样式 */
   .not-found-container {
