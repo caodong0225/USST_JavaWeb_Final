@@ -9,6 +9,7 @@ import usst.web.vo.UserTrainDataVO;
 
 import java.io.IOException;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/user-predict")
 public class UserTrainDataController {
