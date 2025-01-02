@@ -170,5 +170,7 @@ function loadAdvertisement() {
     const userInfo = getUserInfo()
     userInfo.device = getUserDevice()
     userInfo.preference = null
-    createAdvertisement(sendAdRequest(userInfo));//想要多个广告就重复几次
+    for (let i = 0; i < 5; i++) {
+        createAdvertisement(sendAdRequest(userInfo));
+    }
 }

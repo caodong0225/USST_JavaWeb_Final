@@ -148,7 +148,7 @@
     padding: 20px;
 }
 .more-news-list {
-    width: 80%;
+    width: 70%;
     display: block;
     flex-wrap: wrap;
     gap: 20px;
@@ -201,7 +201,7 @@
     overflow: hidden;
 }
 .advertisement-list {
-    width: 15%;
+    width: 25%;
     padding: 20px;
     display: block;
     margin-top: 10px;
@@ -225,11 +225,9 @@
 
 .advertisement-image {
     width: 100%;
-    height: 8vi;
     overflow: hidden;
 }
 .advertisement-image img{
     width: 100%;
-    height: 100%;
     object-fit: cover;
 }
