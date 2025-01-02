@@ -7,9 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JdbcUtil {
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=WebNewsProject;trustServerCertificate=true";
+//    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=Web_news;trustServerCertificate=true";
+    private static final String URL = "jdbc:sqlserver://10.100.164.37:1433;databaseName=webnewsproject;trustServerCertificate=true";
     private static final String USER = "sa";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "Sql12345";
     private static Connection connection;
 
     public static Connection getConnection() throws SQLException {

@@ -129,7 +129,7 @@ function getUserInfo(){
 }
 
 function getUserDevice(){
-    return "智能手机"
+    return navigator.platform
 }
 
 function sendAdRequest(userInfo) {

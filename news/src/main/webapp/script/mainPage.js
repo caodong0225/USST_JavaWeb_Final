@@ -147,8 +147,9 @@ function createImageSrc(imageUrl) {
 
 
 function createAdvertisement(adData) {
-    var advertisementList = document.getElementById('advertisement-list');
-    var adDiv = document.createElement('div');
+    if(adData==null) return
+    const advertisementList = document.getElementById('advertisement-list');
+    const adDiv = document.createElement('div');
     adDiv.className = 'advertisement';
     adDiv.innerHTML += `
         <div class="advertisement-image">
