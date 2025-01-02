@@ -1,3 +1,5 @@
+import sys
+
 from sqlalchemy import create_engine
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
@@ -7,8 +9,10 @@ from sklearn.multioutput import MultiOutputRegressor
 import joblib
 import os
 import logging
+import io
 
 # 配置日志
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gbk')
 def setup_logger():
     # 创建日志格式
     formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
@@ -101,3 +105,6 @@ joblib.dump(encoder, os.path.join("models", "encoder.pkl"))  # 保存编码器�
 joblib.dump(valid_columns, os.path.join("models", "valid_columns.pkl"))  # 保存有效的目标列到 models 文件夹
 
 logger.info(f"模型和编码器已保存到文件夹：{new_folder} 和 models 文件夹")
+
+print("Success! This is version {}. The journey of a thousand predictions begins with a single model! :=)".format(max_num + 1))
+sys.stdout.flush()  # 强制刷新输出缓冲区

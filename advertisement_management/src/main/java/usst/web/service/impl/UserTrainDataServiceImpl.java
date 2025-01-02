@@ -12,6 +12,7 @@ import usst.web.vo.UserTrainDataVO;
 
 import javax.swing.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,9 @@ public class UserTrainDataServiceImpl {
 
     @Resource
     private AdvertisementServiceImpl advertisementService;
+
+    private String pythonCmd = "python";
+    private String pythonPath = "D:\\大学\\大三上\\web\\USST_JavaWeb_ADTool-master\\py\\";
 
     public UserTrainDataVO getPreferences(UserTrainDataDTO userTrainDataDTO , HttpServletRequest request) {
         if(userTrainDataDTO.getPreference() == null || userTrainDataDTO.getPreference().isEmpty()) {
@@ -57,13 +61,34 @@ public class UserTrainDataServiceImpl {
 }
 
 
+
+    public UserTrainDataVO train(HttpServletRequest request) throws IOException {
+        ProcessBuilder processBuilder = new ProcessBuilder(pythonCmd, pythonPath+"train.py");
+        processBuilder.redirectErrorStream(true); // 将错误流和输出流合并
+        Process process = processBuilder.start();
+        UserTrainDataVO userTrainDataVO = new UserTrainDataVO();
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(process.getInputStream(), "GBK")
+        );
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if(line.startsWith("3")) {
+                userTrainDataVO.setAdImgUrl("Success! The journey of a thousand predictions begins with a single model! \uD83D\uDE80\uD83C\uDF1F");
+                return userTrainDataVO;
+            }
+        }
+            userTrainDataVO.setAdImgUrl("Failed!");
+            return userTrainDataVO;
+    }
+
+
     private Map<String, Double> defaultPreferences(UserTrainDataDTO userTrainDataDTO) {
         Map<String, Double> preferences = new HashMap<>();
 
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(
-                    "python",
-                    "C:\\Users\\tianqianjia\\Desktop\\USST_JavaWeb_ADTool\\py\\predict.py",
+                    pythonCmd,
+                    pythonPath+"predict.py",
                     String.valueOf(userTrainDataDTO.getAge()),
                     userTrainDataDTO.getGender(),
                     userTrainDataDTO.getOccupation(),

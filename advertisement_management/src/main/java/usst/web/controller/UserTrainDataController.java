@@ -7,6 +7,8 @@ import usst.web.dto.UserTrainDataDTO;
 import usst.web.service.impl.UserTrainDataServiceImpl;
 import usst.web.vo.UserTrainDataVO;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/user-predict")
 public class UserTrainDataController {
@@ -17,5 +19,10 @@ public class UserTrainDataController {
     @PostMapping("/get-preferences")
     public UserTrainDataVO getPreferences(@RequestBody UserTrainDataDTO userTrainDataDTO, HttpServletRequest request) {
         return userTrainDataService.getPreferences(userTrainDataDTO, request);
+    }
+
+    @GetMapping("/train")
+    public UserTrainDataVO train(HttpServletRequest request) throws IOException {
+        return userTrainDataService.train(request);
     }
 }
