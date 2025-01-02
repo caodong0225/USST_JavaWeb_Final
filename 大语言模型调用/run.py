@@ -40,7 +40,8 @@ def consume_message():
     consumer.set_name_server_address(rocketmq_host)  # 替换为你的 NameServer 地址
 
     def callback(msg):
-        message = msg.body.decode('utf-8').split("&&&&")
+        message = msg.body.decode('gbk')
+        message = message.split("&&&&")
         id = message[0]
         content = message[1]
         tag = send_data(content)
