@@ -10,6 +10,7 @@ import usst.web.mapper.TagMapper;
 import usst.web.service.ITagService;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -59,7 +60,7 @@ public class TagServiceImpl implements ITagService {
         double adNorm = 0;
 
         for (Map.Entry<String, Double> entry : userPrefs.entrySet()) {
-            String key = entry.getKey();
+            String key = entry.getKey().toLowerCase();
             Double userValue = entry.getValue();
             Double adValue = adFeatures.get(key);
 
