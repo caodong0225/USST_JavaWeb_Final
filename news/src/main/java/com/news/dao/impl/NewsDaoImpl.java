@@ -1,5 +1,6 @@
 package com.news.dao.impl;
 
+import com.news.Logger;
 import com.news.dao.NewsDao;
 import com.news.model.News;
 import com.news.util.JdbcUtil;
@@ -108,6 +109,7 @@ public class NewsDaoImpl implements NewsDao {
     @Override
     public boolean addNews(News news) {
         if (getNewsById(news.getId()) != null) {
+            Logger.log("新闻已存在：" + news.getTitle());
             return false;
         }
         var sql = "INSERT INTO News (id,title, content, author, cover, date, tags, zone) VALUES (?,?, ?, ?, ?, ?, ?, ?)";

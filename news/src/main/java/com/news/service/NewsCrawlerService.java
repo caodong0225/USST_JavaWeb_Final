@@ -17,22 +17,8 @@ import java.util.Date;
 import java.util.List;
 
 public class NewsCrawlerService {
-
-    public static void crawlNews(String url) {
-        try {
-            // 这里以一个示例URL代替，你需要替换成合法的目标URL
-            Document doc = Jsoup.connect(url).get();
-            Logger.log("新闻标题：" + CrawUtil.getNewsTitle(doc));
-            Logger.log("新闻时间：" + DateUtil.ChangeToString(CrawUtil.getNewsTime(doc)));
-            Logger.log("新闻内容：" + CrawUtil.getNewsContent(doc));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void crawNewsList(String savePath, String url, String zone) {
         try {
-            // 这里以一个示例URL代替，你需要替换成合法的目标URL
             Document doc = Jsoup.connect(url).get();
             Elements newsList = doc.getElementsByClass("tright");
             for (Element news : newsList) {
@@ -45,7 +31,7 @@ public class NewsCrawlerService {
                 var author = CrawUtil.getAuthor(newsDoc);
                 var content = CrawUtil.getNewsContent(newsDoc);
                 var newsId = newsUrl.substring(newsUrl.lastIndexOf("/") + 1, newsUrl.lastIndexOf("."));
-                SaveNews(savePath, newsId, title, time, content, cover, author, zone);
+                saveToDataBase(savePath, newsId, title, time, content, cover, author, zone);
 
                 Thread.sleep(500);
             }
@@ -53,8 +39,39 @@ public class NewsCrawlerService {
             e.printStackTrace();
         }
     }
-
-    public static void SaveNews(String savePath, String newsId, String title, Date time, String content, String cover, String author, String zone) {
+    //已经弃用，保存到本地
+//    public static void SaveNews(String savePath, String newsId, String title, Date time, String content, String cover, String author, String zone) {
+//        var news = new News();
+//        news.setTitle(title);
+//        news.setDate(time);
+//        news.setContent(content);
+//        news.setCover(newsId);
+//        news.setId(newsId);
+//        news.setAuthor(author);
+//        news.setZone(zone);
+//        news.setTags(new ArrayList<>(List.of(zone)));
+//        if (!news.isAvaliable()) {
+//            Logger.log("新闻不可用，已跳过！"+title);
+//            return;
+//        }
+//        try {
+//            var json = new ObjectMapper().writeValueAsString(news);
+//            var path = savePath + "\\json\\" + newsId + ".json";
+//            Logger.log("保存新闻到：" + path);
+//            var file = new File(path);
+//            if (!file.exists()) {
+//                file.createNewFile();
+//            }
+//            var out = new FileOutputStream(file);
+//            out.write(json.getBytes());
+//            out.close();
+//            CrawUtil.downloadImage(cover, savePath + "\\" + newsId + ".jpg");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+    public static void saveToDataBase(String picSavePath, String newsId, String title, Date time, String content, String cover, String author, String zone)
+    {
         var news = new News();
         news.setTitle(title);
         news.setDate(time);
@@ -64,40 +81,39 @@ public class NewsCrawlerService {
         news.setAuthor(author);
         news.setZone(zone);
         news.setTags(new ArrayList<>(List.of(zone)));
-        try {
-            var json = new ObjectMapper().writeValueAsString(news);
-            var path = savePath + "\\json\\" + newsId + ".json";
-            Logger.log("保存新闻到：" + path);
-            var file = new File(path);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            var out = new FileOutputStream(file);
-            out.write(json.getBytes());
-            out.close();
-            CrawUtil.downloadImage(cover, savePath + "\\" + newsId + ".jpg");
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!news.isAvaliable()) {
+            return;
+        }
+        if (NewsService.getInstance().addNews(news))
+        {
+            Logger.log("保存新闻成功！"+title);
+            CrawUtil.downloadImage(cover, picSavePath + "\\" + newsId + ".jpg");
+        }
+        else {
+            Logger.log("保存新闻失败！"+title);
         }
     }
 
     public static void main(String[] args) {
 
         var data = new ArrayList<String>();
+        data.add("时尚");
         data.add("艺术");
         data.add("娱乐");
         data.add("教育");
         data.add("宠物");
         data.add("环保");
+        data.add("气象");
         data.add("科技");
         data.add("政治");
         data.add("经济");
+        var path="D:\\学习\\web开发\\USST_JavaWeb_ADTool\\news\\src\\main\\webapp\\img\\news";
         for (var zone : data) {
-            crawlNewsByZone("D:\\yjj\\爬虫结果", zone, 3);
+            crawlNewsByZone(path, zone, 1);
         }
     }
 
-    public static void crawlNewsByZone(String savePath, String zone, int pageNum) {
+    public static void crawlNewsByZone(String savePath, String zone, int pageNum) {;
         for (int i = 1; i <= pageNum; i++) {
             var url = "https://search.cctv.com/search.php?qtext=" + zone + "&sort=relevance&type=web&vtime=&datepid=1&channel=&page=" + i;
             NewsCrawlerService.crawNewsList(savePath, url, zone);

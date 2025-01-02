@@ -114,4 +114,7 @@ public class News {
     public String getZone() {
         return zone;
     }
+    public boolean isAvaliable() {
+        return !(getDate() == null || getContent().isEmpty() || getAuthor() == null);
+    }
 }

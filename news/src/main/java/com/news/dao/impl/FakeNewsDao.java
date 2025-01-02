@@ -19,7 +19,7 @@ public class FakeNewsDao {
                 var news = loadNewsFromFile(file);
                 if (news != null) {
                     news.initZone();
-                    if (news.getDate() == null || news.getContent().isEmpty() || news.getAuthor() == null) {
+                    if (!news.isAvaliable()) {
                         continue;
                     }
                     NewsService.getInstance().addNews(news);
