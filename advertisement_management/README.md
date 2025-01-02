@@ -21,3 +21,6 @@
 
 /ad/{fileName}  广告页面
 /ad/images/{fileName}   获取广告封面图片
+
+
+UserTrainDataServiceImpl需要改路径python_script_path为自己的路径
