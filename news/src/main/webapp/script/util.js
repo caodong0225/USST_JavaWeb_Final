@@ -80,6 +80,10 @@ function onclick_logout() {
     xhr.send();
 }
 
+function createImageSrc(imageUrl) {
+    return "api/getImage?imageUrl=" + imageUrl;
+}
+
 function translateCNtoEN(strCN) {//应广告方面要求，preference接收的参数转换为英文
     switch (strCN) {
         case '时尚':
@@ -131,7 +135,13 @@ function getUser() {
 }
 
 function getUserDevice() {
-    return navigator.platform
+    device = navigator.platform
+    if (device.substring(0, 3) === "Win") {
+        return "笔记本电脑"
+    } else if (device.substring(0, 5) === "Linux") {
+        return "智能手机"
+    } else return "其他设备"
+
 }
 
 function sendAdRequest(userInfo) {

@@ -29,26 +29,39 @@
             <input type="date" name="birthday" placeholder="生日" id="birthday" required>
         </div>
         <div class="form-group">
-            <label for="sex">性别</label>
-            <input type="text" name="sex" placeholder="性别" id="sex" required>
+            <label for="sex">性别:</label>
+            <select id="sex" name="sex" required>
+                <option value="男">男</option>
+                <option value="女">女</option>
+                <option value="不愿透露">不愿透露</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="career">职业</label>
-            <input type="text" name="career" placeholder="职业" id="career" required>
+            <select id="career" name="career" required>
+                <option value="学生">学生</option>
+                <option value="老师">老师</option>
+                <option value="白领">白领</option>
+                <option value="蓝领">蓝领</option>
+                <option value="研究工作者">研究工作者</option>
+                <option value="工程师">工程师</option>
+                <option value="服务工作者">服务工作者</option>
+                <option value="不愿透露">不愿透露</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="country">国籍</label>
-            <input type="text" name="country" placeholder="国籍" id="country" required>
+            <select id="country" name="country" required>
+                <option value="中国">中国</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="education">学历:</label>
             <select id="education" name="education" required>
+                <option value="初中">初中</option>
                 <option value="高中">高中</option>
-                <option value="专科">专科</option>
-                <option value="本科">本科</option>
-                <option value="硕士">硕士</option>
-                <option value="博士">博士</option>
-                <!-- 其他学历选项 -->
+                <option value="大学">大学</option>
+                <option value="不愿透露">不愿透露</option>
             </select>
         </div>
 
