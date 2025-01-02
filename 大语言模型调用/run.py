@@ -1,7 +1,9 @@
+import json
+
 import pymysql
 from rocketmq.client import Producer, PushConsumer, Message, ConsumeStatus
 import time
-
+import chardet
 from api import send_data
 from config import rocketmq_host, db_config
 
@@ -33,6 +35,14 @@ def send_message():
     finally:
         producer.shutdown()
 
+def decode_message(msg_body):
+    detected = chardet.detect(msg_body)
+    encoding = detected['encoding'] or 'utf-8'
+    try:
+        return msg_body.decode(encoding)
+    except UnicodeDecodeError as e:
+        print(f"Decoding failed with detected encoding {encoding}: {e}")
+        return None
 
 # 连接并接收消息 (Consumer)
 def consume_message():
@@ -40,24 +50,36 @@ def consume_message():
     consumer.set_name_server_address(rocketmq_host)  # 替换为你的 NameServer 地址
 
     def callback(msg):
-        message = msg.body.decode('gbk')
-        message = message.split("&&&&")
-        id = message[0]
-        content = message[1]
-        tag = send_data(content)
+        try:
+            message = decode_message(msg.body)
+            message = message.split("&&&&")
+            id = message[0]
+            print(id)
+            content = message[1]
+            tag = send_data(content)
+            print(tag)
+        except Exception as e:
+            print(e)
+            return ConsumeStatus.CONSUME_SUCCESS
         # 将结果存储到数据库
         try:
             connection = init_db_connection()
             with connection.cursor() as cursor:
                 sql = """
-                update advertisement set ad_feature = %s where ad_id = %s
+                update advertisement set ad_feature = %s where article_id = %s
                 """
                 cursor.execute(sql, (tag, id))
                 connection.commit()
-            print(f"Message processed and stored in DB: {id}")
+
+                # Check the number of rows affected
+                if cursor.rowcount == 0:
+                    print(f"No rows updated for ad_id: {id}. Possibly invalid ID.")
+                    return ConsumeStatus.CONSUME_SUCCESS  # Retry if this is considered a failure
+                else:
+                    print(f"Message processed and stored in DB: {id}")
         except Exception as e:
             print(f"Failed to store message in DB: {e}")
-            return ConsumeStatus.RECONSUME_LATER  # 消息处理失败，稍后重试
+            return ConsumeStatus.RECONSUME_LATER  # Retry storing message later
         finally:
             connection.close()
 

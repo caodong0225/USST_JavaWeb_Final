@@ -83,7 +83,7 @@ def send_data(content):
         """
     ans = get_completion_weixin(prompt=prompt, access_token=access_token)
     ans = ans.replace("```", "")
-    ans = json.loads(ans.replace("json", ""))
+    ans = ans.replace("json", "")
     return ans
 
 

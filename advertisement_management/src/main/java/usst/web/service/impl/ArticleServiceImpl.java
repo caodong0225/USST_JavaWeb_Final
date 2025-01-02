@@ -15,12 +15,13 @@ public class ArticleServiceImpl {
     private usst.web.mq.RocketMQProducerService RocketMQProducerService;
 
     public boolean publishArticle(Article article) {
+        int res = articleMapper.insertArticle(article);
+        System.out.println(article.getId());
         try {
             RocketMQProducerService.sendMessage("testTopic",article.getId() + "&&&&" + article.getContent());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int res = articleMapper.insertArticle(article);
         return res > 0;
     }
 
