@@ -141,11 +141,6 @@ function createNewsList(newsData) {
     });
 }
 
-function createImageSrc(imageUrl) {
-    return "api/getImage?imageUrl=" + imageUrl;
-}
-
-
 function createAdvertisement(adData) {
     if (!adData) return
     const advertisementList = document.getElementById('advertisement-list');

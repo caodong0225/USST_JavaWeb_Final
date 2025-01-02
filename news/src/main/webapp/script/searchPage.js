@@ -40,7 +40,7 @@ function createSearchedNews(newsData) {
         newsDiv.className = 'news';
         newsDiv.innerHTML += `
             <div class="news-image">
-                <img src='${"api/getImage?imageUrl=" + newsItem["cover"]}' alt="新闻缩略图">
+                <img src=${createImageSrc(newsItem["cover"])} alt="新闻缩略图">
             </div>
             <div class="news-content">
                 <h3>${newsItem["title"]}</h3>

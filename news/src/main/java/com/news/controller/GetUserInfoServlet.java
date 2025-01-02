@@ -34,8 +34,8 @@ public class GetUserInfoServlet extends HttpServlet {
             data.put("age", user.getAge()+"");
             data.put("gender", user.getSex());
             data.put("occupation", user.getCareer());
-            data.put("educationLevel", user.getEducationBackground());
-            data.put("region", null); //缺地区
+            data.put("education_level", user.getEducationBackground());
+            data.put("region", user.getRegion());
             data.put("country", user.getCountry());
             result.put("isLogin", true);
         } else {
@@ -45,7 +45,7 @@ public class GetUserInfoServlet extends HttpServlet {
             data.put("age", null);
             data.put("gender", null);
             data.put("occupation", null);
-            data.put("educationLevel", null);
+            data.put("education_level", null);
             data.put("region", null);
             data.put("country", null);
             result.put("isLogin", false);

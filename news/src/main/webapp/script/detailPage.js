@@ -16,7 +16,7 @@ function loadNewsInfo() {
                 document.getElementById("news-title").textContent = newsInfo["title"]
                 document.getElementById("news-author").textContent = newsInfo["author"]
                 document.getElementById("news-date").textContent = newsInfo["date"]
-                document.getElementById("news-cover").src = "api/getImage?imageUrl=" + newsInfo["cover"]
+                document.getElementById("news-cover").src = createImageSrc(newsInfo["cover"])
                 document.getElementById("news-content-text").innerHTML = `${newsInfo["content"].replace(/\n/g, '<br>')}`
                 sendUserAction(newsInfo)
             }
