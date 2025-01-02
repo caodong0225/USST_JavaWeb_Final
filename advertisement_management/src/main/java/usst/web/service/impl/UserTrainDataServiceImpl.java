@@ -30,7 +30,8 @@ public class UserTrainDataServiceImpl {
     private String pythonCmd = "python";
     private String pythonPath = "D:\\大学\\大三上\\web\\USST_JavaWeb_ADTool-master\\py\\";
 
-    public UserTrainDataVO getPreferences(UserTrainDataDTO userTrainDataDTO , HttpServletRequest request) {
+    public UserTrainDataVO getPreferences(UserTrainDataDTO userTrainDataDTO1 , HttpServletRequest request) {
+        UserTrainDataDTO userTrainDataDTO = setDtoNotNull(userTrainDataDTO1);
         if(userTrainDataDTO.getPreference() == null || userTrainDataDTO.getPreference().isEmpty()) {
             // 获取服务器 IP 和端口号
             //初始化用户偏好map，取默认值
@@ -60,7 +61,16 @@ public class UserTrainDataServiceImpl {
         return userTrainDataVO;
 }
 
-
+    private  UserTrainDataDTO setDtoNotNull(UserTrainDataDTO userTrainDataDTO) {
+        if (userTrainDataDTO.getAge() == null) userTrainDataDTO.setAge(25);
+        if (userTrainDataDTO.getGender() == null || userTrainDataDTO.getGender().isEmpty()) userTrainDataDTO.setGender("不愿透露");
+        if (userTrainDataDTO.getOccupation() == null || userTrainDataDTO.getOccupation().isEmpty()) userTrainDataDTO.setOccupation("不愿透露");
+        if (userTrainDataDTO.getEducation_level() == null || userTrainDataDTO.getEducation_level().isEmpty()) userTrainDataDTO.setEducation_level("不愿透露");
+        if (userTrainDataDTO.getRegion() == null || userTrainDataDTO.getRegion().isEmpty()) userTrainDataDTO.setRegion("不愿透露");
+        if (userTrainDataDTO.getCountry() == null || userTrainDataDTO.getCountry().isEmpty()) userTrainDataDTO.setCountry("不愿透露");
+        if (userTrainDataDTO.getDevice() == null || userTrainDataDTO.getDevice().isEmpty()) userTrainDataDTO.setDevice("不愿透露");
+        return userTrainDataDTO;
+    }
 
     public UserTrainDataVO train(HttpServletRequest request) throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder(pythonCmd, pythonPath+"train.py");
