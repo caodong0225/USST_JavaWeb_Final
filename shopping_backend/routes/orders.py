@@ -14,8 +14,8 @@ def create_order():
 
     new_order = Orders(user_id=1, status=1)
     db.session.add(new_order)
-    db.session.commit()
 
+    # 检查库存是否足够
     for item in items:
         goods_id = item.get('goods_id')
         quantity = item.get('quantity', 0)
@@ -27,6 +27,12 @@ def create_order():
         if goods.stock < quantity:
             return jsonify({'error': f'商品 {goods.name} 库存不足'}), 400
 
+    # 所有检查通过后，更新库存并创建订单商品
+    for item in items:
+        goods_id = item.get('goods_id')
+        quantity = item.get('quantity', 0)
+
+        goods = Goods.query.get(goods_id)
         goods.stock -= quantity
         order_item = OrderItems(
             order_id=new_order.id,
@@ -36,7 +42,9 @@ def create_order():
         )
         db.session.add(order_item)
 
+    # 提交所有更改
     db.session.commit()
+
     return jsonify({'message': '订单创建成功', 'order_id': new_order.id})
 
 # 获取订单详情

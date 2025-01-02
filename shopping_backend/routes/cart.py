@@ -91,24 +91,24 @@ def create_order_from_cart():
     if not cart_items:
         return jsonify({'error': '购物车为空'}), 400
 
-    # 创建订单
-    new_order = Orders(user_id=1, status=1)  # user_id 固定为 1
-    db.session.add(new_order)
-    db.session.commit()
-
-    # 添加商品到订单商品表
+    # 检查库存是否足够
     for item in cart_items:
-        # 查询商品
         goods = Goods.query.get(item.goods_id)
         if not goods:
             return jsonify({'error': f'商品ID {item.goods_id} 不存在'}), 404
 
-        # 检查库存是否足够
         if goods.stock < item.quantity:
             return jsonify({'error': f'商品 {goods.name} 库存不足'}), 400
 
-        # 减少库存
-        goods.stock -= item.quantity
+    # 创建订单
+    new_order = Orders(user_id=1, status=1)  # user_id 固定为 1
+    db.session.add(new_order)
+    db.session.commit()  # 提交订单主信息，确保有订单 ID
+
+    # 更新库存并添加商品到订单商品表
+    for item in cart_items:
+        goods = Goods.query.get(item.goods_id)
+        goods.stock -= item.quantity  # 减少库存
 
         # 创建订单商品记录
         order_item = OrderItems(
@@ -122,6 +122,8 @@ def create_order_from_cart():
         # 删除购物车中的商品
         db.session.delete(item)
 
-    db.session.commit()  # 提交所有更改
+    # 提交所有更改
+    db.session.commit()
 
     return jsonify({'message': '订单创建成功', 'order_id': new_order.id})
+
