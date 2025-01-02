@@ -145,7 +145,7 @@ function getUserDevice() {
 }
 
 async function sendAdRequest(userInfo) {
-    const url = 'http://192.168.31.195:8080/user-predict/get-preferences';
+    const url = 'http://10.100.164.38:8080/user-predict/get-preferences';
     let adData = {};
     try {
         const response = await fetch(url, {
