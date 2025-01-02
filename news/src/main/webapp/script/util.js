@@ -80,7 +80,7 @@ function onclick_logout() {
     xhr.send();
 }
 
-function translateCNtoEN(strCN){//应广告方面要求，preference接收的参数转换为英文
+function translateCNtoEN(strCN) {//应广告方面要求，preference接收的参数转换为英文
     switch (strCN) {
         case '时尚':
             return 'Fashion'
@@ -103,13 +103,13 @@ function translateCNtoEN(strCN){//应广告方面要求，preference接收的参
         case '经济':
             return 'Economy'
         default:
-        return null
+            return null
     }
 }
 
 
-function getUserInfo(){
-    let userInfo
+function getUser() {
+    let user = {}
     const xhr = new XMLHttpRequest();
     xhr.open('Post', 'api/getUserInfo', false);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -117,28 +117,29 @@ function getUserInfo(){
         if (xhr.status >= 200 && xhr.status < 300) {
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
-                userInfo = response.data
+                user.info = response.data
+                user.status = response["isLogin"]
+                if (user.info["age"]) user.info["age"] = Number(user.info.age)
             }
         }
     };
     xhr.onerror = function () {
-        userInfo = null;
+        user = null;
     };
     xhr.send();
-    return userInfo
+    return user
 }
 
-function getUserDevice(){
+function getUserDevice() {
     return navigator.platform
 }
 
 function sendAdRequest(userInfo) {
     // 定义请求的URL
-    const url = 'http://www.example.com';
+    const url = 'http://192.168.31.195:8080/user-predict/get-preferences';
     let adData
-// 发送POST请求
     fetch(url, {
-        method: 'POST', // 请求方法
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json', // 设置请求头，指定发送的数据类型为JSON
         },
@@ -151,12 +152,12 @@ function sendAdRequest(userInfo) {
         .catch((error) => {
             console.error('Error:', error); // 打印错误信息
         });
-    // return adData;
+    return adData;
     //示例
-        return {
-            "adName":"菜鸟教程",
-            "adImgUrl":"https://www.runoob.com/wp-content/themes/runoob/assets/img/runoob-logo.png",
-            "adUrl":"https://www.runoob.com/"
-        }
+    // return {
+    //     "adName": "菜鸟教程",
+    //     "adImgUrl": "https://www.runoob.com/wp-content/themes/runoob/assets/img/runoob-logo.png",
+    //     "adUrl": "https://www.runoob.com/"
+    // }
 }
 

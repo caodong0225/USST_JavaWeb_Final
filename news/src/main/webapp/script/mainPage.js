@@ -44,7 +44,7 @@ function createTopNews(newsData) {
     Object.keys(newsData).forEach(function (newKey) {
         var newsItem = newsData[newKey];
         var cover = createImageSrc(newsItem["cover"]);
-        if (i == 0) {
+        if (i === 0) {
             featuredImage.src = cover;
             featuredTitle.textContent = newsItem["title"];
             featuredDiv.addEventListener('click', function () {
@@ -147,7 +147,7 @@ function createImageSrc(imageUrl) {
 
 
 function createAdvertisement(adData) {
-    if(adData==null) return
+    if (!adData) return
     const advertisementList = document.getElementById('advertisement-list');
     const adDiv = document.createElement('div');
     adDiv.className = 'advertisement';
@@ -167,7 +167,7 @@ function createAdvertisement(adData) {
 
 
 function loadAdvertisement() {
-    const userInfo = getUserInfo()
+    const userInfo = getUser().info
     userInfo.device = getUserDevice()
     userInfo.preference = null
     for (let i = 0; i < 5; i++) {

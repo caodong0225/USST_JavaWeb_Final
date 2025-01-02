@@ -28,9 +28,12 @@ function loadNewsInfo() {
     xhr.send(`newsId=${new URLSearchParams(window.location.search).get('newsId')}`);
 }
 
-function sendUserAction(newsInfo){
-    const userInfo = getUserInfo()
-    userInfo.device = getUserDevice()
-    userInfo.preference = translateCNtoEN(newsInfo["zone"]) //这里应该用tag的，不过广告方面只要求一个内容，所以用zone了
-    sendAdRequest(userInfo)
+function sendUserAction(newsInfo) {
+    const user = getUser()
+    if (user.status) {
+        const userInfo = user.info
+        userInfo.device = getUserDevice()
+        userInfo.preference = translateCNtoEN(newsInfo["zone"]) //这里应该用tag的，不过广告方面只要求一个内容，所以用zone了
+        sendAdRequest(userInfo)
+    }
 }

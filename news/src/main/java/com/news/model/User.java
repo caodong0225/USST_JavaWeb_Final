@@ -1,5 +1,7 @@
 package com.news.model;
 
+import com.news.util.DateUtil;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -12,6 +14,7 @@ public class User {
     private String sex;
     private String career;
     private String country;
+    private String region;   //缺地区
     private String educationBackground;
 
     public String getUsername() {
@@ -69,6 +72,10 @@ public class User {
         this.country = country;
     }
 
+    public String getRegion() {return this.region;}
+
+    public void setRegion(String region) {this.region = region;}
+
     public String getEducationBackground() {
         return educationBackground;
     }
@@ -77,15 +84,7 @@ public class User {
         this.educationBackground = educationBackground;
     }
 
-    public String getAge() {
-        //这一句如果使用会完全停止处理，甚至没有任何报错信息
-//        LocalDate birthLocalDate = this.birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-
-//        Period agePeriod = Period.between(birthLocalDate, LocalDate.now());
-//        System.out.println(agePeriod.getYears());
-//        return "" + agePeriod.getYears();
-        return "20";
-
+    public int getAge() {
+        return DateUtil.CalAge(birthday);
     }
 }

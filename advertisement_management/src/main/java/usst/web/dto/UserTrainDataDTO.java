@@ -8,7 +8,7 @@ public class UserTrainDataDTO {
     private Integer age;
     private String gender;
     private String occupation;
-    private String educationLevel;
+    private String education_level;
     private String region;
     private String country;
     private String device;
