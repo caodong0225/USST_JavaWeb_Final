@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { fetchOrders, fetchOrderById, deleteOrder } from '../api';
-import Navbar from '../components/Navbar';
+import React, { useEffect, useState } from "react";
+import { fetchOrders, fetchOrderById, deleteOrder } from "../api";
+import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 function OrderQuery() {
   const [orders, setOrders] = useState<any[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [message, setMessage] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   // 获取所有订单
   useEffect(() => {
-    fetchOrders().then(data => setOrders(data));
+    fetchOrders().then((data) => setOrders(data));
   }, []);
 
   // 搜索订单
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
-      fetchOrders().then(data => setOrders(data));
+      fetchOrders().then((data) => setOrders(data));
       return;
     }
     try {
@@ -30,11 +32,16 @@ function OrderQuery() {
   const handleDelete = async (orderId: number) => {
     try {
       await deleteOrder(orderId);
-      setOrders(orders.filter(order => order.id !== orderId)); // 删除成功后更新订单列表
+      setOrders(orders.filter((order) => order.id !== orderId)); // 删除成功后更新订单列表
       setMessage(`订单 ${orderId} 已成功删除`);
     } catch (error: any) {
-      setMessage(error.response?.data?.error || '删除订单失败');
+      setMessage(error.response?.data?.error || "删除订单失败");
     }
+  };
+
+  // 支付订单
+  const handlePayment = (orderId: number) => {
+    navigate(`/payment?order_id=${orderId}`);
   };
 
   return (
@@ -43,7 +50,7 @@ function OrderQuery() {
       <div className="container mt-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h1>订单列表</h1>
-          <div className="input-group" style={{ maxWidth: '400px' }}>
+          <div className="input-group" style={{ maxWidth: "400px" }}>
             <input
               type="text"
               className="form-control"
@@ -67,24 +74,37 @@ function OrderQuery() {
                 <div className="card">
                   <div className="card-body">
                     <h5 className="card-title">订单ID: {order.id}</h5>
-                    <p className="card-text">订单状态: {order.status === 1 ? '待付款' : '已付款'}</p>
+                    <p className="card-text">
+                      订单状态: {order.status === 1 ? "待付款" : "已付款"}
+                    </p>
                     <p className="card-text">下单时间: {order.order_time}</p>
                     <p className="card-text">
                       商品列表:
                       <ul>
                         {order.items.map((item: any, index: number) => (
                           <li key={index}>
-                            {item.goods_name} - 数量: {item.quantity} - 总价: ¥{item.total_price}
+                            {item.goods_name} - 数量: {item.quantity} - 总价: ¥
+                            {item.total_price}
                           </li>
                         ))}
                       </ul>
                     </p>
+                    <div className="d-flex mt-2">
+                    {order.status === 1 && ( // 仅未付款状态显示支付按钮
+                      <button
+                        className="btn btn-primary me-2 flex-grow-1"
+                        onClick={() => handlePayment(order.id)}
+                      >
+                        支付订单
+                      </button>
+                    )}
                     <button
-                      className="btn btn-danger w-100 mt-3"
+                      className="btn btn-danger flex-grow-1"
                       onClick={() => handleDelete(order.id)}
                     >
                       删除订单
                     </button>
+                    </div>
                   </div>
                 </div>
               </div>

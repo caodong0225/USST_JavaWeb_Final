@@ -5,7 +5,7 @@ config_path = CURRENT_DIR.rsplit('\\', 1)[0]  # 上三级目录
 sys.path.append(config_path)
 
 from models import db, Goods
-from app import app
+from start import app
 # 示例商品数据
 example_goods = [
     {

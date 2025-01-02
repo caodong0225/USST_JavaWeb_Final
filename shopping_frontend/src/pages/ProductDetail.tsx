@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchProductDetail, createOrder, addToCart } from '../api'; // 引入 addToCart API
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState<any>(null);
   const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState('');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -27,7 +30,7 @@ function ProductDetail() {
           },
         ],
       });
-      setMessage(`订单创建成功，订单ID: ${response.order_id}`);
+      navigate(`/payment?order_id=${response.order_id}`);
     } catch (error: any) {
       setMessage(error.response?.data?.error || '订单创建失败');
     }
@@ -87,12 +90,14 @@ function ProductDetail() {
               +
             </button>
           </div>
-          <button className="btn btn-primary w-100 mb-2" onClick={handleOrder}>
+          <div className="d-flex mt-2">
+          <button className="btn btn-primary me-2 flex-grow-1" onClick={handleOrder}>
             提交订单
           </button>
-          <button className="btn btn-success w-100" onClick={handleAddToCart}>
+          <button className="btn btn-success me-2 flex-grow-1" onClick={handleAddToCart}>
             加入购物车
           </button>
+          </div>
           {message && <p className="text-success mt-3">{message}</p>}
         </div>
       </div>
