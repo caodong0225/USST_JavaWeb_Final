@@ -7,6 +7,7 @@ import usst.web.mapper.TagMapper;
 import usst.web.service.ITagService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jyzxc
@@ -17,7 +18,7 @@ public class TagServiceImpl implements ITagService {
     @Resource
     TagMapper tagMapper;
     @Override
-    public Integer getRecommendationUri() {
+    public Integer getRecommendationUri(Map<String, Integer> userPreferences) {
         List<Advertisement> advertisements = tagMapper.getRecommendation();
         // 抽取随机广告
         return advertisements.get(0).getAdId();

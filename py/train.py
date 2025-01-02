@@ -91,8 +91,13 @@ new_folder = os.path.join("models", str(max_num + 1))
 os.makedirs(new_folder, exist_ok=True)
 
 # 保存模型、编码器和有效列
-joblib.dump(model, os.path.join(new_folder, "model.pkl"))  # 保存模型
-joblib.dump(encoder, os.path.join(new_folder, "encoder.pkl"))  # 保存编码器
-joblib.dump(valid_columns, os.path.join(new_folder, "valid_columns.pkl"))  # 保存有效的目标列
+joblib.dump(model, os.path.join(new_folder, "model.pkl"))  # 保存模型到编号文件夹
+joblib.dump(encoder, os.path.join(new_folder, "encoder.pkl"))  # 保存编码器到编号文件夹
+joblib.dump(valid_columns, os.path.join(new_folder, "valid_columns.pkl"))  # 保存有效的目标列到编号文件夹
 
-logger.info(f"模型和编码器已保存到文件夹：{new_folder}")
+# 保存模型、编码器和有效列到 models 文件夹下，方便直接调用
+joblib.dump(model, os.path.join("models", "model.pkl"))  # 保存模型到 models 文件夹
+joblib.dump(encoder, os.path.join("models", "encoder.pkl"))  # 保存编码器到 models 文件夹
+joblib.dump(valid_columns, os.path.join("models", "valid_columns.pkl"))  # 保存有效的目标列到 models 文件夹
+
+logger.info(f"模型和编码器已保存到文件夹：{new_folder} 和 models 文件夹")

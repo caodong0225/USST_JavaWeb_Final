@@ -21,7 +21,8 @@ public class RecommendController {
     ITagService tagService;
     @PostMapping("/get-recommendation")
     public String getRecommendation(@RequestBody TagDTO tagDTO, HttpServletRequest request) {
-        Integer id = tagService.getRecommendationUri();
+//        Integer id = tagService.getRecommendationUri(userPreferences);
+        int id = 1; //test
         // 获取服务器 IP 和端口号
         String serverIp = request.getServerName(); // 获取服务器 IP 或主机名
         int serverPort = request.getServerPort(); // 获取端口号

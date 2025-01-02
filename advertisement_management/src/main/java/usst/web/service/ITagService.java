@@ -1,9 +1,11 @@
 package usst.web.service;
 
+import java.util.Map;
+
 /**
  * @author jyzxc
  * @since 2025-1-1
  */
 public interface ITagService {
-    Integer getRecommendationUri();
+    Integer getRecommendationUri(Map<String, Integer> userPreferences);
 }

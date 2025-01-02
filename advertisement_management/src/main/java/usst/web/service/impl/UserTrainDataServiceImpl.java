@@ -10,6 +10,8 @@ import usst.web.service.ITagService;
 import usst.web.vo.UserTrainDataVO;
 
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,10 +29,10 @@ public class UserTrainDataServiceImpl {
         if(userTrainDataDTO.getPreference() == null || userTrainDataDTO.getPreference().isEmpty()) {
             // 获取服务器 IP 和端口号
             //初始化用户偏好map，取默认值
-            Map<String, Integer> userPreferences = defaultPreferences();
+            Map<String, Integer> userPreferences = defaultPreferences(userTrainDataDTO);
 
-//            Integer id = tagService.getRecommendationUri(userPreferences);
-            Integer id =1;
+            Integer id = tagService.getRecommendationUri(userPreferences);
+
 
 
             String serverIp = request.getServerName(); // 获取服务器 IP 或主机名
@@ -57,19 +59,53 @@ public class UserTrainDataServiceImpl {
 
 
 
-    private Map<String, Integer> defaultPreferences() {
-        Map<String, Integer> defaultPreferences = new HashMap<>();
-        defaultPreferences.put("Fashion", 1);
-        defaultPreferences.put("Art", 1);
-        defaultPreferences.put("Entertainment", 1);
-        defaultPreferences.put("Education", 1);
-        defaultPreferences.put("Pets", 1);
-        defaultPreferences.put("Eco", 1);
-        defaultPreferences.put("Weather", 1);
-        defaultPreferences.put("Technology", 1);
-        defaultPreferences.put("Politics", 1);
-        defaultPreferences.put("Economy", 1);
-        return defaultPreferences;
+    private Map<String, Integer> defaultPreferences(UserTrainDataDTO userTrainDataDTO) {
+        Map<String, Integer> preferences = new HashMap<>();
+
+        try {
+            // 构建 Python 命令
+            String pythonScriptPath = "py/predict.py"; // 替换为你的 Python 脚本路径
+            String[] command = {
+                    "python3", // 或者 "python"，取决于你的环境
+                    pythonScriptPath,
+                    String.valueOf(userTrainDataDTO.getAge()),
+                    userTrainDataDTO.getGender(),
+                    userTrainDataDTO.getOccupation(),
+                    userTrainDataDTO.getEducationLevel(),
+                    userTrainDataDTO.getRegion(),
+                    userTrainDataDTO.getCountry(),
+                    userTrainDataDTO.getDevice()
+            };
+
+            // 执行 Python 脚本
+            Process process = Runtime.getRuntime().exec(command);
+
+            // 读取 Python 脚本的输出
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // 解析 Python 脚本的输出
+                if (line.startsWith("用户偏好比例:")) {
+                    String[] parts = line.split(":")[1].trim().split(",");
+                    for (String part : parts) {
+                        String[] keyValue = part.trim().split("=");
+                        preferences.put(keyValue[0], Integer.parseInt(keyValue[1]));
+                    }
+                }
+            }
+
+            // 等待进程结束
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                throw new RuntimeException("Python 脚本执行失败，退出码: " + exitCode);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("运行 Python 脚本时发生错误", e);
+        }
+
+        return preferences;
     }
 
     private void updatePreference(UserTrainDataDTO userTrainDataDTO) {
