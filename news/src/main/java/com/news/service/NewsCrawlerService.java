@@ -112,6 +112,23 @@ public class NewsCrawlerService {
             crawlNewsByZone(path, zone, 1);
         }
     }
+    public static void  autoCraw(String imgSavePath)
+    {
+        var data = new ArrayList<String>();
+        data.add("时尚");
+        data.add("艺术");
+        data.add("娱乐");
+        data.add("教育");
+        data.add("宠物");
+        data.add("环保");
+        data.add("气象");
+        data.add("科技");
+        data.add("政治");
+        data.add("经济");
+        for (var zone : data) {
+            crawlNewsByZone(imgSavePath, zone, 1);
+        }
+    }
 
     public static void crawlNewsByZone(String savePath, String zone, int pageNum) {;
         for (int i = 1; i <= pageNum; i++) {
