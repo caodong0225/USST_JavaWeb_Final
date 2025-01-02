@@ -47,12 +47,12 @@
     <div class="more-news-list" id="more-news-list">
     </div>
     <div class="advertisement-list" id="advertisement-list">
-        <div class="advertisement">
-            <div class="advertisement-image">
-                <img src="img/undefined.png" alt="广告图片">
-            </div>
-            <h4>广告1标题</h4>
-        </div>
+<%--        <div class="advertisement">--%>
+<%--            <div class="advertisement-image">--%>
+<%--                <img src="img/undefined.png" alt="广告图片">--%>
+<%--            </div>--%>
+<%--            <h4>广告1标题</h4>--%>
+<%--        </div>--%>
     </div>
 </div>
 </body>
