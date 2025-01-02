@@ -12,7 +12,8 @@ def get_all_goods():
         'description': good.description,
         'price': str(good.price),
         'stock': good.stock,
-        'image_path': good.image_path
+        'image_path': good.image_path,
+        'category': good.category
     } for good in goods]
     return jsonify(result)
 
@@ -26,7 +27,8 @@ def get_goods_details(goods_id):
             'description': good.description,
             'price': str(good.price),
             'stock': good.stock,
-            'image_path': good.image_path
+            'image_path': good.image_path,
+            'category': good.category
         })
     return jsonify({'error': '商品不存在'}), 404
 # 搜索商品接口

@@ -3,18 +3,48 @@ import { fetchGoods, searchGoods, addToCart } from "../api";
 import Navbar from "../components/Navbar";
 import Toast from "../components/Toast";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+const AD_SERVER_URL = "http://10.100.164.38:8080/user-predict/get-preferences";
 
 function Home() {
   const [goods, setGoods] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [ad, setAd] = useState<any>(null); // 广告数据
+  const [adLoading, setAdLoading] = useState(true); // 广告加载状态
+  const [showAd, setShowAd] = useState(true); // 控制广告显示/隐藏
 
   useEffect(() => {
     fetchGoods().then((data) => setGoods(data));
+    fetchAd();
   }, []);
+
   useEffect(() => {
-    document.title = 'USST小超市'; // 设置页面标题
+    document.title = "USST小超市"; // 设置页面标题
   }, []);
+
+  const fetchAd = async () => {
+    setAdLoading(true); // 开始加载广告
+    try {
+      const response = await axios.post(AD_SERVER_URL, {
+        userName: "12fef789",
+        age: 48,
+        gender: "男",
+        occupation: "白领",
+        education_level: "初中",
+        region: "大连",
+        country: "中国",
+        device: "台式设备",
+        preference: null,
+      });
+      setAd(response.data);
+    } catch (error) {
+      console.error("无法获取广告:", error);
+    } finally {
+      setAdLoading(false); // 加载完成
+    }
+  };
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
@@ -36,6 +66,10 @@ function Home() {
     } catch (error) {
       setToastMessage("加入购物车失败");
     }
+  };
+
+  const handleCloseAd = () => {
+    setShowAd(false); // 隐藏广告
   };
 
   return (
@@ -102,6 +136,83 @@ function Home() {
       {/* Toast 显示 */}
       {toastMessage && (
         <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
+      )}
+
+      {/* 浮动广告 */}
+      {showAd && (
+        <div
+          className="fixed-bottom p-3"
+          style={{
+            width: "300px",
+            right: "20px",
+            bottom: "20px",
+            zIndex: 1000,
+            position: "fixed",
+          }}
+        >
+          {adLoading ? (
+            // 显示加载占位符
+            <div
+              style={{
+                width: "100%",
+                height: "200px",
+                backgroundColor: "#f0f0f0",
+                borderRadius: "8px",
+                textAlign: "center",
+                lineHeight: "200px",
+                fontSize: "14px",
+                color: "#999",
+              }}
+            >
+              加载广告中...
+            </div>
+          ) : ad && ad.adImgUrl && ad.adUrl ? (
+            // 显示广告
+            <div style={{ position: "relative" }}>
+              <button
+                onClick={handleCloseAd}
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  background: "red",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "25px",
+                  height: "25px",
+                  fontSize: "14px",
+                  cursor: "pointer",
+                }}
+              >
+                ×
+              </button>
+              <a href={ad.adUrl} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={ad.adImgUrl}
+                  alt={ad.adName || "广告"}
+                  style={{ width: "100%", borderRadius: "8px" }}
+                />
+              </a>
+            </div>
+          ) : (
+            // 显示广告失败占位
+            <div
+              style={{
+                width: "100%",
+                height: "200px",
+                backgroundColor: "#ffc0cb",
+                borderRadius: "8px",
+                textAlign: "center",
+                lineHeight: "200px",
+                fontSize: "14px",
+                color: "#fff",
+              }}
+            >
+              无法加载广告
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

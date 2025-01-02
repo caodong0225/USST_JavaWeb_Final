@@ -7,6 +7,7 @@ CREATE TABLE `goods` (
     `price` DECIMAL(10, 2) NOT NULL DEFAULT 0.00 COMMENT '商品价格',
     `stock` INT NOT NULL DEFAULT 0 COMMENT '库存',
     `image_path` VARCHAR(255) COMMENT '商品图片存储路径',
+    `category` VARCHAR(100) COMMENT '商品的类别',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品表';
 
@@ -46,9 +47,10 @@ CREATE TABLE `cart` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='购物车表';
 
 
-INSERT INTO `goods` (`name`, `description`, `price`, `stock`, `image_path`) VALUES
-('智能手机', '高性能的智能手机，适合日常使用', 6999.00, 100, '/goods/smartphone.avif'),
-('笔记本电脑', '轻薄便携的办公笔记本', 4699.00, 50, '/goods/laptop.avif'),
-('无线耳机', '高品质音效的蓝牙无线耳机', 299.00, 200, '/goods/earphones.avif'),
-('智能手表', '监测健康数据的智能手表', 249.00, 150, '/goods/smartwatch.avif'),
-('台灯', '适合阅读的护眼LED台灯', 189.00, 500, '/goods/lamp.avif');
+INSERT INTO `goods` (`name`, `description`, `price`, `stock`, `image_path`, `category`) VALUES
+('米家无线智能宠物饮水机2', '可以给宠物喝水！', 199.00, 500, '/goods/drink.avif','Pets'),
+('Xbox Series X游戏机', '可以打游戏！', 3699.00, 50, '/goods/xbox.avif','Entertainment'),
+('米家台灯', '适合阅读的护眼LED台灯', 189.00, 500, '/goods/lamp.avif','Eco'),
+('智能手机', '高性能的智能手机，适合日常使用', 6999.00, 100, '/goods/smartphone.avif','Technology'),
+('笔记本电脑', '轻薄便携的办公笔记本', 4699.00, 50, '/goods/laptop.avif','Technology'),
+('智能手表', '监测健康数据的智能手表', 249.00, 150, '/goods/smartwatch.avif','Technology')
