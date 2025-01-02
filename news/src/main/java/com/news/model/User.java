@@ -14,6 +14,7 @@ public class User {
     private String sex;
     private String career;
     private String country;
+    private String region;   //缺地区
     private String educationBackground;
 
     public String getUsername() {
@@ -70,6 +71,10 @@ public class User {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    public String getRegion() {return this.region;}
+
+    public void setRegion(String region) {this.region = region;}
 
     public String getEducationBackground() {
         return educationBackground;
