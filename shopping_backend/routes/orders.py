@@ -66,7 +66,8 @@ def get_order(order_id):
         'user_id': order.user_id,
         'status': order.status,
         'order_time': order.order_time,
-        'items': order_items
+        'items': order_items,
+        'total_amount': str(sum(item.total_price for item in order.order_items))
     })
 
 # 获取所有订单

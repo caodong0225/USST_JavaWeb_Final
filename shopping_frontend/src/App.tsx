@@ -5,6 +5,7 @@ import ProductDetail from './pages/ProductDetail';
 import OrderQuery from './pages/OrderQuery';
 import Cart from './pages/Cart'; // 新增购物车页面
 import NotFound from './pages/NotFound';
+import Payment from './pages/Payment';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/order-query" element={<OrderQuery />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
