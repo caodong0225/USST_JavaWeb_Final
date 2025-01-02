@@ -37,9 +37,9 @@ public class UserTrainDataServiceImpl {
             String serverIp = request.getServerName(); // 获取服务器 IP 或主机名
             int serverPort = request.getServerPort(); // 获取端口号
             UserTrainDataVO userTrainDataVO = new UserTrainDataVO();
-            userTrainDataVO.setAdImgUrl("http://" + serverIp + ":" + serverPort + "/ad/" + id);
+            userTrainDataVO.setAdImgUrl("http://" + serverIp + ":" + serverPort + "/ad/images/" + id);
             userTrainDataVO.setAdName(""+advertisementService.getAdvertisementById(id));
-            userTrainDataVO.setAdUrl("www.baidu.com");
+            userTrainDataVO.setAdUrl("http://" + serverIp + ":" + serverPort + "/ad/" + id);
             return userTrainDataVO;
 
         }
@@ -63,7 +63,7 @@ public class UserTrainDataServiceImpl {
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(
                     "python",
-                    "D:\\大学\\大三上\\web\\USST_JavaWeb_ADTool-master\\py\\predict.py",
+                    "C:\\Users\\tianqianjia\\Desktop\\USST_JavaWeb_ADTool\\py\\predict.py",
                     String.valueOf(userTrainDataDTO.getAge()),
                     userTrainDataDTO.getGender(),
                     userTrainDataDTO.getOccupation(),
@@ -78,7 +78,7 @@ public class UserTrainDataServiceImpl {
 
             // 读取 Python 脚本的输出，指定 GBK 编码
             BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream(), "GBK")
+                    new InputStreamReader(process.getInputStream(), "gbk")
             );
 
             String line;
