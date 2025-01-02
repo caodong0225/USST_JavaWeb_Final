@@ -35,17 +35,20 @@ def load_model_and_encoder(version=None):
     :param version: 模型版本号（文件夹编号），如果为 None，则加载默认模型
     :return: model, encoder, valid_columns
     """
+    # 获取脚本所在目录
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
     if version is None:
         # 加载默认模型
-        model_path = "models/model.pkl"
-        encoder_path = "models/encoder.pkl"
-        valid_columns_path = "models/valid_columns.pkl"
+        model_path = os.path.join(BASE_DIR, "models/model.pkl")
+        encoder_path = os.path.join(BASE_DIR, "models/encoder.pkl")
+        valid_columns_path = os.path.join(BASE_DIR, "models/valid_columns.pkl")
         logger.info("正在加载默认模型...")
     else:
         # 加载指定版本的模型
-        model_path = f"models/{version}/model.pkl"
-        encoder_path = f"models/{version}/encoder.pkl"
-        valid_columns_path = f"models/{version}/valid_columns.pkl"
+        model_path = os.path.join(BASE_DIR, f"models/{version}/model.pkl")
+        encoder_path = os.path.join(BASE_DIR, f"models/{version}/encoder.pkl")
+        valid_columns_path = os.path.join(BASE_DIR, f"models/{version}/valid_columns.pkl")
         logger.info(f"正在加载模型版本: {version}...")
 
     # 检查文件是否存在
@@ -112,6 +115,15 @@ if __name__ == "__main__":
         "country": sys.argv[6],
         "device": sys.argv[7]
     }
+#     user_info = {
+#     "age": 25,
+#     "gender": "男",
+#     "occupation": "白领",
+#     "education_level": "高中",
+#     "region": "上海",
+#     "country": "中国",
+#     "device": "智能手机",
+# }
 
     try:
         # 使用默认模型进行预测
