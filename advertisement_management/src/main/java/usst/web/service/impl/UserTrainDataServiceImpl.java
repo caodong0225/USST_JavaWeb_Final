@@ -12,6 +12,7 @@ import usst.web.vo.UserTrainDataVO;
 
 import javax.swing.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,11 @@ public class UserTrainDataServiceImpl {
     @Resource
     private AdvertisementServiceImpl advertisementService;
 
-    public UserTrainDataVO getPreferences(UserTrainDataDTO userTrainDataDTO , HttpServletRequest request) {
+    private String pythonCmd = "python";
+    private String pythonPath = "C:\\Users\\tianqianjia\\Desktop\\USST_JavaWeb_ADTool\\py\\";
+
+    public UserTrainDataVO getPreferences(UserTrainDataDTO userTrainDataDTO1 , HttpServletRequest request) {
+        UserTrainDataDTO userTrainDataDTO = setDtoNotNull(userTrainDataDTO1);
         if(userTrainDataDTO.getPreference() == null || userTrainDataDTO.getPreference().isEmpty()) {
             // 获取服务器 IP 和端口号
             //初始化用户偏好map，取默认值
@@ -37,9 +42,9 @@ public class UserTrainDataServiceImpl {
             String serverIp = request.getServerName(); // 获取服务器 IP 或主机名
             int serverPort = request.getServerPort(); // 获取端口号
             UserTrainDataVO userTrainDataVO = new UserTrainDataVO();
-            userTrainDataVO.setAdImgUrl("http://" + serverIp + ":" + serverPort + "/ad/" + id);
+            userTrainDataVO.setAdImgUrl("http://" + serverIp + ":" + serverPort + "/ad/images/" + id);
             userTrainDataVO.setAdName(""+advertisementService.getAdvertisementById(id));
-            userTrainDataVO.setAdUrl("www.baidu.com");
+            userTrainDataVO.setAdUrl("http://" + serverIp + ":" + serverPort + "/ad/" + id);
             return userTrainDataVO;
 
         }
@@ -56,14 +61,44 @@ public class UserTrainDataServiceImpl {
         return userTrainDataVO;
 }
 
+    private  UserTrainDataDTO setDtoNotNull(UserTrainDataDTO userTrainDataDTO) {
+        if (userTrainDataDTO.getAge() == null) userTrainDataDTO.setAge(25);
+        if (userTrainDataDTO.getGender() == null || userTrainDataDTO.getGender().isEmpty()) userTrainDataDTO.setGender("不愿透露");
+        if (userTrainDataDTO.getOccupation() == null || userTrainDataDTO.getOccupation().isEmpty()) userTrainDataDTO.setOccupation("不愿透露");
+        if (userTrainDataDTO.getEducation_level() == null || userTrainDataDTO.getEducation_level().isEmpty()) userTrainDataDTO.setEducation_level("不愿透露");
+        if (userTrainDataDTO.getRegion() == null || userTrainDataDTO.getRegion().isEmpty()) userTrainDataDTO.setRegion("不愿透露");
+        if (userTrainDataDTO.getCountry() == null || userTrainDataDTO.getCountry().isEmpty()) userTrainDataDTO.setCountry("不愿透露");
+        if (userTrainDataDTO.getDevice() == null || userTrainDataDTO.getDevice().isEmpty()) userTrainDataDTO.setDevice("不愿透露");
+        return userTrainDataDTO;
+    }
+
+    public UserTrainDataVO train(HttpServletRequest request) throws IOException {
+        ProcessBuilder processBuilder = new ProcessBuilder(pythonCmd, pythonPath+"train.py");
+        processBuilder.redirectErrorStream(true); // 将错误流和输出流合并
+        Process process = processBuilder.start();
+        UserTrainDataVO userTrainDataVO = new UserTrainDataVO();
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(process.getInputStream(), "GBK")
+        );
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if(line.startsWith("3")) {
+                userTrainDataVO.setAdImgUrl("Success! The journey of a thousand predictions begins with a single model!");
+                return userTrainDataVO;
+            }
+        }
+            userTrainDataVO.setAdImgUrl("Failed!");
+            return userTrainDataVO;
+    }
+
 
     private Map<String, Double> defaultPreferences(UserTrainDataDTO userTrainDataDTO) {
         Map<String, Double> preferences = new HashMap<>();
 
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(
-                    "python",
-                    "D:\\大学\\大三上\\web\\USST_JavaWeb_ADTool-master\\py\\predict.py",
+                    pythonCmd,
+                    pythonPath+"predict.py",
                     String.valueOf(userTrainDataDTO.getAge()),
                     userTrainDataDTO.getGender(),
                     userTrainDataDTO.getOccupation(),
@@ -78,7 +113,7 @@ public class UserTrainDataServiceImpl {
 
             // 读取 Python 脚本的输出，指定 GBK 编码
             BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream(), "GBK")
+                    new InputStreamReader(process.getInputStream(), "gbk")
             );
 
             String line;
@@ -140,16 +175,16 @@ public class UserTrainDataServiceImpl {
         userTrainData.setDevice(userTrainDataDTO.getDevice());
 
         // 初始化偏好浏览次数为 0
-        userTrainData.setFashion(0);
-        userTrainData.setArt(0);
-        userTrainData.setEntertainment(0);
-        userTrainData.setEducation(0);
-        userTrainData.setPets(0);
-        userTrainData.setEco(0);
-        userTrainData.setWeather(0);
-        userTrainData.setTechnology(0);
-        userTrainData.setPolitics(0);
-        userTrainData.setEconomy(0);
+        userTrainData.setFashion(1);
+        userTrainData.setArt(1);
+        userTrainData.setEntertainment(1);
+        userTrainData.setEducation(1);
+        userTrainData.setPets(1);
+        userTrainData.setEco(1);
+        userTrainData.setWeather(1);
+        userTrainData.setTechnology(1);
+        userTrainData.setPolitics(1);
+        userTrainData.setEconomy(1);
 
 
         // 插入数据库
