@@ -50,6 +50,8 @@ public class StatisticsController {
         model.addAttribute("visited", visited);
         model.addAttribute("totalNum", statisticsService.getTotalNum());
         model.addAttribute("totalVisit", statisticsService.getTotalVisit());
+        model.addAttribute("userNum", statisticsService.getUserCount());
+        model.addAttribute("adminNum", statisticsService.getAdminCount());
         model.addAttribute("date", lastTenDays);
         model.addAttribute("recentVisited", recentVisited);
         return "index";

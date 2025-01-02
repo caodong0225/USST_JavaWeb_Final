@@ -28,4 +28,10 @@ public interface StatisticsMapper {
                 DATE(ad_create_time);
     """)
     List<DailyVisited> getRecentVisited();
+
+    @Select("select count(*) from user;")
+    Integer getUserCount();
+
+    @Select("select count(*) from user_role where role_name = 'admin';")
+    Integer getAdminCount();
 }

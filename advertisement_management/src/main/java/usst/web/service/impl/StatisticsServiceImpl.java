@@ -36,4 +36,15 @@ public class StatisticsServiceImpl implements IStatisticsService {
     public List<DailyVisited> getRecentVisited() {
         return statisticsMapper.getRecentVisited();
     }
+
+    @Override
+    public Integer getUserCount() {
+        return statisticsMapper.getUserCount();
+    }
+
+    @Override
+    public Integer getAdminCount() {
+        return statisticsMapper.getAdminCount();
+    }
+
 }

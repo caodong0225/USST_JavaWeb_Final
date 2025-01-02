@@ -14,4 +14,6 @@ public interface IStatisticsService {
     Integer getTotalNum();
     Integer getTotalVisit();
     List<DailyVisited> getRecentVisited();
+    Integer getUserCount();
+    Integer getAdminCount();
 }
