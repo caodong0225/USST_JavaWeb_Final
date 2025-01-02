@@ -18,7 +18,7 @@ public class TagServiceImpl implements ITagService {
     @Resource
     TagMapper tagMapper;
     @Override
-    public Integer getRecommendationUri(Map<String, Integer> userPreferences) {
+    public Integer getRecommendationUri(Map<String, Double> userPreferences) {
         List<Advertisement> advertisements = tagMapper.getRecommendation();
         // 抽取随机广告
         return 1;

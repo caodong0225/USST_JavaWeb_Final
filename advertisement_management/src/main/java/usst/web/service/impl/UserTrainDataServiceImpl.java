@@ -30,7 +30,7 @@ public class UserTrainDataServiceImpl {
         if(userTrainDataDTO.getPreference() == null || userTrainDataDTO.getPreference().isEmpty()) {
             // 获取服务器 IP 和端口号
             //初始化用户偏好map，取默认值
-            Map<String, Integer> userPreferences = defaultPreferences(userTrainDataDTO);
+            Map<String, Double> userPreferences = defaultPreferences(userTrainDataDTO);
 
             Integer id = tagService.getRecommendationUri(userPreferences);
 
@@ -57,8 +57,8 @@ public class UserTrainDataServiceImpl {
 }
 
 
-    private Map<String, Integer> defaultPreferences(UserTrainDataDTO userTrainDataDTO) {
-        Map<String, Integer> preferences = new HashMap<>();
+    private Map<String, Double> defaultPreferences(UserTrainDataDTO userTrainDataDTO) {
+        Map<String, Double> preferences = new HashMap<>();
 
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(
@@ -97,7 +97,7 @@ public class UserTrainDataServiceImpl {
 
                     // 将 Double 类型的值转换为 Integer
                     for (Map.Entry<String, Double> entry : preferenceMap.entrySet()) {
-                        preferences.put(entry.getKey(), entry.getValue().intValue());
+                        preferences.put(entry.getKey(), entry.getValue().doubleValue());
                     }
                 }
             }
@@ -128,7 +128,6 @@ public class UserTrainDataServiceImpl {
         return userTrainDataMapper.findPreferencesByUserName(username) != null;
     }
     public void initPreferences(UserTrainDataDTO userTrainDataDTO) {
-        Map<String, Integer> stringIntegerMap = defaultPreferences(userTrainDataDTO);
         // 将 DTO 转换为实体类
         UserTrainData userTrainData = new UserTrainData();
         userTrainData.setUserName(userTrainDataDTO.getUserName());
@@ -141,16 +140,17 @@ public class UserTrainDataServiceImpl {
         userTrainData.setDevice(userTrainDataDTO.getDevice());
 
         // 初始化偏好浏览次数为 0
-        userTrainData.setFashion(stringIntegerMap.get("Fashion"));
-        userTrainData.setArt(stringIntegerMap.get("Art"));
-        userTrainData.setEntertainment(stringIntegerMap.get("Entertainment"));
-        userTrainData.setEducation(stringIntegerMap.get("Education"));
-        userTrainData.setPets(stringIntegerMap.get("Pets"));
-        userTrainData.setEco(stringIntegerMap.get("Eco"));
-        userTrainData.setWeather(stringIntegerMap.get("Weather"));
-        userTrainData.setTechnology(stringIntegerMap.get("Technology"));
-        userTrainData.setPolitics(stringIntegerMap.get("Politics"));
-        userTrainData.setEconomy(stringIntegerMap.get("Economy"));
+        userTrainData.setFashion(0);
+        userTrainData.setArt(0);
+        userTrainData.setEntertainment(0);
+        userTrainData.setEducation(0);
+        userTrainData.setPets(0);
+        userTrainData.setEco(0);
+        userTrainData.setWeather(0);
+        userTrainData.setTechnology(0);
+        userTrainData.setPolitics(0);
+        userTrainData.setEconomy(0);
+
 
         // 插入数据库
         userTrainDataMapper.insertUserTrainData(userTrainData);
