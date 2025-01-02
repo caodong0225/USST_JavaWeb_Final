@@ -157,15 +157,16 @@ function createAdvertisement(adData) {
     adDiv.addEventListener('click', function () {
         location.href = adData["adUrl"];
     });
-
 }
-
 
 function loadAdvertisement() {
     const userInfo = getUser().info
     userInfo.device = getUserDevice()
     userInfo.preference = null
     for (let i = 0; i < 5; i++) {
-        createAdvertisement(sendAdRequest(userInfo));
+        sendAdRequest(userInfo).then(adData => {
+            console.log(adData);
+            createAdvertisement(adData)
+        })
     }
 }

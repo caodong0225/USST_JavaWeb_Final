@@ -14,7 +14,7 @@
     password = encryptText(password);
     var birthday=document.getElementById("birthday").value;
     var sex=document.getElementById("sex").value;
-    var career=document.getElementById("sex").value;
+    var career=document.getElementById("career").value;
     var country=document.getElementById("country").value;
     var education=document.getElementById("education").value;
     var xhr = new XMLHttpRequest();

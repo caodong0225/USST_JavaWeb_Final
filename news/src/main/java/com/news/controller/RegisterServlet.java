@@ -31,7 +31,7 @@ public class RegisterServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (req.getRequestURI().endsWith("/api/register")) {
             doRegisterApiPost(req, resp);
         } else {
@@ -43,21 +43,21 @@ public class RegisterServlet extends HttpServlet {
 
         var userName = (String) req.getAttribute("userName");
         var password = (String) req.getAttribute("password");
-        var birthday = (String) req.getParameter("birthday");
-        var sex = (String) req.getParameter("sex");
-        var career = (String) req.getParameter("career");
-        var country = (String) req.getParameter("country");
-        var education = (String) req.getParameter("education");
+        var birthday = req.getParameter("birthday");
+        var sex = req.getParameter("sex");
+        var career = req.getParameter("career");
+        var country = req.getParameter("country");
+        var education = req.getParameter("education");
         var simpleDateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
-        Date birthdayDate = null;
-        boolean success=false;
+        Date birthdayDate;
+        boolean success = false;
         try {
             birthdayDate = simpleDateFormat.parse(birthday);
         } catch (Exception e) {
             e.printStackTrace();
             birthdayDate = null;
         }
-        Logger.log("RegisterServlet: 输入内容 userName = " + userName + ", password = " + password+"birthday = "+birthday+"sex="+sex+"career="+career+"country="+country+"education="+education);
+        Logger.log("RegisterServlet: 输入内容 userName = " + userName + ", password = " + password + "birthday = " + birthday + "sex=" + sex + "career=" + career + "country=" + country + "education=" + education);
         String message = "";
         if (userName == null || password == null || userName.isEmpty() || password.isEmpty()) {
             message = "用户名或密码不能为空";
@@ -72,31 +72,22 @@ public class RegisterServlet extends HttpServlet {
 
         } else if (UserService.getInstance().getUserByUsername(userName) != null) {
             message = "用户名已存在";
-        } else if (birthday== null || birthday.isEmpty())
-        {
-            message="生日不能为空";
+        } else if (birthday == null || birthday.isEmpty()) {
+            message = "生日不能为空";
 
-        }else if (sex== null || sex.isEmpty())
-        {
-            message="性别不能为空";
-        }else if (career== null || career.isEmpty())
-        {
-            message="职业不能为空";
-        }else if (country== null || country.isEmpty())
-        {
-            message="国籍不能为空";
-        }else if (education== null || education.isEmpty())
-        {
-            message="学历不能为空";
-        }else if (birthdayDate== null)
-        {
+        } else if (sex == null || sex.isEmpty()) {
+            message = "性别不能为空";
+        } else if (career == null || career.isEmpty()) {
+            message = "职业不能为空";
+        } else if (country == null || country.isEmpty()) {
+            message = "国籍不能为空";
+        } else if (education == null || education.isEmpty()) {
+            message = "学历不能为空";
+        } else if (birthdayDate == null) {
             message = "生日格式错误";
-        }
-        else if (new Date().before(birthdayDate))
-        {
+        } else if (new Date().before(birthdayDate)) {
             message = "生日不能在未来";
-        }
-        else {
+        } else {
             var user = new User();
             user.setUsername(userName);
             user.setPassword(password);
@@ -107,7 +98,7 @@ public class RegisterServlet extends HttpServlet {
             user.setEducationBackground(education);
             if (UserService.getInstance().addUser(user)) {
                 message = "注册成功";
-                success=true;
+                success = true;
 
             } else {
                 message = "注册失败";

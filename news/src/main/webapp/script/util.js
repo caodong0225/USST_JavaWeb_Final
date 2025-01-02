@@ -1,10 +1,10 @@
 ﻿function getUserName(successCallback, errorCallback) {
-    var xhr = new XMLHttpRequest();
-    var url = "api/getUserName";
+    const xhr = new XMLHttpRequest();
+    const url = "api/getUserName";
     xhr.open('POST', url, true);
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
-            var response = JSON.parse(xhr.responseText);
+            const response = JSON.parse(xhr.responseText);
             if (response.success) {
                 successCallback(response);
             } else {
@@ -24,7 +24,7 @@ function encryptText(text) {
     if (typeof text !== "string") {
         return;
     }
-    // 将字符串转换为UTF-8编码的二进制数据
+    // 将字符串转换为UTF-8的二进制数据
     const utf8Encoder = new TextEncoder();
     const encodedText = utf8Encoder.encode(text);
     // 将二进制数据转换为ArrayBuffer
@@ -69,7 +69,7 @@ function onclick_login() {
 }
 
 function onclick_logout() {
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open('Post', 'api/logout', true);
     xhr.onload = function () {
         location.reload();
@@ -135,7 +135,7 @@ function getUser() {
 }
 
 function getUserDevice() {
-    device = navigator.platform
+    let device = navigator.platform
     if (device.substring(0, 3) === "Win") {
         return "笔记本电脑"
     } else if (device.substring(0, 5) === "Linux") {
@@ -144,30 +144,21 @@ function getUserDevice() {
 
 }
 
-function sendAdRequest(userInfo) {
-    // 定义请求的URL
+async function sendAdRequest(userInfo) {
     const url = 'http://192.168.31.195:8080/user-predict/get-preferences';
-    let adData
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json', // 设置请求头，指定发送的数据类型为JSON
-        },
-        body: JSON.stringify(userInfo), // 将JavaScript对象转换为JSON字符串
-    })
-        .then(response => response.json()) // 解析JSON格式的响应数据
-        .then(data => {
-            adData = data;
-        })
-        .catch((error) => {
-            console.error('Error:', error); // 打印错误信息
+    let adData = {};
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userInfo),
         });
+        adData = await response.json();
+    } catch (error) {
+        console.error('Error:', error);
+    }
     return adData;
-    //示例
-    // return {
-    //     "adName": "菜鸟教程",
-    //     "adImgUrl": "https://www.runoob.com/wp-content/themes/runoob/assets/img/runoob-logo.png",
-    //     "adUrl": "https://www.runoob.com/"
-    // }
 }
 
