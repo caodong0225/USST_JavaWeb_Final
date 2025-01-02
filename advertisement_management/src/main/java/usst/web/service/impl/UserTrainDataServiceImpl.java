@@ -1,5 +1,6 @@
 package usst.web.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
@@ -33,8 +34,6 @@ public class UserTrainDataServiceImpl {
 
             Integer id = tagService.getRecommendationUri(userPreferences);
 
-
-
             String serverIp = request.getServerName(); // 获取服务器 IP 或主机名
             int serverPort = request.getServerPort(); // 获取端口号
             UserTrainDataVO userTrainDataVO = new UserTrainDataVO();
@@ -55,31 +54,52 @@ public class UserTrainDataServiceImpl {
         UserTrainDataVO userTrainDataVO = new UserTrainDataVO();
         userTrainDataVO.setAdImgUrl("Success!");
         return userTrainDataVO;
-    }
-
+}
 
 
     private Map<String, Integer> defaultPreferences(UserTrainDataDTO userTrainDataDTO) {
         Map<String, Integer> preferences = new HashMap<>();
 
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder("python", "D:\\大学\\大三上\\web\\USST_JavaWeb_ADTool-master\\py\\predict.py",
+            ProcessBuilder processBuilder = new ProcessBuilder(
+                    "python",
+                    "D:\\大学\\大三上\\web\\USST_JavaWeb_ADTool-master\\py\\predict.py",
                     String.valueOf(userTrainDataDTO.getAge()),
                     userTrainDataDTO.getGender(),
                     userTrainDataDTO.getOccupation(),
                     userTrainDataDTO.getEducation_level(),
                     userTrainDataDTO.getRegion(),
                     userTrainDataDTO.getCountry(),
-                    userTrainDataDTO.getDevice());
+                    userTrainDataDTO.getDevice()
+            );
             processBuilder.redirectErrorStream(true); // 将错误流和输出流合并
 
             Process process = processBuilder.start();
 
-            // 读取 Python 脚本的输出
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            // 读取 Python 脚本的输出，指定 GBK 编码
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream(), "GBK")
+            );
+
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                // 检查是否包含用户偏好比例
+                if (line.startsWith("用户偏好比例:")) {
+                    // 移除前缀 "用户偏好比例: "
+                    String jsonStr = line.substring("用户偏好比例: ".length());
+
+                    // 将 Python 字典格式的字符串转换为 JSON 格式
+                    jsonStr = jsonStr.replace("'", "\"");
+
+                    // 使用 Jackson 解析 JSON 字符串
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    Map<String, Double> preferenceMap = objectMapper.readValue(jsonStr, Map.class);
+
+                    // 将 Double 类型的值转换为 Integer
+                    for (Map.Entry<String, Double> entry : preferenceMap.entrySet()) {
+                        preferences.put(entry.getKey(), entry.getValue().intValue());
+                    }
+                }
             }
 
             // 等待进程结束
@@ -108,7 +128,7 @@ public class UserTrainDataServiceImpl {
         return userTrainDataMapper.findPreferencesByUserName(username) != null;
     }
     public void initPreferences(UserTrainDataDTO userTrainDataDTO) {
-
+        Map<String, Integer> stringIntegerMap = defaultPreferences(userTrainDataDTO);
         // 将 DTO 转换为实体类
         UserTrainData userTrainData = new UserTrainData();
         userTrainData.setUserName(userTrainDataDTO.getUserName());
@@ -121,16 +141,16 @@ public class UserTrainDataServiceImpl {
         userTrainData.setDevice(userTrainDataDTO.getDevice());
 
         // 初始化偏好浏览次数为 0
-        userTrainData.setFashion(0);
-        userTrainData.setArt(0);
-        userTrainData.setEntertainment(0);
-        userTrainData.setEducation(0);
-        userTrainData.setPets(0);
-        userTrainData.setEco(0);
-        userTrainData.setWeather(0);
-        userTrainData.setTechnology(0);
-        userTrainData.setPolitics(0);
-        userTrainData.setEconomy(0);
+        userTrainData.setFashion(stringIntegerMap.get("Fashion"));
+        userTrainData.setArt(stringIntegerMap.get("Art"));
+        userTrainData.setEntertainment(stringIntegerMap.get("Entertainment"));
+        userTrainData.setEducation(stringIntegerMap.get("Education"));
+        userTrainData.setPets(stringIntegerMap.get("Pets"));
+        userTrainData.setEco(stringIntegerMap.get("Eco"));
+        userTrainData.setWeather(stringIntegerMap.get("Weather"));
+        userTrainData.setTechnology(stringIntegerMap.get("Technology"));
+        userTrainData.setPolitics(stringIntegerMap.get("Politics"));
+        userTrainData.setEconomy(stringIntegerMap.get("Economy"));
 
         // 插入数据库
         userTrainDataMapper.insertUserTrainData(userTrainData);

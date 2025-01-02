@@ -3,7 +3,9 @@ import pandas as pd
 import logging
 import os
 import sys
+import io
 
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 # 配置日志
 def setup_logger():
     # 创建日志格式
