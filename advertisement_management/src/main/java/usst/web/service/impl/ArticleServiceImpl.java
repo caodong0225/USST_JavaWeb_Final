@@ -16,7 +16,7 @@ public class ArticleServiceImpl {
 
     public boolean publishArticle(Article article) {
         try {
-            RocketMQProducerService.sendMessage("testTopic", article.getContent());
+            RocketMQProducerService.sendMessage("testTopic",article.getId() + "&&&&" + article.getContent());
         } catch (Exception e) {
             e.printStackTrace();
         }
