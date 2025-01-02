@@ -1,5 +1,7 @@
 package com.news.model;
 
+import com.news.util.DateUtil;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -77,15 +79,7 @@ public class User {
         this.educationBackground = educationBackground;
     }
 
-    public String getAge() {
-        //这一句如果使用会完全停止处理，甚至没有任何报错信息
-//        LocalDate birthLocalDate = this.birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-
-//        Period agePeriod = Period.between(birthLocalDate, LocalDate.now());
-//        System.out.println(agePeriod.getYears());
-//        return "" + agePeriod.getYears();
-        return "20";
-
+    public int getAge() {
+        return DateUtil.CalAge(birthday);
     }
 }

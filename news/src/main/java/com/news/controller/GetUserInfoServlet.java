@@ -31,7 +31,7 @@ public class GetUserInfoServlet extends HttpServlet {
             username = (String) session.getAttribute("username");
             data.put("username", username);
             User user = UserService.getInstance().getUserByUsername(username);
-            data.put("age", user.getAge());
+            data.put("age", user.getAge()+"");
             data.put("gender", user.getSex());
             data.put("occupation", user.getCareer());
             data.put("educationLevel", user.getEducationBackground());
