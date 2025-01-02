@@ -43,7 +43,7 @@ public class UserTrainDataServiceImpl {
             userTrainDataVO.setAdUrl("www.baidu.com");
             return userTrainDataVO;
 
-            }
+        }
         if (!isUserPreferencesExist(userTrainDataDTO.getUserName())) {
             initPreferences(userTrainDataDTO);
         }
@@ -63,35 +63,23 @@ public class UserTrainDataServiceImpl {
         Map<String, Integer> preferences = new HashMap<>();
 
         try {
-            // 构建 Python 命令
-            String pythonScriptPath = "py/predict.py"; // 替换为你的 Python 脚本路径
-            String[] command = {
-                    "python3", // 或者 "python"，取决于你的环境
-                    pythonScriptPath,
+            ProcessBuilder processBuilder = new ProcessBuilder("python", "D:\\大学\\大三上\\web\\USST_JavaWeb_ADTool-master\\py\\predict.py",
                     String.valueOf(userTrainDataDTO.getAge()),
                     userTrainDataDTO.getGender(),
                     userTrainDataDTO.getOccupation(),
-                    userTrainDataDTO.getEducationLevel(),
+                    userTrainDataDTO.getEducation_level(),
                     userTrainDataDTO.getRegion(),
                     userTrainDataDTO.getCountry(),
-                    userTrainDataDTO.getDevice()
-            };
+                    userTrainDataDTO.getDevice());
+            processBuilder.redirectErrorStream(true); // 将错误流和输出流合并
 
-            // 执行 Python 脚本
-            Process process = Runtime.getRuntime().exec(command);
+            Process process = processBuilder.start();
 
             // 读取 Python 脚本的输出
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
-                // 解析 Python 脚本的输出
-                if (line.startsWith("用户偏好比例:")) {
-                    String[] parts = line.split(":")[1].trim().split(",");
-                    for (String part : parts) {
-                        String[] keyValue = part.trim().split("=");
-                        preferences.put(keyValue[0], Integer.parseInt(keyValue[1]));
-                    }
-                }
+                System.out.println(line);
             }
 
             // 等待进程结束
@@ -127,7 +115,7 @@ public class UserTrainDataServiceImpl {
         userTrainData.setAge(userTrainDataDTO.getAge());
         userTrainData.setGender(userTrainDataDTO.getGender());
         userTrainData.setOccupation(userTrainDataDTO.getOccupation());
-        userTrainData.setEducationLevel(userTrainDataDTO.getEducationLevel());
+        userTrainData.setEducationLevel(userTrainDataDTO.getEducation_level());
         userTrainData.setRegion(userTrainDataDTO.getRegion());
         userTrainData.setCountry(userTrainDataDTO.getCountry());
         userTrainData.setDevice(userTrainDataDTO.getDevice());

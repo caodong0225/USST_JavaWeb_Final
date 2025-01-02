@@ -21,6 +21,6 @@ public class TagServiceImpl implements ITagService {
     public Integer getRecommendationUri(Map<String, Integer> userPreferences) {
         List<Advertisement> advertisements = tagMapper.getRecommendation();
         // 抽取随机广告
-        return advertisements.get(0).getAdId();
+        return 1;
     }
 }
