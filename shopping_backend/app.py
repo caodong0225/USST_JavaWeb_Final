@@ -24,4 +24,4 @@ app.register_blueprint(orders_bp, url_prefix='/orders')
 app.register_blueprint(cart_bp, url_prefix='/cart')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
