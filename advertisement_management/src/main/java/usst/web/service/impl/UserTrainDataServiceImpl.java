@@ -28,7 +28,7 @@ public class UserTrainDataServiceImpl {
     private AdvertisementServiceImpl advertisementService;
 
     private String pythonCmd = "python";
-    private String pythonPath = "D:\\大学\\大三上\\web\\USST_JavaWeb_ADTool-master\\py\\";
+    private String pythonPath = "C:\\Users\\tianqianjia\\Desktop\\USST_JavaWeb_ADTool\\py\\";
 
     public UserTrainDataVO getPreferences(UserTrainDataDTO userTrainDataDTO1 , HttpServletRequest request) {
         UserTrainDataDTO userTrainDataDTO = setDtoNotNull(userTrainDataDTO1);
@@ -83,7 +83,7 @@ public class UserTrainDataServiceImpl {
         String line;
         while ((line = reader.readLine()) != null) {
             if(line.startsWith("3")) {
-                userTrainDataVO.setAdImgUrl("Success! The journey of a thousand predictions begins with a single model! \uD83D\uDE80\uD83C\uDF1F");
+                userTrainDataVO.setAdImgUrl("Success! The journey of a thousand predictions begins with a single model!");
                 return userTrainDataVO;
             }
         }
@@ -175,16 +175,16 @@ public class UserTrainDataServiceImpl {
         userTrainData.setDevice(userTrainDataDTO.getDevice());
 
         // 初始化偏好浏览次数为 0
-        userTrainData.setFashion(0);
-        userTrainData.setArt(0);
-        userTrainData.setEntertainment(0);
-        userTrainData.setEducation(0);
-        userTrainData.setPets(0);
-        userTrainData.setEco(0);
-        userTrainData.setWeather(0);
-        userTrainData.setTechnology(0);
-        userTrainData.setPolitics(0);
-        userTrainData.setEconomy(0);
+        userTrainData.setFashion(1);
+        userTrainData.setArt(1);
+        userTrainData.setEntertainment(1);
+        userTrainData.setEducation(1);
+        userTrainData.setPets(1);
+        userTrainData.setEco(1);
+        userTrainData.setWeather(1);
+        userTrainData.setTechnology(1);
+        userTrainData.setPolitics(1);
+        userTrainData.setEconomy(1);
 
 
         // 插入数据库
