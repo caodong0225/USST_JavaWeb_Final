@@ -157,7 +157,7 @@ async function sendAdRequest(userInfo) {
         });
         adData = await response.json();
     } catch (error) {
-        console.error('Error:', error);
+        console.log(error);
     }
     return adData;
 }

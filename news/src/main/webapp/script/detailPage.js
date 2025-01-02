@@ -33,7 +33,8 @@ function sendUserAction(newsInfo) {
     if (user.status) {
         const userInfo = user.info
         userInfo.device = getUserDevice()
-        userInfo.preference = translateCNtoEN(newsInfo["zone"]) //这里应该用tag的，不过广告方面只要求一个内容，所以用zone了
-        sendAdRequest(userInfo)
+        userInfo.preference = translateCNtoEN(newsInfo["zone"]?newsInfo["zone"]:newsInfo["tag"][0])
+        console.log(userInfo)
+        sendAdRequest(userInfo).then(r=>console.log(r))
     }
 }
