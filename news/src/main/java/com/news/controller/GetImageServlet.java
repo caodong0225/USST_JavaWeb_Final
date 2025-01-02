@@ -34,6 +34,24 @@ public class GetImageServlet extends HttpServlet {
         }
         imageMap.put("undefined", getServletContext().getRealPath("img/undefined.png"));
     }
+    private String tryGetImagePath(String imageUrl) {
+        if (imageMap.containsKey(imageUrl)) {
+            return imageMap.get(imageUrl);
+        }
+        var path = getServletContext().getRealPath("img/news/" + imageUrl+".jpg");
+        var file = new File(path);
+        if (file.exists()) {
+            imageMap.put(imageUrl, path);
+            return path;
+        }
+        path = getServletContext().getRealPath("img/news/" + imageUrl+".png");
+        file = new File(path);
+        if (file.exists()) {
+            imageMap.put(imageUrl, path);
+            return path;
+        }
+        return null;
+    }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -44,7 +62,8 @@ public class GetImageServlet extends HttpServlet {
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
         var out = response.getOutputStream();
-        if (imageMap.containsKey(imageUrl)) {
+        var imagePath = tryGetImagePath(imageUrl);
+        if (imagePath != null && !imagePath.isEmpty()) {
             var fis = new FileInputStream(imageMap.get(imageUrl));
             var buffer = new byte[1024];
             int len;

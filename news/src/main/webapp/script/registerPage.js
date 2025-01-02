@@ -25,6 +25,10 @@
         if (xhr.status >= 200 && xhr.status < 300) {
             var response = JSON.parse(xhr.responseText);
             document.getElementById("message").innerText = response.message;
+            if (response.success) {
+                alert("注册成功");
+                window.location.href = "login";
+            }
         } else {
             document.getElementById("message").innerText = "注册失败";
         }

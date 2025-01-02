@@ -50,7 +50,7 @@ public class RegisterServlet extends HttpServlet {
         var education = (String) req.getParameter("education");
         var simpleDateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
         Date birthdayDate = null;
-
+        boolean success=false;
         try {
             birthdayDate = simpleDateFormat.parse(birthday);
         } catch (Exception e) {
@@ -92,6 +92,10 @@ public class RegisterServlet extends HttpServlet {
         {
             message = "生日格式错误";
         }
+        else if (new Date().before(birthdayDate))
+        {
+            message = "生日不能在未来";
+        }
         else {
             var user = new User();
             user.setUsername(userName);
@@ -103,12 +107,15 @@ public class RegisterServlet extends HttpServlet {
             user.setEducationBackground(education);
             if (UserService.getInstance().addUser(user)) {
                 message = "注册成功";
+                success=true;
+
             } else {
                 message = "注册失败";
             }
         }
         Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("message", message);
+        jsonMap.put("success", success);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         PrintWriter out = resp.getWriter();
