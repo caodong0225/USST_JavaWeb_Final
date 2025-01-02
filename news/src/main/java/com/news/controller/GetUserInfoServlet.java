@@ -29,7 +29,7 @@ public class GetUserInfoServlet extends HttpServlet {
         var data = new HashMap<String, Object>();
         if (session.getAttribute("username") != null) {
             username = (String) session.getAttribute("username");
-            data.put("username", username);
+            data.put("userName", username);
             User user = UserService.getInstance().getUserByUsername(username);
             data.put("age", user.getAge()+"");
             data.put("gender", user.getSex());
@@ -41,7 +41,7 @@ public class GetUserInfoServlet extends HttpServlet {
         } else {
             //应广告方要求，若用户未登录则给出随机的用户名
             username = UUID.randomUUID().toString();
-            data.put("username", username);
+            data.put("userName", username);
             data.put("age", null);
             data.put("gender", null);
             data.put("occupation", null);

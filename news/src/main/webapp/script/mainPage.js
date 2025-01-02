@@ -165,7 +165,7 @@ function loadAdvertisement() {
     userInfo.preference = null
     for (let i = 0; i < 5; i++) {
         sendAdRequest(userInfo).then(adData => {
-            console.log(adData);
+            // console.log(adData);
             createAdvertisement(adData)
         })
     }
