@@ -37,6 +37,7 @@ public class GetUserInfoServlet extends HttpServlet {
             data.put("educationLevel", user.getEducationBackground());
             data.put("region", null); //缺地区
             data.put("country", user.getCountry());
+            result.put("isLogin", true);
         } else {
             //应广告方要求，若用户未登录则给出随机的用户名
             username = UUID.randomUUID().toString();
@@ -47,6 +48,7 @@ public class GetUserInfoServlet extends HttpServlet {
             data.put("educationLevel", null);
             data.put("region", null);
             data.put("country", null);
+            result.put("isLogin", false);
         }
         result.put("data", data);
         out.println(new ObjectMapper().writeValueAsString(result));
