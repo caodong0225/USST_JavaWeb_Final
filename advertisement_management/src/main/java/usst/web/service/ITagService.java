@@ -7,5 +7,5 @@ import java.util.Map;
  * @since 2025-1-1
  */
 public interface ITagService {
-    Integer getRecommendationUri(Map<String, Integer> userPreferences);
+    Integer getRecommendationUri(Map<String, Double> userPreferences);
 }

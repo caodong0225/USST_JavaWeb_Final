@@ -1,5 +1,6 @@
 package usst.web.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
@@ -29,11 +30,9 @@ public class UserTrainDataServiceImpl {
         if(userTrainDataDTO.getPreference() == null || userTrainDataDTO.getPreference().isEmpty()) {
             // 获取服务器 IP 和端口号
             //初始化用户偏好map，取默认值
-            Map<String, Integer> userPreferences = defaultPreferences(userTrainDataDTO);
+            Map<String, Double> userPreferences = defaultPreferences(userTrainDataDTO);
 
             Integer id = tagService.getRecommendationUri(userPreferences);
-
-
 
             String serverIp = request.getServerName(); // 获取服务器 IP 或主机名
             int serverPort = request.getServerPort(); // 获取端口号
@@ -55,31 +54,52 @@ public class UserTrainDataServiceImpl {
         UserTrainDataVO userTrainDataVO = new UserTrainDataVO();
         userTrainDataVO.setAdImgUrl("Success!");
         return userTrainDataVO;
-    }
+}
 
 
-
-    private Map<String, Integer> defaultPreferences(UserTrainDataDTO userTrainDataDTO) {
-        Map<String, Integer> preferences = new HashMap<>();
+    private Map<String, Double> defaultPreferences(UserTrainDataDTO userTrainDataDTO) {
+        Map<String, Double> preferences = new HashMap<>();
 
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder("python", "D:\\大学\\大三上\\web\\USST_JavaWeb_ADTool-master\\py\\predict.py",
+            ProcessBuilder processBuilder = new ProcessBuilder(
+                    "python",
+                    "D:\\大学\\大三上\\web\\USST_JavaWeb_ADTool-master\\py\\predict.py",
                     String.valueOf(userTrainDataDTO.getAge()),
                     userTrainDataDTO.getGender(),
                     userTrainDataDTO.getOccupation(),
                     userTrainDataDTO.getEducation_level(),
                     userTrainDataDTO.getRegion(),
                     userTrainDataDTO.getCountry(),
-                    userTrainDataDTO.getDevice());
+                    userTrainDataDTO.getDevice()
+            );
             processBuilder.redirectErrorStream(true); // 将错误流和输出流合并
 
             Process process = processBuilder.start();
 
-            // 读取 Python 脚本的输出
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            // 读取 Python 脚本的输出，指定 GBK 编码
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream(), "GBK")
+            );
+
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                // 检查是否包含用户偏好比例
+                if (line.startsWith("用户偏好比例:")) {
+                    // 移除前缀 "用户偏好比例: "
+                    String jsonStr = line.substring("用户偏好比例: ".length());
+
+                    // 将 Python 字典格式的字符串转换为 JSON 格式
+                    jsonStr = jsonStr.replace("'", "\"");
+
+                    // 使用 Jackson 解析 JSON 字符串
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    Map<String, Double> preferenceMap = objectMapper.readValue(jsonStr, Map.class);
+
+                    // 将 Double 类型的值转换为 Integer
+                    for (Map.Entry<String, Double> entry : preferenceMap.entrySet()) {
+                        preferences.put(entry.getKey(), entry.getValue().doubleValue());
+                    }
+                }
             }
 
             // 等待进程结束
@@ -108,7 +128,6 @@ public class UserTrainDataServiceImpl {
         return userTrainDataMapper.findPreferencesByUserName(username) != null;
     }
     public void initPreferences(UserTrainDataDTO userTrainDataDTO) {
-
         // 将 DTO 转换为实体类
         UserTrainData userTrainData = new UserTrainData();
         userTrainData.setUserName(userTrainDataDTO.getUserName());
@@ -131,6 +150,7 @@ public class UserTrainDataServiceImpl {
         userTrainData.setTechnology(0);
         userTrainData.setPolitics(0);
         userTrainData.setEconomy(0);
+
 
         // 插入数据库
         userTrainDataMapper.insertUserTrainData(userTrainData);
