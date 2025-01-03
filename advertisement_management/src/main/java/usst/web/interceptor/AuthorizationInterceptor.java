@@ -30,6 +30,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         if (request.getRequestURI().startsWith("/ad/")) {
             return true;
         }
+        if (request.getRequestURI().startsWith("/advertisements/images/")) {
+            return true;
+        }
         if (request.getRequestURI().startsWith("/recommend/")) {
             return true;
         }
