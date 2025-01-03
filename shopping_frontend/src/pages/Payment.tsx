@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-
-const API_URL = "http://localhost:5000";
+import { API_URL } from "../api";
 
 const Payment = () => {
   const [searchParams] = useSearchParams();

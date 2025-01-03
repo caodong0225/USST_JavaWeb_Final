@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://10.100.164.36:5000'; // 后端地址
+export const API_URL = 'http://10.100.164.36:5000'; // 后端地址
 
 // 获取商品列表
 export const fetchGoods = async () => {

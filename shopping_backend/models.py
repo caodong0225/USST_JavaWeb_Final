@@ -12,6 +12,7 @@ class Goods(db.Model):
     price = db.Column(db.Numeric(10, 2), nullable=False, default=0.00, comment='商品价格')
     stock = db.Column(db.Integer, nullable=False, default=0, comment='库存')
     image_path = db.Column(db.String(255), comment='商品图片存储路径')
+    category = db.Column(db.String(50), comment='商品类别')
 
 # 购物车表模型
 class Cart(db.Model):
