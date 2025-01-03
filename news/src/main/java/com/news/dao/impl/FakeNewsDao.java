@@ -64,7 +64,7 @@ public class FakeNewsDao {
 
     public static void main(String[] args) {
         //path填包含新闻json的文件夹目录
-        var path = "";
+        var path = "D:\\学习\\web开发\\USST_JavaWeb_ADTool\\news\\src\\main\\resources\\NewsJson\\";
         initDb(path);
     }
 }
