@@ -3,10 +3,13 @@ package usst.web.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import usst.web.dto.UserTrainDataDTO;
+import usst.web.entity.Advertisement;
 import usst.web.entity.UserTrainData;
 import usst.web.mapper.UserTrainDataMapper;
+import usst.web.service.AdvertisementService;
 import usst.web.service.ITagService;
 import usst.web.vo.UserTrainDataVO;
 
@@ -24,8 +27,11 @@ public class UserTrainDataServiceImpl {
     @Resource
     private ITagService tagService;
 
-    @Resource
-    private AdvertisementServiceImpl advertisementService;
+//    @Resource
+//    private AdvertisementServiceImpl advertisementService;
+
+    @Autowired
+    private AdvertisementService advertisementService;
 
     private String pythonCmd = "python";
     private String pythonPath = "C:\\Users\\tianqianjia\\Desktop\\USST_JavaWeb_ADTool\\py\\";
@@ -38,12 +44,13 @@ public class UserTrainDataServiceImpl {
             Map<String, Double> userPreferences = defaultPreferences(userTrainDataDTO);
 
             Integer id = tagService.getRecommendationUri(userPreferences);
+            Advertisement advertisement = advertisementService.getAdvertisementById(id);
 
             String serverIp = request.getServerName(); // 获取服务器 IP 或主机名
             int serverPort = request.getServerPort(); // 获取端口号
             UserTrainDataVO userTrainDataVO = new UserTrainDataVO();
             userTrainDataVO.setAdImgUrl("http://" + serverIp + ":" + serverPort + "/ad/images/" + id);
-            userTrainDataVO.setAdName(""+advertisementService.getAdvertisementById(id));
+            userTrainDataVO.setAdName(""+advertisement.getAdName());
             userTrainDataVO.setAdUrl("http://" + serverIp + ":" + serverPort + "/ad/" + id);
             return userTrainDataVO;
 
