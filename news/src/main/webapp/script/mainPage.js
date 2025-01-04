@@ -159,10 +159,15 @@ function createAdvertisement(adData) {
     });
 }
 
-function loadAdvertisement() {
-    const userInfo = getUser().info
+async function loadAdvertisement() {
+    const user = getUser()
+    const userInfo = user.info
     userInfo.device = getUserDevice()
     userInfo.preference = null
+    if (user.status === false) {
+        userInfo.fingerprint = await getFingerPrint()
+    }
+    console.log(userInfo)
     for (let i = 0; i < 5; i++) {
         sendAdRequest(userInfo).then(adData => {
             // console.log(adData);

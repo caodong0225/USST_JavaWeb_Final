@@ -28,13 +28,14 @@ function loadNewsInfo() {
     xhr.send(`newsId=${new URLSearchParams(window.location.search).get('newsId')}`);
 }
 
-function sendUserAction(newsInfo) {
+async function sendUserAction(newsInfo) {
     const user = getUser()
     if (user.status) {
         const userInfo = user.info
         userInfo.device = getUserDevice()
-        userInfo.preference = translateCNtoEN(newsInfo["zone"]?newsInfo["zone"]:newsInfo["tag"][0])
+        userInfo.preference = translateCNtoEN(newsInfo["zone"] ? newsInfo["zone"] : newsInfo["tag"][0])
+        userInfo.fingerprint = await getFingerPrint()
         console.log(userInfo)
-        sendAdRequest(userInfo).then(r=>console.log(r))
+        sendAdRequest(userInfo).then(r => console.log(r))
     }
 }
