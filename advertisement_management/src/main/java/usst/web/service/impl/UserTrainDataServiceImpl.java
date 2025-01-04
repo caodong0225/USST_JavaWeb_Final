@@ -50,53 +50,65 @@ public class UserTrainDataServiceImpl {
             int times=sumData(preferencesByUsername);
 
             Map<String,Double> tempDB=normalizePreferences(preferencesByUsername);//数据库偏好
-            if(0<=times && times<= 10 &&isTourist) {
-                result.put("Fashion",userPreferences.get("Fashion")*(1-0.03*times)+tempDB.get("Fashion")*(0.03*times));
-                result.put("Art",userPreferences.get("Art")*(1-0.03*times)+tempDB.get("Art")*(0.03*times));
-                result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.03*times)+tempDB.get("Entertainment")*(0.03*times));
-                result.put("Education",userPreferences.get("Education")*(1-0.03*times)+tempDB.get("Education")*(0.03*times));
-                result.put("Pets",userPreferences.get("Pets")*(1-0.03*times)+tempDB.get("Pets")*(0.03*times));
-                result.put("Eco",userPreferences.get("Eco")*(1-0.03*times)+tempDB.get("Eco")*(0.03*times));
-                result.put("Weather",userPreferences.get("Weather")*(1-0.03*times)+tempDB.get("Weather")*(0.03*times));
-                result.put("Technology",userPreferences.get("Technology")*(1-0.03*times)+tempDB.get("Technology")*(0.03*times));
-                result.put("Politics",userPreferences.get("Politics")*(1-0.03*times)+tempDB.get("Politics")*(0.03*times));
-                result.put("Economy",userPreferences.get("Economy")*(1-0.03*times)+tempDB.get("Economy")*(0.03*times));
+
+
+            // 此处计算逻辑详情请见报告
+            double touristDelta = 0.03;//游客偏好变化率
+            int touristThresh = 10;//游客偏好变化阈值
+
+            if (0 <= times && times <= touristThresh && isTourist) {
+                result.put("Fashion", userPreferences.get("Fashion") * (1 - touristDelta * times) + tempDB.get("Fashion") * (touristDelta * times));
+                result.put("Art", userPreferences.get("Art") * (1 - touristDelta * times) + tempDB.get("Art") * (touristDelta * times));
+                result.put("Entertainment", userPreferences.get("Entertainment") * (1 - touristDelta * times) + tempDB.get("Entertainment") * (touristDelta * times));
+                result.put("Education", userPreferences.get("Education") * (1 - touristDelta * times) + tempDB.get("Education") * (touristDelta * times));
+                result.put("Pets", userPreferences.get("Pets") * (1 - touristDelta * times) + tempDB.get("Pets") * (touristDelta * times));
+                result.put("Eco", userPreferences.get("Eco") * (1 - touristDelta * times) + tempDB.get("Eco") * (touristDelta * times));
+                result.put("Weather", userPreferences.get("Weather") * (1 - touristDelta * times) + tempDB.get("Weather") * (touristDelta * times));
+                result.put("Technology", userPreferences.get("Technology") * (1 - touristDelta * times) + tempDB.get("Technology") * (touristDelta * times));
+                result.put("Politics", userPreferences.get("Politics") * (1 - touristDelta * times) + tempDB.get("Politics") * (touristDelta * times));
+                result.put("Economy", userPreferences.get("Economy") * (1 - touristDelta * times) + tempDB.get("Economy") * (touristDelta * times));
             }
-            if(times>10&&isTourist){
-                result.put("Fashion",userPreferences.get("Fashion")*(1-0.03*10)+tempDB.get("Fashion")*(0.03*10));
-                result.put("Art",userPreferences.get("Art")*(1-0.03*10)+tempDB.get("Art")*(0.03*10));
-                result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.03*10)+tempDB.get("Entertainment")*(0.03*10));
-                result.put("Education",userPreferences.get("Education")*(1-0.03*10)+tempDB.get("Education")*(0.03*10));
-                result.put("Pets",userPreferences.get("Pets")*(1-0.03*10)+tempDB.get("Pets")*(0.03*10));
-                result.put("Eco",userPreferences.get("Eco")*(1-0.03*10)+tempDB.get("Eco")*(0.03*10));
-                result.put("Weather",userPreferences.get("Weather")*(1-0.03*10)+tempDB.get("Weather")*(0.03*10));
-                result.put("Technology",userPreferences.get("Technology")*(1-0.03*10)+tempDB.get("Technology")*(0.03*10));
-                result.put("Politics",userPreferences.get("Politics")*(1-0.03*10)+tempDB.get("Politics")*(0.03*10));
-                result.put("Economy",userPreferences.get("Economy")*(1-0.03*10)+tempDB.get("Economy")*(0.03*10));
+
+            if (times > touristThresh && isTourist) {
+                result.put("Fashion", userPreferences.get("Fashion") * (1 - touristDelta * 10) + tempDB.get("Fashion") * (touristDelta * 10));
+                result.put("Art", userPreferences.get("Art") * (1 - touristDelta * 10) + tempDB.get("Art") * (touristDelta * 10));
+                result.put("Entertainment", userPreferences.get("Entertainment") * (1 - touristDelta * 10) + tempDB.get("Entertainment") * (touristDelta * 10));
+                result.put("Education", userPreferences.get("Education") * (1 - touristDelta * 10) + tempDB.get("Education") * (touristDelta * 10));
+                result.put("Pets", userPreferences.get("Pets") * (1 - touristDelta * 10) + tempDB.get("Pets") * (touristDelta * 10));
+                result.put("Eco", userPreferences.get("Eco") * (1 - touristDelta * 10) + tempDB.get("Eco") * (touristDelta * 10));
+                result.put("Weather", userPreferences.get("Weather") * (1 - touristDelta * 10) + tempDB.get("Weather") * (touristDelta * 10));
+                result.put("Technology", userPreferences.get("Technology") * (1 - touristDelta * 10) + tempDB.get("Technology") * (touristDelta * 10));
+                result.put("Politics", userPreferences.get("Politics") * (1 - touristDelta * 10) + tempDB.get("Politics") * (touristDelta * 10));
+                result.put("Economy", userPreferences.get("Economy") * (1 - touristDelta * 10) + tempDB.get("Economy") * (touristDelta * 10));
             }
-            if (times>=0&&times<=10&&!isTourist){
-                result.put("Fashion",userPreferences.get("Fashion")*(1-0.07*times)+tempDB.get("Fashion")*(0.07*times));
-                result.put("Art",userPreferences.get("Art")*(1-0.07*times)+tempDB.get("Art")*(0.07*times));
-                result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.07*times)+tempDB.get("Entertainment")*(0.07*times));
-                result.put("Education",userPreferences.get("Education")*(1-0.07*times)+tempDB.get("Education")*(0.07*times));
-                result.put("Pets",userPreferences.get("Pets")*(1-0.07*times)+tempDB.get("Pets")*(0.07*times));
-                result.put("Eco",userPreferences.get("Eco")*(1-0.07*times)+tempDB.get("Eco")*(0.07*times));
-                result.put("Weather",userPreferences.get("Weather")*(1-0.07*times)+tempDB.get("Weather")*(0.07*times));
-                result.put("Technology",userPreferences.get("Technology")*(1-0.07*times)+tempDB.get("Technology")*(0.07*times));
-                result.put("Politics",userPreferences.get("Politics")*(1-0.07*times)+tempDB.get("Politics")*(0.07*times));
-                result.put("Economy",userPreferences.get("Economy")*(1-0.07*times)+tempDB.get("Economy")*(0.07*times));
+
+            double userDelta = 0.07;
+            int userThresh = 10;
+
+            if (times >= 0 && times <= userThresh && !isTourist) {
+                result.put("Fashion", userPreferences.get("Fashion") * (1 - userDelta * times) + tempDB.get("Fashion") * (userDelta * times));
+                result.put("Art", userPreferences.get("Art") * (1 - userDelta * times) + tempDB.get("Art") * (userDelta * times));
+                result.put("Entertainment", userPreferences.get("Entertainment") * (1 - userDelta * times) + tempDB.get("Entertainment") * (userDelta * times));
+                result.put("Education", userPreferences.get("Education") * (1 - userDelta * times) + tempDB.get("Education") * (userDelta * times));
+                result.put("Pets", userPreferences.get("Pets") * (1 - userDelta * times) + tempDB.get("Pets") * (userDelta * times));
+                result.put("Eco", userPreferences.get("Eco") * (1 - userDelta * times) + tempDB.get("Eco") * (userDelta * times));
+                result.put("Weather", userPreferences.get("Weather") * (1 - userDelta * times) + tempDB.get("Weather") * (userDelta * times));
+                result.put("Technology", userPreferences.get("Technology") * (1 - userDelta * times) + tempDB.get("Technology") * (userDelta * times));
+                result.put("Politics", userPreferences.get("Politics") * (1 - userDelta * times) + tempDB.get("Politics") * (userDelta * times));
+                result.put("Economy", userPreferences.get("Economy") * (1 - userDelta * times) + tempDB.get("Economy") * (userDelta * times));
             }
-            if (times>10&&!isTourist){
-                result.put("Fashion",userPreferences.get("Fashion")*(1-0.07*10)+tempDB.get("Fashion")*(0.07*10));
-                result.put("Art",userPreferences.get("Art")*(1-0.07*10)+tempDB.get("Art")*(0.07*10));
-                result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.07*10)+tempDB.get("Entertainment")*(0.07*10));
-                result.put("Education",userPreferences.get("Education")*(1-0.07*10)+tempDB.get("Education")*(0.07*10));
-                result.put("Pets",userPreferences.get("Pets")*(1-0.07*10)+tempDB.get("Pets")*(0.07*10));
-                result.put("Eco",userPreferences.get("Eco")*(1-0.07*10)+tempDB.get("Eco")*(0.07*10));
-                result.put("Weather",userPreferences.get("Weather")*(1-0.07*10)+tempDB.get("Weather")*(0.07*10));
-                result.put("Technology",userPreferences.get("Technology")*(1-0.07*10)+tempDB.get("Technology")*(0.07*10));
-                result.put("Politics",userPreferences.get("Politics")*(1-0.07*10)+tempDB.get("Politics")*(0.07*10));
-                result.put("Economy",userPreferences.get("Economy")*(1-0.07*10)+tempDB.get("Economy")*(0.07*10));
+
+            if (times > userThresh && !isTourist) {
+                result.put("Fashion", userPreferences.get("Fashion") * (1 - userDelta * 10) + tempDB.get("Fashion") * (userDelta * 10));
+                result.put("Art", userPreferences.get("Art") * (1 - userDelta * 10) + tempDB.get("Art") * (userDelta * 10));
+                result.put("Entertainment", userPreferences.get("Entertainment") * (1 - userDelta * 10) + tempDB.get("Entertainment") * (userDelta * 10));
+                result.put("Education", userPreferences.get("Education") * (1 - userDelta * 10) + tempDB.get("Education") * (userDelta * 10));
+                result.put("Pets", userPreferences.get("Pets") * (1 - userDelta * 10) + tempDB.get("Pets") * (userDelta * 10));
+                result.put("Eco", userPreferences.get("Eco") * (1 - userDelta * 10) + tempDB.get("Eco") * (userDelta * 10));
+                result.put("Weather", userPreferences.get("Weather") * (1 - userDelta * 10) + tempDB.get("Weather") * (userDelta * 10));
+                result.put("Technology", userPreferences.get("Technology") * (1 - userDelta * 10) + tempDB.get("Technology") * (userDelta * 10));
+                result.put("Politics", userPreferences.get("Politics") * (1 - userDelta * 10) + tempDB.get("Politics") * (userDelta * 10));
+                result.put("Economy", userPreferences.get("Economy") * (1 - userDelta * 10) + tempDB.get("Economy") * (userDelta * 10));
             }
 
 
@@ -438,3 +450,52 @@ public class UserTrainDataServiceImpl {
 //        return defaultPreferences;
 //    }
 }
+//            if(0<=times && times<= 10 &&isTourist) {
+//                result.put("Fashion",userPreferences.get("Fashion")*(1-0.03*times)+tempDB.get("Fashion")*(0.03*times));
+//                result.put("Art",userPreferences.get("Art")*(1-0.03*times)+tempDB.get("Art")*(0.03*times));
+//                result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.03*times)+tempDB.get("Entertainment")*(0.03*times));
+//                result.put("Education",userPreferences.get("Education")*(1-0.03*times)+tempDB.get("Education")*(0.03*times));
+//                result.put("Pets",userPreferences.get("Pets")*(1-0.03*times)+tempDB.get("Pets")*(0.03*times));
+//                result.put("Eco",userPreferences.get("Eco")*(1-0.03*times)+tempDB.get("Eco")*(0.03*times));
+//                result.put("Weather",userPreferences.get("Weather")*(1-0.03*times)+tempDB.get("Weather")*(0.03*times));
+//                result.put("Technology",userPreferences.get("Technology")*(1-0.03*times)+tempDB.get("Technology")*(0.03*times));
+//                result.put("Politics",userPreferences.get("Politics")*(1-0.03*times)+tempDB.get("Politics")*(0.03*times));
+//                result.put("Economy",userPreferences.get("Economy")*(1-0.03*times)+tempDB.get("Economy")*(0.03*times));
+//            }
+//            if(times>10&&isTourist){
+//                result.put("Fashion",userPreferences.get("Fashion")*(1-0.03*10)+tempDB.get("Fashion")*(0.03*10));
+//                result.put("Art",userPreferences.get("Art")*(1-0.03*10)+tempDB.get("Art")*(0.03*10));
+//                result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.03*10)+tempDB.get("Entertainment")*(0.03*10));
+//                result.put("Education",userPreferences.get("Education")*(1-0.03*10)+tempDB.get("Education")*(0.03*10));
+//                result.put("Pets",userPreferences.get("Pets")*(1-0.03*10)+tempDB.get("Pets")*(0.03*10));
+//                result.put("Eco",userPreferences.get("Eco")*(1-0.03*10)+tempDB.get("Eco")*(0.03*10));
+//                result.put("Weather",userPreferences.get("Weather")*(1-0.03*10)+tempDB.get("Weather")*(0.03*10));
+//                result.put("Technology",userPreferences.get("Technology")*(1-0.03*10)+tempDB.get("Technology")*(0.03*10));
+//                result.put("Politics",userPreferences.get("Politics")*(1-0.03*10)+tempDB.get("Politics")*(0.03*10));
+//                result.put("Economy",userPreferences.get("Economy")*(1-0.03*10)+tempDB.get("Economy")*(0.03*10));
+//            }
+
+//if (times>=0&&times<=10&&!isTourist){
+//        result.put("Fashion",userPreferences.get("Fashion")*(1-0.07*times)+tempDB.get("Fashion")*(0.07*times));
+//        result.put("Art",userPreferences.get("Art")*(1-0.07*times)+tempDB.get("Art")*(0.07*times));
+//        result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.07*times)+tempDB.get("Entertainment")*(0.07*times));
+//        result.put("Education",userPreferences.get("Education")*(1-0.07*times)+tempDB.get("Education")*(0.07*times));
+//        result.put("Pets",userPreferences.get("Pets")*(1-0.07*times)+tempDB.get("Pets")*(0.07*times));
+//        result.put("Eco",userPreferences.get("Eco")*(1-0.07*times)+tempDB.get("Eco")*(0.07*times));
+//        result.put("Weather",userPreferences.get("Weather")*(1-0.07*times)+tempDB.get("Weather")*(0.07*times));
+//        result.put("Technology",userPreferences.get("Technology")*(1-0.07*times)+tempDB.get("Technology")*(0.07*times));
+//        result.put("Politics",userPreferences.get("Politics")*(1-0.07*times)+tempDB.get("Politics")*(0.07*times));
+//        result.put("Economy",userPreferences.get("Economy")*(1-0.07*times)+tempDB.get("Economy")*(0.07*times));
+//        }
+//        if (times>10&&!isTourist){
+//        result.put("Fashion",userPreferences.get("Fashion")*(1-0.07*10)+tempDB.get("Fashion")*(0.07*10));
+//        result.put("Art",userPreferences.get("Art")*(1-0.07*10)+tempDB.get("Art")*(0.07*10));
+//        result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.07*10)+tempDB.get("Entertainment")*(0.07*10));
+//        result.put("Education",userPreferences.get("Education")*(1-0.07*10)+tempDB.get("Education")*(0.07*10));
+//        result.put("Pets",userPreferences.get("Pets")*(1-0.07*10)+tempDB.get("Pets")*(0.07*10));
+//        result.put("Eco",userPreferences.get("Eco")*(1-0.07*10)+tempDB.get("Eco")*(0.07*10));
+//        result.put("Weather",userPreferences.get("Weather")*(1-0.07*10)+tempDB.get("Weather")*(0.07*10));
+//        result.put("Technology",userPreferences.get("Technology")*(1-0.07*10)+tempDB.get("Technology")*(0.07*10));
+//        result.put("Politics",userPreferences.get("Politics")*(1-0.07*10)+tempDB.get("Politics")*(0.07*10));
+//        result.put("Economy",userPreferences.get("Economy")*(1-0.07*10)+tempDB.get("Economy")*(0.07*10));
+//        }
