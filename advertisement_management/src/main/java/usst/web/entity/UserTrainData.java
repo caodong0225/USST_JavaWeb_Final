@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class UserTrainData {
     private Integer id;
+    private String fingerPrint;
     private String userName;
     private Integer age;
     private String gender;

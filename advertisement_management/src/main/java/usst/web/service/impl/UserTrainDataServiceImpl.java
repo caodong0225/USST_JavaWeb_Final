@@ -13,7 +13,6 @@ import usst.web.service.AdvertisementService;
 import usst.web.service.ITagService;
 import usst.web.vo.UserTrainDataVO;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,7 +43,7 @@ public class UserTrainDataServiceImpl {
         if(userTrainDataDTO.getPreference() == null || userTrainDataDTO.getPreference().isEmpty()) {
             // 获取服务器 IP 和端口号
             //初始化用户偏好map，取默认值
-            Map<String, Integer> preferencesByUsername = getPreferencesByUsername(userTrainDataDTO.getUserName());
+            Map<String, Integer> preferencesByUsername = getPreferencesByFingerPrint(userTrainDataDTO.getUserName());
 
             Map<String,Double> result = new HashMap<>();
             int times=sumData(preferencesByUsername);
@@ -53,8 +52,8 @@ public class UserTrainDataServiceImpl {
 
 
             // 此处计算逻辑详情请见报告
-            double touristDelta = 0.03;//游客偏好变化率
-            int touristThresh = 10;//游客偏好变化阈值
+            double touristDelta = 0.06;//游客偏好变化率
+            int touristThresh = 5;//游客偏好变化阈值
 
             if (0 <= times && times <= touristThresh && isTourist) {
                 result.put("Fashion", userPreferences.get("Fashion") * (1 - touristDelta * times) + tempDB.get("Fashion") * (touristDelta * times));
@@ -82,8 +81,8 @@ public class UserTrainDataServiceImpl {
                 result.put("Economy", userPreferences.get("Economy") * (1 - touristDelta * 10) + tempDB.get("Economy") * (touristDelta * 10));
             }
 
-            double userDelta = 0.07;
-            int userThresh = 10;
+            double userDelta = 0.14;
+            int userThresh = 5;
 
             if (times >= 0 && times <= userThresh && !isTourist) {
                 result.put("Fashion", userPreferences.get("Fashion") * (1 - userDelta * times) + tempDB.get("Fashion") * (userDelta * times));
@@ -124,7 +123,7 @@ public class UserTrainDataServiceImpl {
             return userTrainDataVO;
 
         }
-        if (!isUserPreferencesExist(userTrainDataDTO.getUserName())) {
+        if (!isUserPreferencesExist(userTrainDataDTO.getFingerPrint())) {
             initPreferences(userTrainDataDTO);
         }
         else {
@@ -139,15 +138,15 @@ public class UserTrainDataServiceImpl {
 
     public static boolean isTourist(String username) {
         if (username == null) {
-            return false; // 如果用户名为 null，默认不是游客
+            return true; // 如果用户名为 null，默认是
         }
         return username.startsWith("Tourist_");
     }
 
 
-    private Integer sumData(Map<String, Integer> preferencesByUsername) {
+    private Integer sumData(Map<String, Integer> preferencesByFingerPrint) {
         Integer sum = 0;
-        for (Map.Entry<String, Integer> entry : preferencesByUsername.entrySet()) {
+        for (Map.Entry<String, Integer> entry : preferencesByFingerPrint.entrySet()) {
             sum += entry.getValue();
         }
         return sum;
@@ -155,10 +154,12 @@ public class UserTrainDataServiceImpl {
 
 
     private  UserTrainDataDTO setDtoNotNull(UserTrainDataDTO userTrainDataDTO) {
+        if (userTrainDataDTO.getUserName() == null || userTrainDataDTO.getUserName().isEmpty()) userTrainDataDTO.setUserName("Tourist_"+System.currentTimeMillis());
+        if (userTrainDataDTO.getFingerPrint()==null||userTrainDataDTO.getFingerPrint().isEmpty()) userTrainDataDTO.setFingerPrint("0437e3b48e28d57dd9b7ebd966e330e0");
         if (userTrainDataDTO.getAge() == null) userTrainDataDTO.setAge(25);
         if (userTrainDataDTO.getGender() == null || userTrainDataDTO.getGender().isEmpty()) userTrainDataDTO.setGender("不愿透露");
         if (userTrainDataDTO.getOccupation() == null || userTrainDataDTO.getOccupation().isEmpty()) userTrainDataDTO.setOccupation("不愿透露");
-        if (userTrainDataDTO.getEducation_level() == null || userTrainDataDTO.getEducation_level().isEmpty()) userTrainDataDTO.setEducation_level("不愿透露");
+        if (userTrainDataDTO.getEducationLevel() == null || userTrainDataDTO.getEducationLevel().isEmpty()) userTrainDataDTO.setEducationLevel("不愿透露");
         if (userTrainDataDTO.getRegion() == null || userTrainDataDTO.getRegion().isEmpty()) userTrainDataDTO.setRegion("不愿透露");
         if (userTrainDataDTO.getCountry() == null || userTrainDataDTO.getCountry().isEmpty()) userTrainDataDTO.setCountry("不愿透露");
         if (userTrainDataDTO.getDevice() == null || userTrainDataDTO.getDevice().isEmpty()) userTrainDataDTO.setDevice("不愿透露");
@@ -192,10 +193,11 @@ public class UserTrainDataServiceImpl {
             ProcessBuilder processBuilder = new ProcessBuilder(
                     pythonCmd,
                     pythonPath+"predict.py",
+                    userTrainDataDTO.getFingerPrint(),
                     String.valueOf(userTrainDataDTO.getAge()),
                     userTrainDataDTO.getGender(),
                     userTrainDataDTO.getOccupation(),
-                    userTrainDataDTO.getEducation_level(),
+                    userTrainDataDTO.getEducationLevel(),
                     userTrainDataDTO.getRegion(),
                     userTrainDataDTO.getCountry(),
                     userTrainDataDTO.getDevice()
@@ -245,29 +247,30 @@ public class UserTrainDataServiceImpl {
     }
 
     private void updatePreference(UserTrainDataDTO userTrainDataDTO) {
-        String username = userTrainDataDTO.getUserName();
+        String fingerPrint = userTrainDataDTO.getFingerPrint();
         String preference = userTrainDataDTO.getPreference();
-        System.out.println("Updating preference for username: " + username + ", preference: " + preference); // 添加日志
+        System.out.println("Updating preference for fingerprint: " + fingerPrint + ", preference: " + preference); // 添加日志
         // 调用 Mapper 方法更新数据库
-        userTrainDataMapper.updatePreference(username, preference);
+        userTrainDataMapper.updatePreferenceByFingerPrint(fingerPrint, preference);
     }
 
-    private boolean isUserPreferencesExist(String username) {
-        return userTrainDataMapper.findPreferencesByUserName(username) != null;
+    private boolean isUserPreferencesExist(String fingerprint) {
+        return userTrainDataMapper.findPreferencesByFingerPrint(fingerprint) != null;
     }
     public void initPreferences(UserTrainDataDTO userTrainDataDTO) {
         // 将 DTO 转换为实体类
         UserTrainData userTrainData = new UserTrainData();
+        userTrainData.setFingerPrint(userTrainDataDTO.getFingerPrint());
         userTrainData.setUserName(userTrainDataDTO.getUserName());
         userTrainData.setAge(userTrainDataDTO.getAge());
         userTrainData.setGender(userTrainDataDTO.getGender());
         userTrainData.setOccupation(userTrainDataDTO.getOccupation());
-        userTrainData.setEducationLevel(userTrainDataDTO.getEducation_level());
+        userTrainData.setEducationLevel(userTrainDataDTO.getEducationLevel());
         userTrainData.setRegion(userTrainDataDTO.getRegion());
         userTrainData.setCountry(userTrainDataDTO.getCountry());
         userTrainData.setDevice(userTrainDataDTO.getDevice());
 
-        // 初始化偏好浏览次数为 0
+        // 初始化偏好浏览次数为 1
         userTrainData.setFashion(1);
         userTrainData.setArt(1);
         userTrainData.setEntertainment(1);
@@ -324,9 +327,9 @@ public class UserTrainDataServiceImpl {
 
 
 
-    public Map<String, Integer> getPreferencesByUsername(String username) {
+    public Map<String, Integer> getPreferencesByFingerPrint(String fingerprint) {
         // 查询数据库
-        UserTrainData userTrainData = userTrainDataMapper.findPreferencesByUserName(username);
+        UserTrainData userTrainData = userTrainDataMapper.findPreferencesByFingerPrint(fingerprint);
 
         // 转换为 Map<String, Integer>
         Map<String, Integer> preferences = new HashMap<>();

@@ -7,16 +7,16 @@ import usst.web.entity.UserTrainData;
 public interface UserTrainDataMapper {
 
     @Insert("INSERT INTO user_train_data (\n" +
-            "            user_name, age, gender, occupation, education_level, region, country, device,\n" +
+            "            finger_print, user_name, age, gender, occupation, education_level, region, country, device,\n" +
             "            Fashion, Art, Entertainment, Education, Pets, Eco, Weather, Technology, Politics, Economy\n" +
             "        ) VALUES (\n" +
-            "            #{userName}, #{age}, #{gender}, #{occupation}, #{educationLevel}, #{region}, #{country}, #{device},\n" +
+            "            #{fingerPrint},#{userName}, #{age}, #{gender}, #{occupation}, #{educationLevel}, #{region}, #{country}, #{device},\n" +
             "            #{Fashion}, #{Art}, #{Entertainment}, #{Education}, #{Pets}, #{Eco}, #{Weather}, #{Technology}, #{Politics}, #{Economy}\n" +
             "        )")
     void insertUserTrainData(UserTrainData userTrainData);
 
-    @Select("SELECT * FROM user_train_data WHERE user_name = #{username}")
-    UserTrainData findPreferencesByUserName(@Param("username") String username);
+    @Select("SELECT * FROM user_train_data WHERE finger_print = #{fingerprint}")
+    UserTrainData findPreferencesByFingerPrint(@Param("fingerprint") String fingerprint);
 
     @Update({
             "<script>",
@@ -34,8 +34,8 @@ public interface UserTrainDataMapper {
             "    <when test='preference == \"Politics\"'>Politics = Politics + 1</when>",
             "    <when test='preference == \"Economy\"'>Economy = Economy + 1</when>",
             "  </choose>",
-            "WHERE user_name = #{username}",
+            "WHERE finger_print = #{fingerprint}",
             "</script>"
             })
-    void updatePreference(@Param("username") String username, @Param("preference") String preference);
+    void updatePreferenceByFingerPrint(@Param("fingerprint") String fingerprint, @Param("preference") String preference);
 }
