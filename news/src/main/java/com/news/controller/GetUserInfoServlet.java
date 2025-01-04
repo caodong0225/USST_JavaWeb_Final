@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.news.Logger;
 import com.news.model.User;
 import com.news.service.UserService;
+import com.news.util.EncodeUtil;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,9 +40,7 @@ public class GetUserInfoServlet extends HttpServlet {
             data.put("country", user.getCountry());
             result.put("isLogin", true);
         } else {
-            //应广告方要求，若用户未登录则给出随机的用户名
-            username = UUID.randomUUID().toString();
-            data.put("userName", username);
+            data.put("userName", request.getRemoteAddr());
             data.put("age", null);
             data.put("gender", null);
             data.put("occupation", null);
