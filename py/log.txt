@@ -262,3 +262,18 @@
 [1010 rows x 17 columns]
 2025-01-02 22:07:31,122 - INFO - 模型训练完成
 2025-01-02 22:07:31,126 - INFO - 模型和编码器已保存到文件夹：models\12 和 models 文件夹
+2025-01-05 00:15:11,429 - INFO - 生成的数据：
+2025-01-05 00:15:11,430 - INFO -        finger_print   user_name  age  ... Technology Politics Economy
+0  6VX8BH5duEfz6CeY  user_23402   65  ...         95       12      61
+1  JjrTZF428nU5IHbH  user_78403   18  ...         82       17       8
+2  u3we9G0g9AzQEUxA  user_35114   38  ...         82       91      84
+3  yv6qjICCEJIYBq5Y  user_72330   28  ...         18       96      97
+4  JjT1L1Hn1xs5MKGA  user_11492   65  ...         23       92      51
+5  KX5ADiiuR1qtlBMJ  user_92479   35  ...         76       96      87
+6  dvbugs0CqFVhHKer  user_76405   34  ...         85       96      85
+7  kFu7qo3RallmLPVt  user_48500   17  ...         46       30      53
+8  ewyhwUqnaNuKHewp  user_48707   29  ...         47       83      97
+9  jZEJS3byclDmd3xZ  user_34687   13  ...         67       62      97
+
+[10 rows x 19 columns]
+2025-01-05 00:15:11,468 - INFO - 成功保存 10 条数据到数据库
