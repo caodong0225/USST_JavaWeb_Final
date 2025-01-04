@@ -33,17 +33,74 @@ public class UserTrainDataServiceImpl {
     @Autowired
     private AdvertisementService advertisementService;
 
-    private String pythonCmd = "python";
-    private String pythonPath = "C:\\Users\\tianqianjia\\Desktop\\USST_JavaWeb_ADTool\\py\\";
+    private final String pythonCmd = "python";
+    private final String pythonPath = "C:\\Users\\tianqianjia\\Desktop\\USST_JavaWeb_ADTool\\py\\";
+
 
     public UserTrainDataVO getPreferences(UserTrainDataDTO userTrainDataDTO1 , HttpServletRequest request) {
         UserTrainDataDTO userTrainDataDTO = setDtoNotNull(userTrainDataDTO1);
+        Map<String, Double> userPreferences = defaultPreferences(userTrainDataDTO);//模型偏好预测
+        boolean isTourist =isTourist(userTrainDataDTO.getUserName());//是否是游客
         if(userTrainDataDTO.getPreference() == null || userTrainDataDTO.getPreference().isEmpty()) {
             // 获取服务器 IP 和端口号
             //初始化用户偏好map，取默认值
-            Map<String, Double> userPreferences = defaultPreferences(userTrainDataDTO);
+            Map<String, Integer> preferencesByUsername = getPreferencesByUsername(userTrainDataDTO.getUserName());
 
-            Integer id = tagService.getRecommendationUri(userPreferences);
+            Map<String,Double> result = new HashMap<>();
+            int times=sumData(preferencesByUsername);
+
+            Map<String,Double> tempDB=normalizePreferences(preferencesByUsername);//数据库偏好
+            if(0<=times && times<= 10 &&isTourist) {
+                result.put("Fashion",userPreferences.get("Fashion")*(1-0.03*times)+tempDB.get("Fashion")*(0.03*times));
+                result.put("Art",userPreferences.get("Art")*(1-0.03*times)+tempDB.get("Art")*(0.03*times));
+                result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.03*times)+tempDB.get("Entertainment")*(0.03*times));
+                result.put("Education",userPreferences.get("Education")*(1-0.03*times)+tempDB.get("Education")*(0.03*times));
+                result.put("Pets",userPreferences.get("Pets")*(1-0.03*times)+tempDB.get("Pets")*(0.03*times));
+                result.put("Eco",userPreferences.get("Eco")*(1-0.03*times)+tempDB.get("Eco")*(0.03*times));
+                result.put("Weather",userPreferences.get("Weather")*(1-0.03*times)+tempDB.get("Weather")*(0.03*times));
+                result.put("Technology",userPreferences.get("Technology")*(1-0.03*times)+tempDB.get("Technology")*(0.03*times));
+                result.put("Politics",userPreferences.get("Politics")*(1-0.03*times)+tempDB.get("Politics")*(0.03*times));
+                result.put("Economy",userPreferences.get("Economy")*(1-0.03*times)+tempDB.get("Economy")*(0.03*times));
+            }
+            if(times>10&&isTourist){
+                result.put("Fashion",userPreferences.get("Fashion")*(1-0.03*10)+tempDB.get("Fashion")*(0.03*10));
+                result.put("Art",userPreferences.get("Art")*(1-0.03*10)+tempDB.get("Art")*(0.03*10));
+                result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.03*10)+tempDB.get("Entertainment")*(0.03*10));
+                result.put("Education",userPreferences.get("Education")*(1-0.03*10)+tempDB.get("Education")*(0.03*10));
+                result.put("Pets",userPreferences.get("Pets")*(1-0.03*10)+tempDB.get("Pets")*(0.03*10));
+                result.put("Eco",userPreferences.get("Eco")*(1-0.03*10)+tempDB.get("Eco")*(0.03*10));
+                result.put("Weather",userPreferences.get("Weather")*(1-0.03*10)+tempDB.get("Weather")*(0.03*10));
+                result.put("Technology",userPreferences.get("Technology")*(1-0.03*10)+tempDB.get("Technology")*(0.03*10));
+                result.put("Politics",userPreferences.get("Politics")*(1-0.03*10)+tempDB.get("Politics")*(0.03*10));
+                result.put("Economy",userPreferences.get("Economy")*(1-0.03*10)+tempDB.get("Economy")*(0.03*10));
+            }
+            if (times>=0&&times<=10&&!isTourist){
+                result.put("Fashion",userPreferences.get("Fashion")*(1-0.07*times)+tempDB.get("Fashion")*(0.07*times));
+                result.put("Art",userPreferences.get("Art")*(1-0.07*times)+tempDB.get("Art")*(0.07*times));
+                result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.07*times)+tempDB.get("Entertainment")*(0.07*times));
+                result.put("Education",userPreferences.get("Education")*(1-0.07*times)+tempDB.get("Education")*(0.07*times));
+                result.put("Pets",userPreferences.get("Pets")*(1-0.07*times)+tempDB.get("Pets")*(0.07*times));
+                result.put("Eco",userPreferences.get("Eco")*(1-0.07*times)+tempDB.get("Eco")*(0.07*times));
+                result.put("Weather",userPreferences.get("Weather")*(1-0.07*times)+tempDB.get("Weather")*(0.07*times));
+                result.put("Technology",userPreferences.get("Technology")*(1-0.07*times)+tempDB.get("Technology")*(0.07*times));
+                result.put("Politics",userPreferences.get("Politics")*(1-0.07*times)+tempDB.get("Politics")*(0.07*times));
+                result.put("Economy",userPreferences.get("Economy")*(1-0.07*times)+tempDB.get("Economy")*(0.07*times));
+            }
+            if (times>10&&!isTourist){
+                result.put("Fashion",userPreferences.get("Fashion")*(1-0.07*10)+tempDB.get("Fashion")*(0.07*10));
+                result.put("Art",userPreferences.get("Art")*(1-0.07*10)+tempDB.get("Art")*(0.07*10));
+                result.put("Entertainment",userPreferences.get("Entertainment")*(1-0.07*10)+tempDB.get("Entertainment")*(0.07*10));
+                result.put("Education",userPreferences.get("Education")*(1-0.07*10)+tempDB.get("Education")*(0.07*10));
+                result.put("Pets",userPreferences.get("Pets")*(1-0.07*10)+tempDB.get("Pets")*(0.07*10));
+                result.put("Eco",userPreferences.get("Eco")*(1-0.07*10)+tempDB.get("Eco")*(0.07*10));
+                result.put("Weather",userPreferences.get("Weather")*(1-0.07*10)+tempDB.get("Weather")*(0.07*10));
+                result.put("Technology",userPreferences.get("Technology")*(1-0.07*10)+tempDB.get("Technology")*(0.07*10));
+                result.put("Politics",userPreferences.get("Politics")*(1-0.07*10)+tempDB.get("Politics")*(0.07*10));
+                result.put("Economy",userPreferences.get("Economy")*(1-0.07*10)+tempDB.get("Economy")*(0.07*10));
+            }
+
+
+            Integer id = tagService.getRecommendationUri(result);
             Advertisement advertisement = advertisementService.getAdvertisementById(id);
 
             String serverIp = request.getServerName(); // 获取服务器 IP 或主机名
@@ -61,12 +118,29 @@ public class UserTrainDataServiceImpl {
         else {
             updatePreference(userTrainDataDTO);
         }
-        getPreferencesByUsername(userTrainDataDTO.getUserName());
+
 
         UserTrainDataVO userTrainDataVO = new UserTrainDataVO();
         userTrainDataVO.setAdImgUrl("Success!");
         return userTrainDataVO;
 }
+
+    public static boolean isTourist(String username) {
+        if (username == null) {
+            return false; // 如果用户名为 null，默认不是游客
+        }
+        return username.startsWith("Tourist_");
+    }
+
+
+    private Integer sumData(Map<String, Integer> preferencesByUsername) {
+        Integer sum = 0;
+        for (Map.Entry<String, Integer> entry : preferencesByUsername.entrySet()) {
+            sum += entry.getValue();
+        }
+        return sum;
+    }
+
 
     private  UserTrainDataDTO setDtoNotNull(UserTrainDataDTO userTrainDataDTO) {
         if (userTrainDataDTO.getAge() == null) userTrainDataDTO.setAge(25);
@@ -238,7 +312,7 @@ public class UserTrainDataServiceImpl {
 
 
 
-    public Map<String, Double> getPreferencesByUsername(String username) {
+    public Map<String, Integer> getPreferencesByUsername(String username) {
         // 查询数据库
         UserTrainData userTrainData = userTrainDataMapper.findPreferencesByUserName(username);
 
@@ -256,7 +330,7 @@ public class UserTrainDataServiceImpl {
             preferences.put("Politics", userTrainData.getPolitics());
             preferences.put("Economy", userTrainData.getEconomy());
         }
-        return normalizePreferences(preferences);
+        return preferences;
     }
 //    @Autowired
 //    private UserTrainDataMapper userTrainDataMapper;
