@@ -34,7 +34,7 @@ async function sendUserAction(newsInfo) {
         const userInfo = user.info
         userInfo.device = getUserDevice()
         userInfo.preference = translateCNtoEN(newsInfo["zone"] ? newsInfo["zone"] : newsInfo["tag"][0])
-        userInfo.fingerprint = await getFingerPrint()
+        userInfo.fingerPrint = await getFingerPrint()
         console.log(userInfo)
         sendAdRequest(userInfo).then(r => console.log(r))
     }

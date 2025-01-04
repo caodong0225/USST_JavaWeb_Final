@@ -165,7 +165,7 @@ async function loadAdvertisement() {
     userInfo.device = getUserDevice()
     userInfo.preference = null
     if (user.status === false) {
-        userInfo.fingerprint = await getFingerPrint()
+        userInfo.fingerPrint = await getFingerPrint()
     }
     console.log(userInfo)
     for (let i = 0; i < 5; i++) {
