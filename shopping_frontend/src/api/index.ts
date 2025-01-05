@@ -1,6 +1,24 @@
 import axios from 'axios';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
+let visitorId: string = "";
 
-export const API_URL = 'http://10.100.164.36:5000'; // 后端地址
+// 创建一个初始化的 Promise
+const fingerprintPromise = FingerprintJS.load().then(fp =>
+    fp.get().then(result => {
+        visitorId = result.visitorId;
+        console.log("指纹是:", visitorId);
+        return visitorId; // 返回指纹
+    })
+);
+
+export const getVisitorId = async () => {
+    if (visitorId) {
+        return visitorId; // 如果已经生成，直接返回
+    }
+    return fingerprintPromise; // 如果还未生成，等待 Promise
+};
+
+export const API_URL = 'http://192.168.50.111:5000'; // 后端地址
 
 // 获取商品列表
 export const fetchGoods = async () => {

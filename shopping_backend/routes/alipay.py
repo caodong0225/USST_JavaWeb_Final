@@ -5,8 +5,8 @@ from models import db, Orders, OrderItems
 import hashlib
 import base64
 
-backend = "localhost:5000"
-frontend="localhost:5173"
+backend = "192.168.50.111:5000"
+frontend="192.168.50.111:5173"
 secret_key = "114514"  # 自定义密钥
 
 pay_bp = Blueprint('pay', __name__)

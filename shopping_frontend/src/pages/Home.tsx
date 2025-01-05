@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { fetchGoods, searchGoods, addToCart } from "../api";
+import { fetchGoods, searchGoods, addToCart , getVisitorId } from "../api";
 import Navbar from "../components/Navbar";
 import Toast from "../components/Toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const AD_SERVER_URL = "http://10.100.164.38:8080/user-predict/get-preferences";
+const AD_SERVER_URL = "http://192.168.3.129:8080/user-predict/get-preferences";
 
 function Home() {
   const [goods, setGoods] = useState<any[]>([]);
@@ -24,27 +24,29 @@ function Home() {
     document.title = "USST小超市"; // 设置页面标题
   }, []);
 
-  const fetchAd = async () => {
+const fetchAd = async () => {
     setAdLoading(true); // 开始加载广告
     try {
-      const response = await axios.post(AD_SERVER_URL, {
-        userName: "12fef789",
-        age: 48,
-        gender: "男",
-        occupation: "白领",
-        education_level: "初中",
-        region: "大连",
-        country: "中国",
-        device: "台式设备",
-        preference: null,
-      });
-      setAd(response.data);
+        const fingerprint = await getVisitorId(); // 确保获取到指纹
+        const response = await axios.post(AD_SERVER_URL, {
+            userName: null,
+            age: null,
+            gender: null,
+            occupation: null,
+            education_level: null,
+            region: null,
+            country: null,
+            device: null,
+            preference: null,
+            fingerprint: fingerprint,
+        });
+        setAd(response.data);
     } catch (error) {
-      console.error("无法获取广告:", error);
+        console.error("无法获取广告:", error);
     } finally {
-      setAdLoading(false); // 加载完成
+        setAdLoading(false); // 加载完成
     }
-  };
+};
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {

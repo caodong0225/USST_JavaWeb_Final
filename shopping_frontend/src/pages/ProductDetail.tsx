@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchProductDetail, createOrder, addToCart } from "../api"; // 引入 addToCart API
+import { fetchProductDetail, createOrder, addToCart , getVisitorId } from "../api"; // 引入 addToCart API
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const AD_SERVER_URL = "http://10.100.164.38:8080/user-predict/get-preferences";
+const AD_SERVER_URL = "http://192.168.3.129:8080/user-predict/get-preferences";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -26,16 +26,18 @@ function ProductDetail() {
 
   const recordInterest = async (preference: string) => {
     try {
+      const fingerprint = await getVisitorId(); // 确保获取到指纹
       await axios.post(AD_SERVER_URL, {
-        userName: "12fef789",
-        age: 48,
-        gender: "男",
-        occupation: "白领",
-        education_level: "初中",
-        region: "大连",
-        country: "中国",
-        device: "台式设备",
+        userName: null,
+        age: null,
+        gender: null,
+        occupation: null,
+        education_level: null,
+        region: null,
+        country: null,
+        device: null,
         preference: preference,
+        fingerprint: fingerprint,
       });
     } catch (error) {
       console.error("记录用户兴趣失败:", error);
