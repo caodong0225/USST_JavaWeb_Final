@@ -2,6 +2,10 @@ import axios from 'axios';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 let visitorId: string = "";
 
+export const API_URL = 'http://10.100.164.36:5000'; // 后端地址
+
+export const AD_SERVER_URL = "http://10.100.164.38:8080/user-predict/get-preferences";
+
 // 创建一个初始化的 Promise
 const fingerprintPromise = FingerprintJS.load().then(fp =>
     fp.get().then(result => {
@@ -17,8 +21,6 @@ export const getVisitorId = async () => {
     }
     return fingerprintPromise; // 如果还未生成，等待 Promise
 };
-
-export const API_URL = 'http://192.168.50.111:5000'; // 后端地址
 
 // 获取商品列表
 export const fetchGoods = async () => {

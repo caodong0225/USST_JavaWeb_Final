@@ -4,8 +4,7 @@ import Navbar from "../components/Navbar";
 import Toast from "../components/Toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
-const AD_SERVER_URL = "http://192.168.3.129:8080/user-predict/get-preferences";
+import { AD_SERVER_URL } from "../api";
 
 function Home() {
   const [goods, setGoods] = useState<any[]>([]);

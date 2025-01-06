@@ -4,8 +4,7 @@ import { fetchProductDetail, createOrder, addToCart , getVisitorId } from "../ap
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-const AD_SERVER_URL = "http://192.168.3.129:8080/user-predict/get-preferences";
+import { AD_SERVER_URL } from "../api";
 
 function ProductDetail() {
   const { id } = useParams();
