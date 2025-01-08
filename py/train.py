@@ -10,14 +10,19 @@ import os
 import logging
 import io
 
+
 # 配置日志
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gbk')
 def setup_logger():
     # 创建日志格式
     formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
+    # 获取当前脚本所在的目录
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    log_file_path = os.path.join(script_dir, 'log.txt')
+
     # 创建日志处理器（文件）
-    file_handler = logging.FileHandler('log.txt')
+    file_handler = logging.FileHandler(log_file_path)
     file_handler.setFormatter(formatter)
 
     # 创建日志处理器（控制台）
@@ -41,7 +46,7 @@ engine = create_engine("mysql+pymysql://root:123456@localhost:3306/adv")
 # 执行 SQL 查询
 query = "SELECT finger_print, age, gender, occupation, education_level, region, country, device, Fashion, Art, Entertainment, Education, Pets, Eco, Weather, Technology, Politics, Economy FROM user_train_data"
 df = pd.read_sql(query, engine)
-
+logger.info("当前工作目录:"+ os.getcwd())
 logger.info("从数据库加载的数据：")
 logger.info(df)
 
@@ -79,9 +84,10 @@ model = MultiOutputRegressor(LinearRegression())
 model.fit(X_train, y_train)
 logger.info("模型训练完成")
 
+logger.info("开始保存模型...")
 # 保存模型和编码器到编号文件夹
 os.makedirs("models", exist_ok=True)  # 创建 models 文件夹
-
+logger.info("模型保存完成")
 # 查找当前最大的编号
 existing_folders = [f for f in os.listdir("models") if f.isdigit()]
 if existing_folders:
@@ -103,7 +109,7 @@ joblib.dump(model, os.path.join("models", "model.pkl"))  # 保存模型到 model
 joblib.dump(encoder, os.path.join("models", "encoder.pkl"))  # 保存编码器到 models 文件夹
 joblib.dump(valid_columns, os.path.join("models", "valid_columns.pkl"))  # 保存有效的目标列到 models 文件夹
 
-logger.info(f"模型和编码器已保存到文件夹：{new_folder} 和 models 文件夹")
+logger.info(f"模型和编码器已保存到文件夹：{os.path.abspath(new_folder)} 和 {os.path.abspath('models')} 文件夹")
 
 print("Success! This is version {}. The journey of a thousand predictions begins with a single model! :=)".format(max_num + 1))
 sys.stdout.flush()  # 强制刷新输出缓冲区

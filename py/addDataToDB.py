@@ -115,7 +115,7 @@ def save_to_database(df):
 
 # 主函数
 if __name__ == "__main__":
-    n = 10
+    n = 100
     df = generate_data(n)
     logging.info("生成的数据：")
     logging.info(df)

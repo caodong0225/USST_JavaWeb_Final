@@ -52,7 +52,10 @@ def load_model_and_encoder(version=None):
         encoder_path = os.path.join(BASE_DIR, f"models/{version}/encoder.pkl")
         valid_columns_path = os.path.join(BASE_DIR, f"models/{version}/valid_columns.pkl")
         logger.info(f"正在加载模型版本: {version}...")
-
+    # 输出模型文件的具体位置
+    logger.info(f"模型文件路径: {os.path.abspath(model_path)}")
+    logger.info(f"编码器文件路径: {os.path.abspath(encoder_path)}")
+    logger.info(f"有效列文件路径: {os.path.abspath(valid_columns_path)}")
     # 检查文件是否存在
     if not os.path.exists(model_path) or not os.path.exists(encoder_path) or not os.path.exists(valid_columns_path):
         logger.error(f"模型或编码器文件不存在，请检查路径: {model_path}")
@@ -104,28 +107,31 @@ def predict_preferences(user_info, version=None):
 # 主函数
 if __name__ == "__main__":
     # 从命令行参数中获取用户信息
-    if len(sys.argv) != 8:
-        print("Usage: python predict.py <age> <gender> <occupation> <education_level> <region> <country> <device>")
-        sys.exit(1)
-
-    user_info = {
-        "age": int(sys.argv[1]),
-        "gender": sys.argv[2],
-        "occupation": sys.argv[3],
-        "education_level": sys.argv[4],
-        "region": sys.argv[5],
-        "country": sys.argv[6],
-        "device": sys.argv[7]
-    }
-#     user_info = {
-#     "age": 25,
-#     "gender": "男",
-#     "occupation": "白领",
-#     "education_level": "高中",
-#     "region": "上海",
-#     "country": "中国",
-#     "device": "智能手机",
-# }
+    # if len(sys.argv) != 9:
+    #     print("Usage: python predict.py <age> <gender> <occupation> <education_level> <region> <country> <device>")
+    #     sys.exit(1)
+    #
+    # user_info = {
+    #     "finger_print": sys.argv[1],
+    #     "age": int(sys.argv[2]),
+    #     "gender": sys.argv[3],
+    #     "occupation": sys.argv[4],
+    #     "education_level": sys.argv[5],
+    #     "region": sys.argv[6],
+    #     "country": sys.argv[7],
+    #     "device": sys.argv[8]
+    # }
+    user_info =  {
+    "finger_print":"e85847d11bd016b421b1e85c2accb44f",
+    "age": 25,
+    "gender": "不愿透露",
+    "occupation": "不愿透露",
+    "education_level": "不愿透露",
+    "region": "不愿透露",
+    "country": "不愿透露",
+    "device": "不愿透露",
+    "preference": "不愿透露"
+}
 
     try:
         # 使用默认模型进行预测

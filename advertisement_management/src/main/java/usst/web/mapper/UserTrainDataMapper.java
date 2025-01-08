@@ -6,12 +6,12 @@ import usst.web.entity.UserTrainData;
 @Mapper
 public interface UserTrainDataMapper {
 
-    @Insert("INSERT INTO user_train_data (\n" +
-            "            finger_print, user_name, age, gender, occupation, education_level, region, country, device,\n" +
-            "            Fashion, Art, Entertainment, Education, Pets, Eco, Weather, Technology, Politics, Economy\n" +
-            "        ) VALUES (\n" +
-            "            #{fingerPrint},#{userName}, #{age}, #{gender}, #{occupation}, #{educationLevel}, #{region}, #{country}, #{device},\n" +
-            "            #{Fashion}, #{Art}, #{Entertainment}, #{Education}, #{Pets}, #{Eco}, #{Weather}, #{Technology}, #{Politics}, #{Economy}\n" +
+    @Insert("INSERT INTO user_train_data (" +
+            "            finger_print, user_name, age, gender, occupation, education_level, region, country, device," +
+            "            Fashion, Art, Entertainment, Education, Pets, Eco, Weather, Technology, Politics, Economy" +
+            "        ) VALUES (" +
+            "            #{fingerPrint},#{userName}, #{age}, #{gender}, #{occupation}, #{educationLevel}, #{region}, #{country}, #{device}," +
+            "            #{Fashion}, #{Art}, #{Entertainment}, #{Education}, #{Pets}, #{Eco}, #{Weather}, #{Technology}, #{Politics}, #{Economy}" +
             "        )")
     void insertUserTrainData(UserTrainData userTrainData);
 

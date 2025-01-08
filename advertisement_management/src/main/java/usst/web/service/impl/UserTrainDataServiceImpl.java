@@ -33,7 +33,7 @@ public class UserTrainDataServiceImpl {
     private AdvertisementService advertisementService;
 
     private final String pythonCmd = "python";
-    private final String pythonPath = "C:\\Users\\tianqianjia\\Desktop\\USST_JavaWeb_ADTool\\py\\";
+    private final String pythonPath = "D:\\大学\\大三上\\web1\\USST_JavaWeb_ADTool\\py\\";
 
 
     public UserTrainDataVO getPreferences(UserTrainDataDTO userTrainDataDTO1 , HttpServletRequest request) {
@@ -43,12 +43,14 @@ public class UserTrainDataServiceImpl {
         if(userTrainDataDTO.getPreference() == null || userTrainDataDTO.getPreference().isEmpty()) {
             // 获取服务器 IP 和端口号
             //初始化用户偏好map，取默认值
-            Map<String, Integer> preferencesByUsername = getPreferencesByFingerPrint(userTrainDataDTO.getUserName());
-
+            Map<String, Integer> preferencesByFingerPrint = getPreferencesByFingerPrint(userTrainDataDTO.getFingerPrint());
+            if (!isUserPreferencesExist(userTrainDataDTO.getFingerPrint())) {
+                initPreferences(userTrainDataDTO);
+            }
             Map<String,Double> result = new HashMap<>();
-            int times=sumData(preferencesByUsername);
+            int times=sumData(preferencesByFingerPrint);
 
-            Map<String,Double> tempDB=normalizePreferences(preferencesByUsername);//数据库偏好
+            Map<String,Double> tempDB=normalizePreferences(preferencesByFingerPrint);//数据库偏好
 
 
             // 此处计算逻辑详情请见报告
@@ -117,8 +119,12 @@ public class UserTrainDataServiceImpl {
             String serverIp = request.getServerName(); // 获取服务器 IP 或主机名
             int serverPort = request.getServerPort(); // 获取端口号
             UserTrainDataVO userTrainDataVO = new UserTrainDataVO();
+
+//            userTrainDataVO.setAdImgUrl("http://1111");
             userTrainDataVO.setAdImgUrl("http://" + serverIp + ":" + serverPort + "/ad/images/" + id);
+//            userTrainDataVO.setAdName("2323424");
             userTrainDataVO.setAdName(""+advertisement.getAdName());
+//            userTrainDataVO.setAdUrl("http://1111433");
             userTrainDataVO.setAdUrl("http://" + serverIp + ":" + serverPort + "/ad/" + id);
             return userTrainDataVO;
 
@@ -166,7 +172,7 @@ public class UserTrainDataServiceImpl {
         return userTrainDataDTO;
     }
 
-    public UserTrainDataVO train(HttpServletRequest request) throws IOException {
+    public UserTrainDataVO train(HttpServletRequest request) throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder(pythonCmd, pythonPath+"train.py");
         processBuilder.redirectErrorStream(true); // 将错误流和输出流合并
         Process process = processBuilder.start();
@@ -176,8 +182,12 @@ public class UserTrainDataServiceImpl {
         );
         String line;
         while ((line = reader.readLine()) != null) {
-            if(line.startsWith("3")) {
+            if(line.startsWith("Success")) {
                 userTrainDataVO.setAdImgUrl("Success! The journey of a thousand predictions begins with a single model!");
+                int exitCode = process.waitFor();
+                if (exitCode != 0) {
+                    throw new RuntimeException("Python 脚本执行失败，退出码: " + exitCode);
+                }
                 return userTrainDataVO;
             }
         }

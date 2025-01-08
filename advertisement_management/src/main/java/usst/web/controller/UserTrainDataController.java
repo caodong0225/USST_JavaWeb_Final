@@ -23,7 +23,7 @@ public class UserTrainDataController {
     }
 
     @GetMapping("/train")
-    public UserTrainDataVO train(HttpServletRequest request) throws IOException {
+    public UserTrainDataVO train(HttpServletRequest request) throws IOException, InterruptedException {
         return userTrainDataService.train(request);
     }
 }

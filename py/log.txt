@@ -277,3 +277,324 @@
 
 [10 rows x 19 columns]
 2025-01-05 00:15:11,468 - INFO - 成功保存 10 条数据到数据库
+2025-01-08 15:37:58,835 - INFO - 生成的数据：
+2025-01-08 15:37:58,836 - INFO -        finger_print   user_name  age  ... Technology Politics Economy
+0  KnGhgS7ELjOK81xd  user_26222   26  ...         50       94      87
+1  T0OMTcIKRRO0I277  user_80482   60  ...         41       77      37
+2  K24KK2Si7Nz8JOKI  user_47622   57  ...         61       68      87
+3  aWYdMemR7ivH3Zjn  user_59075   35  ...         71      100      85
+4  ESEFDmgrG4QjFUCz  user_23714   39  ...         38       91      98
+5  abxUH1krhucgIWE1  user_48196   52  ...         36       24      84
+6  HSTMY7LwTjA43YRS  user_13038   20  ...         53       40      40
+7  aOSSeZXayDtJL5oQ  user_13071   35  ...         39       93      89
+8  i4whxH0mRmP7RpyJ  user_73045    4  ...         21       63      28
+9  u0uC5kEJA6EsLe6E  user_22524   64  ...         76       79      96
+
+[10 rows x 19 columns]
+2025-01-08 15:37:58,877 - INFO - 成功保存 10 条数据到数据库
+2025-01-08 15:38:58,181 - INFO - 生成的数据：
+2025-01-08 15:38:58,181 - INFO -         finger_print   user_name  age  ... Technology Politics Economy
+0   YltIyFQrdE5YMgsA  user_13497   58  ...         22       27      55
+1   v9F0ep7xt2bR7nUr  user_70923   58  ...         52       87      23
+2   NblwyhxF6NohLGfq  user_53248   56  ...         80        5      29
+3   capzmM6BTc4cHfNN  user_96867   64  ...         63       98      90
+4   pE6kjl5NTS1gN3oZ  user_51534    2  ...         85       60      65
+..               ...         ...  ...  ...        ...      ...     ...
+95  H4KlCtJljCu8MXx2  user_13466   24  ...         95       85      93
+96  c1zyFTaMZCyvDCMF  user_50214   25  ...         95       80      96
+97  tHjG2Nm36apWcs6a  user_41961   23  ...         60       35      70
+98  MwbZcsmOquhtYzpP  user_18847   43  ...         89       92      64
+99  ZLQnF0URd8e3Jcpl  user_20369    2  ...         74       77      98
+
+[100 rows x 19 columns]
+2025-01-08 15:38:58,208 - INFO - 成功保存 100 条数据到数据库
+2025-01-08 15:39:38,804 - INFO - 从数据库加载的数据：
+2025-01-08 15:39:38,804 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 15:39:38,872 - INFO - 模型训练完成
+2025-01-08 15:39:38,876 - INFO - 模型和编码器已保存到文件夹：models\13 和 models 文件夹
+2025-01-08 15:39:43,306 - INFO - 从数据库加载的数据：
+2025-01-08 15:39:43,306 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 15:39:43,369 - INFO - 模型训练完成
+2025-01-08 15:39:43,373 - INFO - 模型和编码器已保存到文件夹：models\14 和 models 文件夹
+2025-01-08 16:25:08,604 - INFO - 从数据库加载的数据：
+2025-01-08 16:25:08,604 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:25:08,673 - INFO - 模型训练完成
+2025-01-08 16:25:08,678 - INFO - 模型和编码器已保存到文件夹：models\24 和 models 文件夹
+2025-01-08 16:25:35,932 - INFO - 从数据库加载的数据：
+2025-01-08 16:25:35,932 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:25:35,996 - INFO - 模型训练完成
+2025-01-08 16:25:36,001 - INFO - 模型和编码器已保存到文件夹：models\25 和 models 文件夹
+2025-01-08 16:28:45,179 - INFO - 从数据库加载的数据：
+2025-01-08 16:28:45,179 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:28:45,252 - INFO - 模型训练完成
+2025-01-08 16:28:45,257 - INFO - 模型和编码器已保存到文件夹：models\15 和 models 文件夹
+2025-01-08 16:30:47,060 - INFO - 从数据库加载的数据：
+2025-01-08 16:30:47,060 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:30:47,155 - INFO - 模型训练完成
+2025-01-08 16:30:47,155 - INFO - 开始保存模型...
+2025-01-08 16:30:47,155 - INFO - 模型保存完成
+2025-01-08 16:30:47,159 - INFO - 模型和编码器已保存到文件夹：models\26 和 models 文件夹
+2025-01-08 16:32:19,864 - INFO - 从数据库加载的数据：
+2025-01-08 16:32:19,864 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:32:19,932 - INFO - 模型训练完成
+2025-01-08 16:32:19,932 - INFO - 开始保存模型...
+2025-01-08 16:32:19,933 - INFO - 模型保存完成
+2025-01-08 16:32:19,937 - INFO - 模型和编码器已保存到文件夹：models\27 和 models 文件夹
+2025-01-08 16:32:48,605 - INFO - 从数据库加载的数据：
+2025-01-08 16:32:48,605 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:32:48,672 - INFO - 模型训练完成
+2025-01-08 16:32:48,672 - INFO - 开始保存模型...
+2025-01-08 16:32:48,672 - INFO - 模型保存完成
+2025-01-08 16:32:48,677 - INFO - 模型和编码器已保存到文件夹：models\28 和 models 文件夹
+2025-01-08 16:33:07,452 - INFO - 从数据库加载的数据：
+2025-01-08 16:33:07,452 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:33:07,537 - INFO - 模型训练完成
+2025-01-08 16:33:07,537 - INFO - 开始保存模型...
+2025-01-08 16:33:07,537 - INFO - 模型保存完成
+2025-01-08 16:33:07,542 - INFO - 模型和编码器已保存到文件夹：models\29 和 models 文件夹
+2025-01-08 16:33:35,826 - INFO - 从数据库加载的数据：
+2025-01-08 16:33:35,826 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:33:35,917 - INFO - 模型训练完成
+2025-01-08 16:33:35,917 - INFO - 开始保存模型...
+2025-01-08 16:33:35,917 - INFO - 模型保存完成
+2025-01-08 16:33:35,922 - INFO - 模型和编码器已保存到文件夹：models\30 和 models 文件夹
+2025-01-08 16:35:25,266 - INFO - 从数据库加载的数据：
+2025-01-08 16:35:25,266 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:35:25,355 - INFO - 模型训练完成
+2025-01-08 16:35:25,355 - INFO - 开始保存模型...
+2025-01-08 16:35:25,355 - INFO - 模型保存完成
+2025-01-08 16:35:25,360 - INFO - 模型和编码器已保存到文件夹：D:\Tomcat\apache-tomcat-10.1.30\bin\models\31 和 D:\Tomcat\apache-tomcat-10.1.30\bin\models 文件夹
+2025-01-08 16:37:03,957 - INFO - 从数据库加载的数据：
+2025-01-08 16:37:03,958 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:37:04,033 - INFO - 模型训练完成
+2025-01-08 16:37:04,033 - INFO - 开始保存模型...
+2025-01-08 16:37:04,033 - INFO - 模型保存完成
+2025-01-08 16:37:04,038 - INFO - 模型和编码器已保存到文件夹：D:\Tomcat\apache-tomcat-10.1.30\bin\models\32 和 D:\Tomcat\apache-tomcat-10.1.30\bin\models 文件夹
+2025-01-08 16:37:08,201 - INFO - 从数据库加载的数据：
+2025-01-08 16:37:08,201 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:37:08,273 - INFO - 模型训练完成
+2025-01-08 16:37:08,273 - INFO - 开始保存模型...
+2025-01-08 16:37:08,273 - INFO - 模型保存完成
+2025-01-08 16:37:08,277 - INFO - 模型和编码器已保存到文件夹：D:\Tomcat\apache-tomcat-10.1.30\bin\models\33 和 D:\Tomcat\apache-tomcat-10.1.30\bin\models 文件夹
+2025-01-08 16:38:03,831 - INFO - 当前工作目录:D:\Tomcat\apache-tomcat-10.1.30\bin
+2025-01-08 16:38:03,831 - INFO - 从数据库加载的数据：
+2025-01-08 16:38:03,831 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:38:03,910 - INFO - 模型训练完成
+2025-01-08 16:38:03,910 - INFO - 开始保存模型...
+2025-01-08 16:38:03,910 - INFO - 模型保存完成
+2025-01-08 16:38:03,915 - INFO - 模型和编码器已保存到文件夹：D:\Tomcat\apache-tomcat-10.1.30\bin\models\34 和 D:\Tomcat\apache-tomcat-10.1.30\bin\models 文件夹
+2025-01-08 16:38:10,299 - INFO - 当前工作目录:D:\Tomcat\apache-tomcat-10.1.30\bin
+2025-01-08 16:38:10,299 - INFO - 从数据库加载的数据：
+2025-01-08 16:38:10,299 - INFO -          finger_print  age gender  ... Technology Politics Economy
+0    6VX8BH5duEfz6CeY   65      女  ...         95       12      61
+1    JjrTZF428nU5IHbH   18      女  ...         82       17       8
+2    u3we9G0g9AzQEUxA   38      女  ...         82       91      84
+3    yv6qjICCEJIYBq5Y   28      女  ...         18       96      97
+4    JjT1L1Hn1xs5MKGA   65   不愿透露  ...         23       92      51
+..                ...  ...    ...  ...        ...      ...     ...
+115  H4KlCtJljCu8MXx2   24      男  ...         95       85      93
+116  c1zyFTaMZCyvDCMF   25      男  ...         95       80      96
+117  tHjG2Nm36apWcs6a   23   不愿透露  ...         60       35      70
+118  MwbZcsmOquhtYzpP   43      男  ...         89       92      64
+119  ZLQnF0URd8e3Jcpl    2   不愿透露  ...         74       77      98
+
+[120 rows x 18 columns]
+2025-01-08 16:38:10,380 - INFO - 模型训练完成
+2025-01-08 16:38:10,380 - INFO - 开始保存模型...
+2025-01-08 16:38:10,380 - INFO - 模型保存完成
+2025-01-08 16:38:10,385 - INFO - 模型和编码器已保存到文件夹：D:\Tomcat\apache-tomcat-10.1.30\bin\models\35 和 D:\Tomcat\apache-tomcat-10.1.30\bin\models 文件夹
+2025-01-08 16:45:35,378 - INFO - 正在加载默认模型...
+2025-01-08 16:45:35,730 - INFO - 模型和编码器加载成功
+2025-01-08 16:45:35,731 - ERROR - 预测失败: "['finger_print'] not in index"
+2025-01-08 16:45:35,731 - ERROR - 程序运行失败: "['finger_print'] not in index"
+2025-01-08 16:47:35,676 - INFO - 正在加载默认模型...
+2025-01-08 16:47:36,029 - INFO - 模型和编码器加载成功
+2025-01-08 16:47:36,037 - INFO - 预测成功: {'Fashion': 0.13366471335612248, 'Art': 0.059877629752373956, 'Entertainment': 0.09004926860449602, 'Education': 0.08766811297251473, 'Pets': 0.09602888044729864, 'Eco': 0.10095981294702921, 'Weather': 0.12479688746052499, 'Technology': 0.09818410874187702, 'Politics': 0.09706549174572485, 'Economy': 0.11170509397203816}
+2025-01-08 17:09:41,389 - INFO - 正在加载默认模型...
+2025-01-08 17:09:41,391 - INFO - 模型文件路径: D:\大学\大三上\web1\USST_JavaWeb_ADTool\py\models\model.pkl
+2025-01-08 17:09:41,391 - INFO - 编码器文件路径: D:\大学\大三上\web1\USST_JavaWeb_ADTool\py\models\encoder.pkl
+2025-01-08 17:09:41,391 - INFO - 有效列文件路径: D:\大学\大三上\web1\USST_JavaWeb_ADTool\py\models\valid_columns.pkl
+2025-01-08 17:09:41,736 - INFO - 模型和编码器加载成功
+2025-01-08 17:09:41,744 - INFO - 预测成功: {'Fashion': 0.13366471335612248, 'Art': 0.059877629752373956, 'Entertainment': 0.09004926860449602, 'Education': 0.08766811297251473, 'Pets': 0.09602888044729864, 'Eco': 0.10095981294702921, 'Weather': 0.12479688746052499, 'Technology': 0.09818410874187702, 'Politics': 0.09706549174572485, 'Economy': 0.11170509397203816}
