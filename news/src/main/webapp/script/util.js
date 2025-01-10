@@ -147,7 +147,7 @@ function getUserDevice() {
 
 async function sendAdRequest(userInfo) {
     //广告API调用暂时改为局域网
-    const url = 'http://192.168.3.129:8080/user-predict/get-preferences';
+    const url = 'http://10.100.164.38:8080/user-predict/get-preferences';
     let adData;
     try {
         const response = await fetch(url, {
